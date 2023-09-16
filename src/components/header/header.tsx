@@ -13,7 +13,7 @@ export const Header = () => {
         <header className='header-home'>
             <div className='header-profile-picture-container '>
                 {/* //TODO redirigir a link perfil usuario */}
-                <a className='header-profile-picture' href='/'>
+                <a className='header-profile-picture' href='/profile'>
                     <ImageContent
                         image={profilePicture}
                         width='50px'

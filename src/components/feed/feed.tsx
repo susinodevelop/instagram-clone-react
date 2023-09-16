@@ -22,13 +22,15 @@ export const Feed = () => {
                     id: image.id,
                     item: <div className='carrousel-item'>
                         <div className='carrousel-item-header'>
-                            <ImageContent
-                                image={susoProfilePicture}
-                                width='50px'
-                                height='50px'
-                                rounded='50%'
-                                border={true}
-                            />
+                            <a href="/profile">
+                                <ImageContent
+                                    image={susoProfilePicture}
+                                    width='50px'
+                                    height='50px'
+                                    rounded='50%'
+                                    border={true}
+                                />
+                            </a>
                             <span className='username'>{image.author.username}</span>
                             <span className='separation-point'>·</span>
                             <span className='time-since-upload'>22h</span>
