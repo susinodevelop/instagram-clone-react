@@ -1,12 +1,13 @@
 import React from 'react';
 import ImageContent from '../../components/image-content';
-import { ProfilePictureSuso } from '../../data/images';
+import { ImageData, ProfilePictureSuso } from '../../data/images';
 import { Button } from '@mui/material';
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined';
 import SlideshowOutlinedIcon from '@mui/icons-material/SlideshowOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import './style.css';
+import Carrousel from '../../components/carrousel';
 
 export const Profile = () => {
 
@@ -45,6 +46,25 @@ export const Profile = () => {
             </div>
             <div className='profile-main-story-highlights'>
                 {/* TODO aqui iran nuestras stories */}
+
+                <Carrousel elements={
+                    ImageData.map(image => {
+                        return {
+                            id: image.id,
+                            item:
+                                <div className='story-highlight'>
+                                    <ImageContent
+                                        image={image}
+                                        width='100px'
+                                        height='100px'
+                                        rounded='50%'
+                                        border={false}
+                                    />
+                                </div>
+                        }
+                    })
+                }
+                />
             </div>
             <hr />
             <div className='profile-main-content-buttons'>

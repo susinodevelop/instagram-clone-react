@@ -7,7 +7,7 @@ export interface CarrouselProps {
 
 export const Carrousel = ({ elements }: CarrouselProps) => {
     return (
-        <div>
+        <div className="carrousel-container">
             {elements.map(element => (
                 <div key={element.id} className="carrousel-element">
                     {element.item}
