@@ -4,7 +4,8 @@ import './style.css';
 export const Footer = () => {
     return (
         <footer>
-            <h1>I am footer</h1>
+            <span>English</span>
+            <span>@2023 CloneGram from SusinoDevelop</span>
         </footer>
     )
 }
