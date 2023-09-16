@@ -5,6 +5,7 @@ import { ImageData, ProfilePictureSuso } from "../../data/images";
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp'
 import ChatBubbleOutlineSharpIcon from '@mui/icons-material/ChatBubbleOutlineSharp'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import './style.css';
 import FeedComments from "../feed-comments";
 
@@ -48,6 +49,7 @@ export const Feed = () => {
                             <div className='carrousel-item-actions-left'>
                                 <FavoriteBorderSharpIcon />
                                 <ChatBubbleOutlineSharpIcon />
+                                <ShareOutlinedIcon />
                             </div>
                             <div className='carrousel-item-actions-right'>
                                 <BookmarkBorderOutlinedIcon />

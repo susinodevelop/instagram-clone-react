@@ -1,38 +1,53 @@
-.profile-main-header{
+.profile-main-header {
     display: flex;
     flex-direction: row;
 }
 
-.profile-main-header-image{
+.profile-main-header-image {
     margin-inline-start: 50px;
     margin-block-end: 50px;
 }
 
-.profile-main-header-data{
+.profile-main-header-data {
     display: flex;
     flex-direction: column;
     margin-inline: 50px;
 }
 
-.profile-statistics{
+.profile-statistics {
     display: flex;
     flex-direction: row;
 }
 
-.profile-statistics>span{
+.profile-statistics>span {
     margin-inline-end: 25px;
     margin-block: 25px;
 }
 
-.profile-information{
-    display:flex;
+.profile-information {
+    display: flex;
     flex-direction: column;
 }
 
-.profile-information>span.realname{
+.profile-information>span.realname {
     font-weight: bold;
 }
 
-.profile-information>text.description{
+.profile-information>text.description {
     margin-block-start: 15px;
+}
+
+.profile-main-content-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.profile-main-content-buttons>Button {
+    color: gray;
+}
+
+.profile-main-content-buttons>Button:hover {
+    color: black;
+    font-weight: bold;
 }
