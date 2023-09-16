@@ -1,0 +1,17 @@
+
+.carroulse-item-division-line {
+    color: lightgray;
+}
+
+.comment-input-text {
+    border: none;
+    margin-block: 5px;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: gray;
+}
+
+.comment-input-text:focus {
+    outline: none;
+}

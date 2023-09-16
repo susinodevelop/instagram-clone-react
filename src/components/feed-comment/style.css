@@ -1,0 +1,16 @@
+.feed-comment {
+    font-size: 14px;
+}
+
+.feed-comment-user {
+    margin-inline-end: 15px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.feed-comment-user :visited {
+    margin-inline-end: 15px;
+    text-decoration: none;
+    color: black;
+}
