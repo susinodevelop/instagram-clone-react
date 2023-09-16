@@ -1,0 +1,21 @@
+.header-profile-picture-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.header-profile-picture {
+    margin: 25px;
+}
+
+.unlooked-stories {
+    border: 2px solid white;
+    border-radius: 50%;
+    outline: 3px solid red;
+}
+
+.looked-stories {
+    border: 2px solid white;
+    border-radius: 50%;
+    outline: 3px solid lightgray;
+}
