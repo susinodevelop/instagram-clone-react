@@ -1,19 +1,31 @@
 'use client';
 
 import { Box, VStack, Link, Icon } from "@chakra-ui/react";
-import { FaHome, FaSearch, FaCompass, FaInstagram, FaRegHeart, FaPlusSquare, FaUserCircle } from "react-icons/fa";
+import { AiTwotoneHeart } from "react-icons/ai";
+import { FaHome, FaSearch, FaCompass, FaInstagram, FaUserCircle } from "react-icons/fa";
+import { MdOutlineAddBox } from "react-icons/md";
+import { SlPaperPlane } from "react-icons/sl";
+import { TfiVideoClapper } from "react-icons/tfi";
+import CreateButton from "./CreateButton";
+import React from "react";
 
-const Sidebar = () => {
+export interface SidebarProps {
+  showText?: boolean
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ showText = true }) => {
   return (
     <Box as="nav" width="240px" padding="20px" bg="black" color="white" height="100vh">
       <VStack spacing="20px" align="start">
         <Icon as={FaInstagram} boxSize="10" />
-        <Link><Icon as={FaHome} boxSize="6" /> Inicio</Link>
-        <Link><Icon as={FaSearch} boxSize="6" /> Búsqueda</Link>
-        <Link><Icon as={FaCompass} boxSize="6" /> Explorar</Link>
-        <Link><Icon as={FaRegHeart} boxSize="6" /> Notificaciones</Link>
-        <Link><Icon as={FaPlusSquare} boxSize="6" /> Crear</Link>
-        <Link><Icon as={FaUserCircle} boxSize="6" /> Perfil</Link>
+        <Link href="/"><Icon as={FaHome} boxSize="6" />  {showText ? "Inicio" : ""}</Link>
+        <Link href="/search"><Icon as={FaSearch} boxSize="6" /> {showText ? "Búsqueda" : ""}</Link>
+        <Link href="/explore"><Icon as={FaCompass} boxSize="6" /> {showText ? "Explorar" : ""}</Link>
+        <Link href="/reels"><Icon as={TfiVideoClapper} boxSize="6" /> {showText ? "Reels" : ""}</Link>
+        <Link href="/messages"><Icon as={SlPaperPlane} boxSize="6" /> {showText ? "Mensajes" : ""}</Link>
+        <Link href="/notifications"><Icon as={AiTwotoneHeart} boxSize="6" />{showText ? "Notificaciones" : ""}</Link>
+        <CreateButton showText={showText}></CreateButton>
+        <Link href="/profile"><Icon as={FaUserCircle} boxSize="6" /> {showText ? "Perfil" : ""}</Link>
       </VStack>
     </Box>
   );

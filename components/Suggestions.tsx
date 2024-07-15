@@ -5,11 +5,11 @@ const Suggestions = () => {
     <Box padding="20px" bg="black" color="white" width="240px">
       <Text fontSize="xl" marginBottom="10px">Sugerencias para ti</Text>
       <VStack spacing="10px">
-        <Link>anatierritatattoo</Link>
-        <Link>pablosv94</Link>
-        <Link>eloy_pd</Link>
-        <Link>franrmroman</Link>
-        <Link>pintxolaribar2018</Link>
+        <Link>analaperro</Link>
+        <Link>pablodk45</Link>
+        <Link>eloquepasa</Link>
+        <Link>franmanolo</Link>
+        <Link>pintxo2341</Link>
       </VStack>
     </Box>
   );
