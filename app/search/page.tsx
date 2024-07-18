@@ -1,4 +1,6 @@
 'use client'
+import Sidebar from "@/components/Sidebar";
+import { Flex } from "@chakra-ui/react";
 import React from "react"
 import { FaSearch, FaTimes } from "react-icons/fa";
 
@@ -12,7 +14,9 @@ const Search: React.FC = () => {
     ];
 
     return (
-        <div style={{ backgroundColor: '#000', color: '#fff', height: '100vh', padding: '20px' }}>
+        <Flex style={{ display: 'flex', backgroundColor: '#000', color: '#fff', minHeight: '100vh' }}>
+            <Sidebar showText={false} />
+            <div className="flex flex-col w-full">
             <h1>Búsqueda</h1>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                 <FaSearch style={{ marginRight: '10px' }} />
@@ -50,7 +54,8 @@ const Search: React.FC = () => {
                     ))}
                 </ul>
             </div>
-        </div>
+            </div>
+        </Flex>
     );
 }
 

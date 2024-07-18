@@ -1,4 +1,6 @@
 'use client'
+import Sidebar from '@/components/Sidebar';
+import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 const notifications = [
@@ -64,7 +66,9 @@ const notifications = [
 
 const Notifications: React.FC = () => {
     return (
-        <div style={{ display: 'flex', backgroundColor: '#000', color: '#fff', minHeight: '100vh' }}>
+        <Flex style={{ display: 'flex', backgroundColor: '#000', color: '#fff', minHeight: '100vh' }}>
+            <Sidebar showText={false} />
+        <div className='flex flex-row w-full'>
             <aside style={{ width: '300px', borderRight: '1px solid #333', padding: '20px' }}>
                 <h1>Notificaciones</h1>
                 <a href="#" style={{ color: '#00f', textDecoration: 'none' }}>Filtrar</a>
@@ -92,6 +96,7 @@ const Notifications: React.FC = () => {
                 </div>
             </main>
         </div>
+        </Flex>
     );
 }
 
