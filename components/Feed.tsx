@@ -3,21 +3,18 @@ import { Box, Image, VStack, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ProfilePicture from "./ProfilePicture";
+import { fetchUsers } from "@/services/UserService";
 
 const Feed = () => {
 
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    async function fetchUsers() {
-      try {
-        const response = await axios.get('/api/users');
-        setUsers(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
+    async function fetchAndSetUsers() {
+        const users:User[] = await fetchUsers()
+        setUsers(users)
     }
-    fetchUsers();
+    fetchAndSetUsers();
   }, []);
 
   return (
