@@ -46,7 +46,7 @@ const ProfilePicture = (props: ProfilePictureProps) => {
         <UserProfileContainer className="flex flex-row">
             <ProfileImageContainer>
                 <ProfileImage
-                    src={props.user.profile_picture}
+                    src={props.user.profile_img}
                     alt={`${props.user.username}'s profile`}
                     $borderColor={props.borderColor}
                 />

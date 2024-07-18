@@ -1,69 +1,57 @@
+'use client';
 import Sidebar from '@/components/Sidebar';
-import { Flex } from '@chakra-ui/react';
-import React from 'react';
+import { fetchReel, fetchReels } from '@/services/ReelService';
+import { Flex, Box, Image, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import { FaHeart, FaComment, FaPaperPlane, FaBookmark } from 'react-icons/fa';
 
-const reels = [
-    {
-        id: 1,
-        user: 'kreisi_random',
-        userImage: 'https://via.placeholder.com/50',
-        content: 'https://via.placeholder.com/300x500',
-        caption: 'Noooooo, porque son así 😭...',
-        music: 'Hislerim (feat. Zerrin) - Serhat Durmus',
-        likes: 84
-    },
-    {
-        id: 2,
-        user: 'kreisi_random',
-        userImage: 'https://via.placeholder.com/50',
-        content: 'https://via.placeholder.com/300x500',
-        caption: 'Noooooo, porque son así 😭...',
-        music: 'Hislerim (feat. Zerrin) - Serhat Durmus',
-        likes: 84
-    },
-    {
-        id: 3,
-        user: 'kreisi_random',
-        userImage: 'https://via.placeholder.com/50',
-        content: 'https://via.placeholder.com/300x500',
-        caption: 'Noooooo, porque son así 😭...',
-        music: 'Hislerim (feat. Zerrin) - Serhat Durmus',
-        likes: 84
-    },
-    // Agrega más reels según sea necesario
-];
-
 const Reels: React.FC = () => {
+    const [reels, setReels] = useState<UserReel[]>([]);
+
+    useEffect(() => {
+        const fetchAndSetReels = async (): Promise<void> => {
+            const retrievedReels: Reel[] = await fetchReels();
+
+            const promises = retrievedReels.map(async (retrievedReel): Promise<UserReel> => {
+                const reel: UserReel = await fetchReel(retrievedReel.id);
+                return reel;
+            });
+
+            const mappedReels: UserReel[] = await Promise.all(promises);
+            setReels(mappedReels);
+        };
+
+        fetchAndSetReels();
+    }, []);
+
     return (
-        <Flex style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh', padding: '20px' }}>
+        <Flex bg="#000" color="#fff" minHeight="100vh" p="20px">
             <Sidebar />
-            <div style={{ justifyContent: "center", width: "100%" }}>
-                <h1>Reels</h1>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-                    {reels.map(reel => (
-                        <div key={reel.id} style={{ width: '300px', position: 'relative' }}>
-                            <img src={reel.content} alt="reel" style={{ width: '100%', borderRadius: '10px' }} />
-                            <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', alignItems: 'center' }}>
-                                <img src={reel.userImage} alt={reel.user} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
-                                <p>{reel.user} • Seguir</p>
-                            </div>
-                            <div style={{ position: 'absolute', bottom: '10px', left: '10px' }}>
-                                <p>{reel.caption}</p>
-                                <p style={{ color: '#bbb' }}>{reel.music}</p>
-                            </div>
-                            <div style={{ position: 'absolute', bottom: '10px', right: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-                                <FaHeart /> {reel.likes}
-                                <FaComment />
-                                <FaPaperPlane />
-                                <FaBookmark />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </Flex >
+            <Box flex="1" display="flex" flexDirection="column" alignItems="center" gap="20px">
+                <Text as="h1">Reels</Text>
+                {reels.map((reel, index) => (
+                    <Box key={index} width="300px" position="relative">
+                        <Image src={reel.reel_url} alt="reel" width="100%" borderRadius="10px" />
+                        <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
+                            <Image src={reel.reel_url} alt={reel.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
+                            <Text>{reel.username} • Seguir</Text>
+                        </Box>
+                        {/* <Box position="absolute" bottom="10px" left="10px">
+                            TODO: Add caption and music
+                            <Text>{reel.caption}</Text>
+                            <Text color="#bbb">{reel.music}</Text>
+                        </Box> */}
+                        <Box position="absolute" bottom="10px" right="10px" display="flex" flexDirection="column" alignItems="center" gap="10px">
+                            <FaHeart /> {/* TODO: Add likes {reel.likes} */}
+                            <FaComment />
+                            <FaPaperPlane />
+                            <FaBookmark />
+                        </Box>
+                    </Box>
+                ))}
+            </Box>
+        </Flex>
     );
-}
+};
 
 export default Reels;
