@@ -1,4 +1,3 @@
-import ProfilePictureProps from '@/interface/ProfilePictureProps';
 import React from 'react';
 import styled from 'styled-components';
 

@@ -1,9 +1,8 @@
 'use client';
 import { Box, Image, VStack, Text } from "@chakra-ui/react";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import ProfilePicture from "./ProfilePicture";
 import { fetchUsers } from "@/services/UserService";
+import ProfilePicture from "./ProfilePicture";
 
 const Feed = () => {
 
@@ -11,8 +10,8 @@ const Feed = () => {
 
   useEffect(() => {
     async function fetchAndSetUsers() {
-        const users:User[] = await fetchUsers()
-        setUsers(users)
+      const users: User[] = await fetchUsers()
+      setUsers(users)
     }
     fetchAndSetUsers();
   }, []);
