@@ -1,8 +1,7 @@
 'use client';
 import Sidebar from '@/components/Sidebar';
+import { fetchMessages } from '@/services/MessageService';
 import { Flex } from '@chakra-ui/react';
-import axios from 'axios';
-import { Message } from 'postcss';
 import React, { useEffect, useState } from 'react';
 
 // TODO remove 
@@ -24,20 +23,20 @@ import React, { useEffect, useState } from 'react';
 //     // Agrega más conversaciones según sea necesario
 // ];
 
+// TODO revisar e hacer fetching co usuario sender do mensajes
 const Messages: React.FC = () => {
 
-    const [messages, setMessages] = useState<Message[]>([])
+    const [messages, setMessages] = useState<DirectMessage[]>([])
 
     useEffect(() => {
-        async function fetchMessages() {
-            try {
-                const response = await axios.get('/api/messages');
-                setMessages(response.data)
-            } catch (error) {
-                console.error("Error fetching messages: ", error)
-            }
+        const fetchAndSetMessages = async (): Promise<void> => {
+
+            const messages: DirectMessage[] = await fetchMessages()
+
+            // TODO ver aqui para traer los datos del usuario de cada mensaje
+            setMessages(messages)
         }
-        fetchMessages()
+        fetchAndSetMessages()
     }, [])
 
     return (
@@ -52,13 +51,13 @@ const Messages: React.FC = () => {
                 </div>
                 <div>
                     {messages.map(message => (
-                        <div key={message.message_id} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+                        <div key={message.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                             {/* TODO introducir enlace entre mensaje y usuario y meter aqui la foto de perfil del usuario que envio el mensaje */}
-                            <img src={"https://via.placeholder.com/50"} alt={message.sender_username} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
+                            <img src={"https://via.placeholder.com/50"} /*TODO revisar */ alt={'Imagen placeholder'} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
                             <div>
-                                <p style={{ margin: '0', fontWeight: 'bold' }}>{message.sender_username}</p>
-                                <p style={{ margin: '0', color: '#bbb' }}>{message.message_content}</p>
-                                <p style={{ margin: '0', color: '#777' }}>{message.timestamp}</p>
+                                <p style={{ margin: '0', fontWeight: 'bold' }}>usuario {/*message.sender_username*/}</p>
+                                <p style={{ margin: '0', color: '#bbb' }}>{message.content}</p>
+                                <p style={{ margin: '0', color: '#777' }}>{message.created_at}</p>
                             </div>
                         </div>
                     ))}

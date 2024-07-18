@@ -1,13 +1,10 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import { openDB } from "@/lib/db";
 
-export async function GET(request) {
+export async function GET(request: Request) {
   try {
-    // Define la ruta al archivo JSON en la carpeta public
-    const filePath = path.join(process.cwd(), 'public', 'messages.json');
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    const users = JSON.parse(fileContents);
+    const db = await openDB();
 
+    const users = await db.all('SELECT * FROM posts');
     return new Response(JSON.stringify(users), {
       status: 200,
       headers: {

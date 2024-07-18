@@ -1,5 +1,4 @@
 'use client';
-import User from "@/interface/User";
 import { Box, Image, VStack, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -18,7 +17,6 @@ const Feed = () => {
         console.error('Error fetching users:', error);
       }
     }
-
     fetchUsers();
   }, []);
 
