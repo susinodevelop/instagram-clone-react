@@ -120,24 +120,35 @@ INSERT INTO user_stories (id, user_id, story_id) VALUES
 (12, 1, 12);
 
 -- Insert data into messages
-INSERT INTO messages (id, content, created_at) VALUES
-(1, 'Hello!', '2024-01-13 22:00:00'),
-(2, 'How are you?', '2024-01-14 23:00:00');
+INSERT INTO messages (id, user_id, action_user_id, content, created_at, read) VALUES
+(1, 1, 2, 'Hello!', '2024-01-13 22:00:00', FALSE),
+(2, 1, 2, 'How are you?', '2024-01-14 23:00:00', FALSE),
+(3, 1, 2, 'What´s up?', '2024-01-15 09:00:00', FALSE),
+(4, 1, 2, 'See you soon!', '2024-01-16 10:00:00', FALSE),
+(5, 1, 2, 'Good morning!', '2024-01-17 08:00:00', FALSE),
+(6, 1, 2, 'Let’s meet up later.', '2024-01-18 12:00:00', FALSE),
+(7, 1, 2, 'Can you call me?', '2024-01-19 14:00:00', FALSE),
+(8, 1, 2, 'Happy Birthday!', '2024-01-20 16:00:00', FALSE),
+(9, 1, 2, 'Congratulations!', '2024-01-21 18:00:00', FALSE),
+(10, 1, 2, 'Good night!', '2024-01-22 20:00:00', FALSE);
 
--- Insert data into user_messages
-INSERT INTO user_messages (id, user_id, message_id) VALUES
-(1, 1, 1),
-(2, 2, 2);
 
 -- Insert data into post_likes
 INSERT INTO post_likes (id, user_id, post_id) VALUES
 (1, 1, 1),
 (2, 2, 2);
-
 -- Insert data into message_likes
 INSERT INTO message_likes (id, user_id, message_id) VALUES
-(1, 1, 1),
-(2, 2, 2);
+(1, 2, 1),
+(2, 2, 2),
+(3, 2, 3),
+(4, 2, 4),
+(5, 2, 5),
+(6, 2, 6),
+(7, 2, 7),
+(8, 2, 8),
+(9, 2, 9),
+(10, 2, 10);
 
 -- Insert data into reel_likes
 INSERT INTO reel_likes (id, user_id, reel_id) VALUES

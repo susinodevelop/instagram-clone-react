@@ -90,10 +90,10 @@ CREATE TABLE post_comments (
 CREATE TABLE notifications (
   id integer PRIMARY KEY,
   user_id integer,
-  action_type varchar,
+  action_type varchar(255),
   action_user_id integer,
-  related_entity_id integer, --TODO revisar
-  related_entity_type varchar, --TODO revisar
+  related_entity_id integer,
+  related_entity_type varchar(255),
   content varchar(255),
   created_at timestamp,
   read bool
@@ -115,14 +115,11 @@ CREATE TABLE user_stories (
 
 CREATE TABLE messages (
   id integer PRIMARY KEY,
-  content varchar(255),
-  created_at timestamp
-);
-
-CREATE TABLE user_messages (
-  id integer PRIMARY KEY,
   user_id integer,
-  message_id integer
+  action_user_id integer,
+  content varchar(255),
+  created_at timestamp,
+  read bool
 );
 
 CREATE TABLE post_likes (

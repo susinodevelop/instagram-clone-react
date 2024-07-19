@@ -19,7 +19,6 @@ const Notifications: React.FC = () => {
         const usersData = await Promise.all(userIds.map(id => fetchUser(id)));
         const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
 
-        console.log(usersMap)
         setUsers(usersMap);
     };
 

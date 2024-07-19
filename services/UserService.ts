@@ -59,3 +59,16 @@ export async function fetchUserNotifications(userId: number): Promise<UserNotifi
     }
     return response.json();
 }
+
+export async function fetchUserMessages(userId: number): Promise<DirectMessage[]> {
+    const response = await fetch(`${API_URL}/${userId}/messages`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch messages for user with id ${userId}`);
+    }
+    return response.json();
+}
