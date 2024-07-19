@@ -6,7 +6,7 @@
     "predev": "node lib/initDb.js",
     "dev": "next dev",
     "prestart": "node lib/initDb.js",
-    "build": "next build",
+    "build": "node lib/initDb.js && next build",
     "start": "next start"
   },
   "dependencies": {
