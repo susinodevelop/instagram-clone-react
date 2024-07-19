@@ -28,23 +28,21 @@ export async function GET(request: Request, { params }: HandlerArgs) {
 
         const query = `
             SELECT 
-                reels.id as reel_id,
-                reels.title as reel_title,
-                reels.url as reel_url,
-                reels.status as reel_status,
-                users.username as username,
-                users.profile_img as user_profile_img
-            FROM reels
-            INNER JOIN user_reels ON reels.id = user_reels.reel_id
-            INNER JOIN users ON user_reels.user_id = users.id
-            WHERE reels.id = ?
+                stories.id as id,
+                stories.title as title,
+                stories.url as url,
+                stories.miniature_url as miniature_url,
+                stories.created_at as created_at
+            FROM stories
+            INNER JOIN user_stories ON user_stories.story_id = stories.id
+            WHERE user_stories.user_id = ?
         `;
 
-        const reel = await db.get(query, id);
+        const posts = await db.all(query, id);
 
-        if (!reel) {
+        if (!posts) {
             // Return a 404 Not Found if no reel is found for the given 'id'
-            return new NextResponse(JSON.stringify({ error: 'Reel not found' }), {
+            return new NextResponse(JSON.stringify({ error: 'User Stories not found' }), {
                 status: 404,
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,7 +51,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
         }
 
         // Return the found reel with a 200 OK status
-        return new NextResponse(JSON.stringify(reel), {
+        return new NextResponse(JSON.stringify(posts), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json'

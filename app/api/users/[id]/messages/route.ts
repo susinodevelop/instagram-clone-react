@@ -28,23 +28,20 @@ export async function GET(request: Request, { params }: HandlerArgs) {
 
         const query = `
             SELECT 
-                reels.id as reel_id,
-                reels.title as reel_title,
-                reels.url as reel_url,
-                reels.status as reel_status,
-                users.username as username,
-                users.profile_img as user_profile_img
-            FROM reels
-            INNER JOIN user_reels ON reels.id = user_reels.reel_id
-            INNER JOIN users ON user_reels.user_id = users.id
-            WHERE reels.id = ?
+                messages.id AS id,
+                messages.content AS content,
+                messages.created_at AS created_at
+                user_messages.user_id AS user_id
+            FROM messages
+            INNER JOIN user_messages ON user_messages.message_id = messages.id
+            WHERE user_messages.user_id = ?
         `;
 
-        const reel = await db.get(query, id);
+        const messages = await db.all(query, id);
 
-        if (!reel) {
+        if (!messages) {
             // Return a 404 Not Found if no reel is found for the given 'id'
-            return new NextResponse(JSON.stringify({ error: 'Reel not found' }), {
+            return new NextResponse(JSON.stringify({ error: 'User Notifications not found' }), {
                 status: 404,
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,7 +50,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
         }
 
         // Return the found reel with a 200 OK status
-        return new NextResponse(JSON.stringify(reel), {
+        return new NextResponse(JSON.stringify(messages), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json'

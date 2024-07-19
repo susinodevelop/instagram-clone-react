@@ -1,6 +1,7 @@
 'use client';
 import Sidebar from '@/components/Sidebar';
 import { fetchMessages } from '@/services/MessageService';
+import { fetchUser } from '@/services/UserService';
 import { Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
@@ -27,6 +28,7 @@ import React, { useEffect, useState } from 'react';
 const Messages: React.FC = () => {
 
     const [messages, setMessages] = useState<DirectMessage[]>([])
+    const [users, setUsers] = useState<{ [key: number]: User }>({})
 
     useEffect(() => {
         const fetchAndSetMessages = async (): Promise<void> => {
@@ -34,7 +36,13 @@ const Messages: React.FC = () => {
             const messages: DirectMessage[] = await fetchMessages()
 
             // TODO ver aqui para traer los datos del usuario de cada mensaje
+            // Fetch users for the messages
+            const userIds = Array.from(new Set(messages.map(m => m.action_user_id)));
+            const usersData = await Promise.all(userIds.map(id => fetchUser(id)));
+            const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
+
             setMessages(messages)
+            setUsers(usersMap)
         }
         fetchAndSetMessages()
     }, [])
@@ -50,17 +58,24 @@ const Messages: React.FC = () => {
                     <button>Requests</button>
                 </div>
                 <div>
-                    {messages.map(message => (
-                        <div key={message.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                            {/* TODO introducir enlace entre mensaje y usuario y meter aqui la foto de perfil del usuario que envio el mensaje */}
-                            <img src={"https://via.placeholder.com/50"} /*TODO revisar */ alt={'Imagen placeholder'} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
-                            <div>
-                                <p style={{ margin: '0', fontWeight: 'bold' }}>usuario {/*message.sender_username*/}</p>
-                                <p style={{ margin: '0', color: '#bbb' }}>{message.content}</p>
-                                <p style={{ margin: '0', color: '#777' }}>{message.created_at}</p>
+                    {messages.map(message => {
+
+                        const actionUser = users[message.action_user_id]
+
+                        if (!actionUser) return null;  // In case user data is not yet loaded
+
+                        return (
+                            <div key={message.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+                                {/* TODO introducir enlace entre mensaje y usuario y meter aqui la foto de perfil del usuario que envio el mensaje */}
+                                <img src={actionUser.profile_img} /*TODO revisar */ alt={'Imagen placeholder'} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
+                                <div>
+                                    <p style={{ margin: '0', fontWeight: 'bold' }}>{actionUser.username}</p>
+                                    <p style={{ margin: '0', color: '#bbb' }}>{message.content}</p>
+                                    <p style={{ margin: '0', color: '#777' }}>{message.created_at}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             </aside>
             <main style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
