@@ -46,3 +46,16 @@ export async function fetchUserStories(userId: number): Promise<UserStory[]> {
     }
     return response.json();
 }
+
+export async function fetchUserNotifications(userId: number): Promise<UserNotification[]> {
+    const response = await fetch(`${API_URL}/${userId}/notifications`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch stories for user with id ${userId}`);
+    }
+    return response.json();
+}

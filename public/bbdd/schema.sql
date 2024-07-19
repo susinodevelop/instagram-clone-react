@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS user_reels;
 DROP TABLE IF EXISTS post_tags;
 DROP TABLE IF EXISTS reel_tags;
 DROP TABLE IF EXISTS post_comments;
-DROP TABLE IF EXISTS user_notifications;
 DROP TABLE IF EXISTS user_stories;
 DROP TABLE IF EXISTS user_messages;
 DROP TABLE IF EXISTS post_likes;
@@ -19,138 +18,139 @@ DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS stories;
 DROP TABLE IF EXISTS messages;
+
 CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
-    username TEXT,
-    biography_name TEXT,
-    biography_content TEXT,
-    biography_url TEXT,
-    profile_img TEXT,
-    created_at TIMESTAMP
+  id integer PRIMARY KEY,
+  username varchar(255),
+  biography_name varchar(255),
+  biography_content varchar(255),
+  biography_url varchar(255),
+  profile_img varchar(255),
+  created_at timestamp
 );
 
 CREATE TABLE posts (
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    url TEXT,
-    status TEXT,
-    created_at TIMESTAMP
+  id integer PRIMARY KEY,
+  title varchar(255),
+  url varchar(255),
+  status varchar(255),
+  created_at timestamp
 );
 
 CREATE TABLE user_posts (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    post_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  post_id integer
 );
 
 CREATE TABLE reels (
-    id INTEGER PRIMARY KEY,
-    url TEXT,
-    title TEXT,
-    status TEXT,
-    created_at TIMESTAMP
+  id integer PRIMARY KEY,
+  url varchar(255),
+  title varchar(255),
+  status varchar(255),
+  created_at timestamp
 );
 
 CREATE TABLE user_reels (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    reel_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  reel_id integer
 );
 
 CREATE TABLE tags (
-    id INTEGER PRIMARY KEY,
-    name TEXT
+  id integer PRIMARY KEY,
+  name varchar(255)
 );
 
 CREATE TABLE post_tags (
-    id INTEGER PRIMARY KEY,
-    post_id INTEGER,
-    tag_id INTEGER
+  id integer PRIMARY KEY,
+  post_id integer,
+  tag_id integer
 );
 
 CREATE TABLE reel_tags (
-    id INTEGER PRIMARY KEY,
-    reel_id INTEGER,
-    tag_id INTEGER
+  id integer PRIMARY KEY,
+  reel_id integer,
+  tag_id integer
 );
 
 CREATE TABLE comments (
-    id INTEGER PRIMARY KEY,
-    content TEXT,
-    created_at TIMESTAMP
+  id integer PRIMARY KEY,
+  content varchar(255),
+  created_at timestamp
 );
 
 CREATE TABLE post_comments (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    post_id INTEGER,
-    comment_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  post_id integer,
+  comment_id integer
 );
 
 CREATE TABLE notifications (
-    id INTEGER PRIMARY KEY,
-    content TEXT,
-    created_at TIMESTAMP
-);
-
-CREATE TABLE user_notifications (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    notification_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  action_type varchar,
+  action_user_id integer,
+  related_entity_id integer, --TODO revisar
+  related_entity_type varchar, --TODO revisar
+  content varchar(255),
+  created_at timestamp,
+  read bool
 );
 
 CREATE TABLE stories (
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    miniature_url TEXT,
-    url TEXT,
-    created_at TIMESTAMP
+  id integer PRIMARY KEY,
+  title varchar(255),
+  url varchar(255),
+  miniature_url varchar(255),
+  created_at timestamp
 );
 
 CREATE TABLE user_stories (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    story_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  story_id integer
 );
 
 CREATE TABLE messages (
-    id INTEGER PRIMARY KEY,
-    content TEXT,
-    created_at TIMESTAMP
+  id integer PRIMARY KEY,
+  content varchar(255),
+  created_at timestamp
 );
 
 CREATE TABLE user_messages (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    message_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  message_id integer
 );
 
 CREATE TABLE post_likes (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    post_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  post_id integer
 );
 
 CREATE TABLE message_likes (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    message_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  message_id integer
 );
 
 CREATE TABLE reel_likes (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    reel_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  reel_id integer
 );
 
 CREATE TABLE comment_likes (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    comment_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  comment_id integer
 );
 
 CREATE TABLE story_likes (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER,
-    story_id INTEGER
+  id integer PRIMARY KEY,
+  user_id integer,
+  story_id integer
 );
