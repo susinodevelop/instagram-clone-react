@@ -101,6 +101,8 @@ CREATE TABLE user_notifications (
 
 CREATE TABLE stories (
     id INTEGER PRIMARY KEY,
+    title TEXT,
+    miniature_url TEXT,
     url TEXT,
     created_at TIMESTAMP
 );

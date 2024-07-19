@@ -7,3 +7,42 @@ export async function fetchUsers(): Promise<User[]> {
     }
     return response.json();
 }
+
+export async function fetchUser(userId: number): Promise<User> {
+    const response = await fetch(`${API_URL}/${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch user with id ${userId}`);
+    }
+    return response.json();
+}
+
+export async function fetchUserPosts(userId: number): Promise<UserPost[]> {
+    const response = await fetch(`${API_URL}/${userId}/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch posts for user with id ${userId}`);
+    }
+    return response.json();
+}
+
+export async function fetchUserStories(userId: number): Promise<UserStory[]> {
+    const response = await fetch(`${API_URL}/${userId}/stories`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch stories for user with id ${userId}`);
+    }
+    return response.json();
+}
