@@ -102,6 +102,7 @@ const Feed = () => {
             <Box >
               <div className="flex flex-row p-4 rounded-lg shadow-md">
                 <ProfilePicture user={user} borderColor="red" />
+                <Text className="flex items-center text-white font-bold">{post.owner.username}</Text>
                 <Text className="flex items-center text-gray-500 mt-1 ml-2" fontSize="sm">{`• ${timeAgo(post.created_at)}`}</Text>
               </div>
               {/* TODO crear endpoint para imagenes segun usuario */}
