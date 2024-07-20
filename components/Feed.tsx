@@ -3,41 +3,54 @@ import { Box, Image, VStack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getUser } from "@/services/UserService";
 import ProfilePicture from "./ProfilePicture";
-import { getAllPosts } from "@/services/PostService";
-import { getAllComments } from "@/services/CommentService";
+import { getAllPosts, getPostComments } from "@/services/PostService";
 import { timeAgo } from "@/utils/DateUtils";
 
+type PostWithCommentsAndUsers = Post & {
+  comments: (Comment & { user: User })[];
+};
 const Feed = () => {
 
   //TODO por optimizar y arreglar llamadas rest
-  const [posts, setPosts] = useState<UserPost[]>([])
-  const [comments, setComments] = useState<Comment[]>([])
+  const [posts, setPosts] = useState<PostWithCommentsAndUsers[]>([])
   const [user, setUser] = useState<User>({
-    id: 2345,
-    username: "string",
-    biography_name: "string",
-    biography_content: "string",
-    biography_url: "string",
-    profile_img: "string",
-    created_at: "string"
-  })
-
-  const fetchAndSetPosts = async () => {
-    setPosts(await getAllPosts())
-  }
+    id: 1,
+    username: "default",
+    biography_name: "default",
+    biography_content: "default",
+    biography_url: "default",
+    profile_img: "default",
+    created_at: "default"
+  }) //TODO revisar
 
   const fetchAndSetUser = async () => {
     setUser(await getUser(1))
   }
 
-  const fetchAndSetComments = async () => {
-    setComments(await getAllComments())
-  }
+  const fetchAndSetPosts = async () => {
+    const posts: Post[] = await getAllPosts();
+
+    const postsWithCommentsAndUsers = await Promise.all(
+      posts.map(async (post) => {
+        const comments: Comment[] = await getPostComments(post.id);
+
+        const commentsWithUsers = await Promise.all(
+          comments.map(async (comment) => {
+            const user: User = await getUser(comment.user_owner_id);
+            return { ...comment, user };
+          })
+        );
+
+        return { ...post, comments: commentsWithUsers };
+      })
+    );
+
+    setPosts(postsWithCommentsAndUsers);
+  };
 
   useEffect(() => {
-    fetchAndSetPosts()
     fetchAndSetUser()
-    fetchAndSetComments()
+    fetchAndSetPosts()
   }, [])
 
 
@@ -57,7 +70,7 @@ const Feed = () => {
               <div>Le gusta a .... y mas</div> {/*TODO revisar*/}
               <ul>
                 {
-                  comments.map((comment) => {
+                  post.comments.map((comment) => {
 
                     return (
                       <li key={comment.id}>
