@@ -4,8 +4,8 @@ export async function GET(request: Request) {
   try {
     const db = await openDB();
 
-    const users = await db.all('SELECT * FROM users')
-    return new Response(JSON.stringify(users), {
+    const comments = await db.all('SELECT * FROM comments')
+    return new Response(JSON.stringify(comments), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
