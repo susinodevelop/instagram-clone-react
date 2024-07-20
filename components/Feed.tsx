@@ -1,5 +1,5 @@
 'use client';
-import { Box, Image, VStack, Text, Modal, ModalContent } from "@chakra-ui/react";
+import { Box, Image, VStack, Text, Modal, ModalContent, ModalOverlay } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getUser } from "@/services/UserService";
 import ProfilePicture from "./ProfilePicture";
@@ -123,7 +123,7 @@ const Feed = () => {
         onClose={() => setShowAllComments(false)}
       >
         {/*TODO revisar, esta llamada a funcion esta mal */}
-        {/* <ModalOverlay /> */}
+        <ModalOverlay bg="blackAlpha.800" />
         <ModalContent>
           {/* <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
