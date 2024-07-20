@@ -43,7 +43,7 @@ white-space: nowrap;
 const ProfilePicture = (props: ProfilePictureProps) => {
     return (
         <UserProfileContainer className="flex flex-row">
-            <ProfileImageContainer>
+            <ProfileImageContainer className='mr-5'>
                 <ProfileImage
                     src={props.user.profile_img}
                     alt={`${props.user.username}'s profile`}
