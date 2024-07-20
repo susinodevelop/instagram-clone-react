@@ -1,17 +1,17 @@
 -- Insert data into users
 INSERT INTO users (id, username, biography_name, biography_content, biography_url, profile_img, created_at) VALUES
-(1, 'john_doe', 'John Doe', 'Just a regular guy.', 'http://example.com/johndoe', 'https://robohash.org/exipsumquidem.png?size=50x50&set=set1', '2024-01-01 10:00:00'),
-(2, 'jane_smith', 'Jane Smith', 'Love traveling and photography.', 'http://example.com/janesmith', 'https://robohash.org/exipsumquidem.png?size=50x50&set=set1', '2024-01-02 11:00:00');
+(1, 'john_doe', 'John Doe', 'Just a regular guy.', 'http://example.com/johndoe', 'https://img.freepik.com/foto-gratis/hombre-feliz-pie-playa_107420-9868.jpg?t=st=1721515433~exp=1721519033~hmac=86b45d4b412fb7999dc4dbcda3db98ab99f7b6970438941c228c977d03b6ddad&w=1480', '2024-01-01 10:00:00'),
+(2, 'jane_smith', 'Jane Smith', 'Love traveling and photography.', 'http://example.com/janesmith', 'https://img.freepik.com/foto-gratis/chica-agradable-cabello-castano-brillante-sonriendo-foto-interior-dama-caucasica-pie-brazos-cruzados_197531-9395.jpg?t=st=1721515494~exp=1721519094~hmac=2c800c4f55143a987db3ce85f0a53ff8d56428514340f8c2935645620190cf6f&w=1480', '2024-01-02 11:00:00');
 
 -- Insert data into posts
-INSERT INTO posts (id, title, url, status, created_at) VALUES
-(1, 'First Post', 'https://images.pexels.com/photos/709552/pexels-photo-709552.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-03 12:00:00'),
-(2, 'Second Post', 'https://images.pexels.com/photos/15286/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-04 13:00:00'),
-(3, 'Third Post', 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-15 10:00:00'),
-(4, 'Fourth Post', 'https://images.pexels.com/photos/158607/cairn-fog-mystical-background-158607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-16 11:00:00'),
-(5, 'Fifth Post', 'https://images.pexels.com/photos/345345/pexels-photo-345345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-17 12:00:00'),
-(6, 'Sixth Post', 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-18 13:00:00'),
-(7, 'Seventh Post', 'https://images.pexels.com/photos/567567/pexels-photo-567567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-19 14:00:00');
+INSERT INTO posts (id, title, url, status, created_at, user_owner_id) VALUES
+(1, 'First Post', 'https://images.pexels.com/photos/709552/pexels-photo-709552.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-03 12:00:00', 1),
+(2, 'Second Post', 'https://images.pexels.com/photos/15286/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-04 13:00:00', 1),
+(3, 'Third Post', 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-15 10:00:00', 1),
+(4, 'Fourth Post', 'https://images.pexels.com/photos/158607/cairn-fog-mystical-background-158607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-16 11:00:00', 1),
+(5, 'Fifth Post', 'https://images.pexels.com/photos/345345/pexels-photo-345345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-17 12:00:00', 1),
+(6, 'Sixth Post', 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-18 13:00:00', 1),
+(7, 'Seventh Post', 'https://images.pexels.com/photos/567567/pexels-photo-567567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'active', '2024-01-19 14:00:00', 1);
 
 
 -- Insert data into user_posts

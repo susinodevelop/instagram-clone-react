@@ -34,7 +34,8 @@ CREATE TABLE posts (
   title varchar(255),
   url varchar(255),
   status varchar(255),
-  created_at timestamp
+  created_at timestamp,
+  user_owner_id integer
 );
 
 CREATE TABLE user_posts (

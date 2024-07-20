@@ -32,10 +32,10 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                 posts.title AS title,
                 posts.url AS url,
                 posts.status AS status,
-                posts.created_at AS created_at
+                posts.created_at AS created_at,
+                posts.user_owner_id AS user_owner_id
             FROM posts
-            INNER JOIN user_posts ON user_posts.post_id = posts.id
-            WHERE user_posts.user_id = ?
+            WHERE posts.user_owner_id = ?
         `;
 
         const posts = await db.all(query, id);
