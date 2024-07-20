@@ -28,21 +28,23 @@ export async function GET(request: Request, { params }: HandlerArgs) {
 
         const query = `
             SELECT 
-                posts.id AS id,
-                posts.title AS title,
-                posts.url AS url,
-                posts.status AS status,
-                posts.created_at AS created_at,
-                posts.user_owner_id AS user_owner_id
-            FROM posts
-            WHERE posts.user_owner_id = ?
+                users.id as id,
+                users.username as username,
+                users.biography_name as biography_name,
+                users.biography_content as biography_content,
+                users.biography_url as biography_url,
+                users.profile_img as profile_img,
+                users.created_at as created_at
+            FROM users
+            INNER JOIN comments ON comments.user_owner_id = users.id
+            WHERE comments.id = ?
         `;
 
-        const posts = await db.all(query, id);
+        const user = await db.get(query, id);
 
-        if (!posts) {
+        if (!user) {
             // Return a 404 Not Found if no reel is found for the given 'id'
-            return new NextResponse(JSON.stringify({ error: 'User Posts not found' }), {
+            return new NextResponse(JSON.stringify({ error: 'User not found' }), {
                 status: 404,
                 headers: {
                     'Content-Type': 'application/json'
@@ -51,7 +53,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
         }
 
         // Return the found reel with a 200 OK status
-        return new NextResponse(JSON.stringify(posts), {
+        return new NextResponse(JSON.stringify(user), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json'

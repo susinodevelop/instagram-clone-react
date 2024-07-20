@@ -34,7 +34,8 @@ CREATE TABLE posts (
   title varchar(255),
   url varchar(255),
   status varchar(255),
-  created_at timestamp
+  created_at timestamp,
+  user_owner_id integer
 );
 
 CREATE TABLE user_posts (
@@ -77,12 +78,12 @@ CREATE TABLE reel_tags (
 CREATE TABLE comments (
   id integer PRIMARY KEY,
   content varchar(255),
-  created_at timestamp
+  created_at timestamp,
+  user_owner_id integer
 );
 
 CREATE TABLE post_comments (
   id integer PRIMARY KEY,
-  user_id integer,
   post_id integer,
   comment_id integer
 );

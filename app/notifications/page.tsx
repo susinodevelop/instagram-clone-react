@@ -1,6 +1,6 @@
 'use client'
 import Sidebar from '@/components/Sidebar';
-import { fetchUser, fetchUserNotifications } from '@/services/UserService';
+import { getUser, getUserNotifications } from '@/services/UserService';
 import { Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
@@ -11,12 +11,12 @@ const Notifications: React.FC = () => {
 
     const fetchAndSetNotifications = async (): Promise<void> => {
         //TODO el id sacarlo del contexto despues de identificar al usuario
-        const retrievedNotifications: UserNotification[] = await fetchUserNotifications(1);
+        const retrievedNotifications: UserNotification[] = await getUserNotifications(1);
         setNotifications(retrievedNotifications);
 
         // Fetch users for the notifications
         const userIds = Array.from(new Set(retrievedNotifications.map(n => n.action_user_id)));
-        const usersData = await Promise.all(userIds.map(id => fetchUser(id)));
+        const usersData = await Promise.all(userIds.map(id => getUser(id)));
         const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
 
         setUsers(usersMap);

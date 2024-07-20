@@ -23,7 +23,8 @@ const ProfileImageContainer = styled.div`
 `;
 
 interface ProfileImageProps {
-    $borderColor?: string
+    $borderColor?: string;
+    $textColor?: string;
 }
 
 const ProfileImage = styled.img<ProfileImageProps>`
@@ -33,24 +34,28 @@ border-radius: 50%;
 border:  ${({ $borderColor }) => $borderColor ? `2px solid ${$borderColor}` : ''}; // Color del fondo de la imagen
 `;
 
-const UserName = styled.div`
+const UserName = styled.strong<ProfileImageProps>`
 max-width: 80px;
 overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap;
+color: ${({ $textColor }) => $textColor || 'black'};
 `;
 
 const ProfilePicture = (props: ProfilePictureProps) => {
+
     return (
         <UserProfileContainer className="flex flex-row">
-            <ProfileImageContainer>
+            <ProfileImageContainer className='mr-5'>
                 <ProfileImage
                     src={props.user.profile_img}
                     alt={`${props.user.username}'s profile`}
                     $borderColor={props.borderColor}
                 />
             </ProfileImageContainer >
-            <UserName>{props.user.username}</UserName>
+            <UserName $textColor={props.textColor}>
+                {props.user.username}
+            </UserName>
         </UserProfileContainer >
     );
 };

@@ -1,4 +1,5 @@
 interface ProfilePictureProps {
     user: User,
-    borderColor: string
+    borderColor: string,
+    textColor: string
 }

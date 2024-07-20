@@ -1,6 +1,6 @@
 'use client'
 import Sidebar from "@/components/Sidebar";
-import { fetchPosts } from "@/services/PostService";
+import { getAllPosts } from "@/services/PostService";
 import { Flex } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ const Explore: React.FC = () => {
     // TODO revisar o porque hay que metelo nunha funcion
     useEffect(() => {
         const fetchAndSetPosts = async () => {
-            const result = await fetchPosts()
+            const result = await getAllPosts()
             setPosts(result)
         }
 

@@ -1,6 +1,6 @@
 'use client'
 import Sidebar from '@/components/Sidebar';
-import { fetchUser, fetchUserPosts, fetchUserStories } from '@/services/UserService';
+import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import React, { useEffect, useState } from 'react';
 
 // TODO eliminar cuando funcione consulta a bbdd
@@ -53,18 +53,18 @@ const Profile: React.FC = () => {
 
     //TODO revisar el id que se le pasa aqui(debe obtenerse al autenticar usuario)
     const fetchAndSetUser = async (): Promise<void> => {
-        const retrievedUser: User = await fetchUser(1)
+        const retrievedUser: User = await getUser(1)
         setUser(retrievedUser)
     }
 
     const fetchAndSetUserPosts = async (): Promise<void> => {
-        const retrievedPosts: UserPost[] = await fetchUserPosts(1)
+        const retrievedPosts: UserPost[] = await getUserPosts(1)
         setUserPosts(retrievedPosts)
     }
 
     const fetchAndSetUserHighlights = async (): Promise<void> => {
         //TODO cambiar por fetch hightlights cuando lo haya
-        const retrievedStories: UserStory[] = await fetchUserStories(1)
+        const retrievedStories: UserStory[] = await getUserStories(1)
         setUserHighlights(retrievedStories)
     }
 

@@ -1,6 +1,6 @@
 'use client';
 import Sidebar from '@/components/Sidebar';
-import { fetchReel, fetchReels } from '@/services/ReelService';
+import { getReel, getAllReels } from '@/services/ReelService';
 import { Flex, Box, Image, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FaHeart, FaComment, FaPaperPlane, FaBookmark } from 'react-icons/fa';
@@ -10,10 +10,10 @@ const Reels: React.FC = () => {
 
     useEffect(() => {
         const fetchAndSetReels = async (): Promise<void> => {
-            const retrievedReels: Reel[] = await fetchReels();
+            const retrievedReels: Reel[] = await getAllReels();
 
             const promises = retrievedReels.map(async (retrievedReel): Promise<UserReel> => {
-                const reel: UserReel = await fetchReel(retrievedReel.id);
+                const reel: UserReel = await getReel(retrievedReel.id);
                 return reel;
             });
 
