@@ -20,7 +20,7 @@ export default function RootLayout({
       <head>
         <title>Instagram Clone</title>
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-black`}>
         <ChakraProvider>
           {children}
         </ChakraProvider>

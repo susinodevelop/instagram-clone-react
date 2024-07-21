@@ -1,17 +1,33 @@
 import { PostWithCommentsAndUsers } from '@/types/PostWithCommentsAndUsers';
-import React from 'react';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import ProfilePicture from './ProfilePicture';
 import { Image } from '@chakra-ui/react';
-import "@/styles/globals.css";
 import { timeAgo } from '@/utils/DateUtils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFaceSmile } from '@fortawesome/free-solid-svg-icons';
+import "@/styles/globals.css";
 
 interface AllCommentsViewProps {
+    actualUser: User,
     post: PostWithCommentsAndUsers
 }
 const AllCommentsView = (props: AllCommentsViewProps) => {
 
+    const [newComment, setNewComment] = useState<string>('')
+
+    const handleCommentInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setNewComment(event.target.value)
+    }
+
+    const saveNewComment = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault
+
+        //TODO guardar comentario nuevo
+
+    }
+
     return (
-        <div className="flex flex-row w-full mx-auto font-sans border border-gray-900 bg-black">
+        <div className="flex flex-row w-full mx-auto font-sans border border-gray-900">
             <Image className="h-[500px] w-[500px]" src={props.post.url} />
             <div className="p-4">
                 <div className="flex items-center mb-2">
@@ -47,8 +63,10 @@ const AllCommentsView = (props: AllCommentsViewProps) => {
                 <div className="text-gray-100 mb-4">
                     <p>Les gusta a <strong>username</strong> y <strong>personas más</strong></p>
                 </div>
-                <div className="border-t border-gray-400 pt-4">
-                    <input type="text" placeholder="Añade un comentario..." className="w-full border-none p-2 focus:outline-none bg-black" />
+                <div className="border-t border-t-gray-400 pt-4 w-full border-b border-b-gray-800 flex flex-row">
+                    <input type="text" placeholder="Añade un comentario..." onChange={handleCommentInputChange} className="w-full text-white p-2 focus:outline-none bg-black" />
+                    <button onClick={saveNewComment}><span className='text-blue-500'>Publicar</span></button>
+                    <button><FontAwesomeIcon icon={faFaceSmile} className="ml-1" /></button>
                 </div>
             </div>
         </div>

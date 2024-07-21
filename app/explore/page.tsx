@@ -31,7 +31,7 @@ const Explore: React.FC = () => {
                     <div key={index} style={{ position: 'relative' }}>
                         <img
                             src={post.url}
-                            alt={post.title}
+                            alt="Imagen" //TODO revisar
                             style={{ width: '100%', borderRadius: '10px' }}
                         />
                     </div>
