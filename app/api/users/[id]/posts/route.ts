@@ -29,7 +29,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
         const query = `
             SELECT 
                 posts.id AS id,
-                posts.title AS title,
+                posts.description AS description,
                 posts.url AS url,
                 posts.status AS status,
                 posts.created_at AS created_at,

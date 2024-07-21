@@ -31,7 +31,7 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
   id integer PRIMARY KEY,
-  title varchar(255),
+  description varchar(255),
   url varchar(255),
   status varchar(255),
   created_at timestamp,

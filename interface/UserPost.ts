@@ -1,6 +1,6 @@
 interface UserPost {
     id: number,
-    title: string,
+    description: string,
     url: string,
     status: string,
     created_at: string,

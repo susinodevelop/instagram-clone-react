@@ -23,8 +23,7 @@ const AllCommentsView = (props: AllCommentsViewProps) => {
                 <div className="flex flex-row items-center mb-4">
                     {/* TODO revisar y sacar los datos de la bbdd1 */}
                     <ProfilePicture user={props.post.owner} borderColor='red' />
-                    <strong className='text-white'>{props.post.owner.username}</strong>
-                    <p className='ml-2 text-gray-400'>Descripcion de la publicacion</p>
+                    <p className='ml-2 text-gray-400'><strong className='text-white'>{props.post.owner.username}</strong> {props.post.description}</p>
                 </div>
                 <div className="mb-4 h-80 overflow-y-auto no-scrollbar">
                     {
