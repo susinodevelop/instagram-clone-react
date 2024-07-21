@@ -132,7 +132,7 @@ const Feed = () => {
           <ModalBody>
             <p>This is the modal content.</p>
           </ModalBody> */}
-          {actualPost && <AllCommentsView post={actualPost} />}
+          {actualPost && <AllCommentsView actualUser={user} post={actualPost} />}
           {/* <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={handleShowAllComments}>
               Close
