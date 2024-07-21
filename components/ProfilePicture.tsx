@@ -5,6 +5,8 @@ const ProfileImageContainer = styled.div`
   position: relative;
   width: 50px;
   height: 50px;
+  min-width: 50px;
+  min-height: 50px;
   margin-bottom: 8px;
   border-radius: 50%;
   background: black;

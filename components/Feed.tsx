@@ -70,8 +70,9 @@ const Feed = () => {
     if (post.comments.length <= NUMBER_OF_VISIBLE_COMMENTS || !showAllComments) {
       return (
         <div>
+          <p className='text-gray-400 w-[500px]'><strong className='text-white'>{post.owner.username}</strong> {post.description}</p>
           <ul>
-            {post.comments.slice(-3).map((comment) => {
+            {post.comments.slice(-NUMBER_OF_VISIBLE_COMMENTS).map((comment) => {
               return (
                 <li key={comment.id} className="my-2">
                   <span className="font-bold">{user.username}  </span>
