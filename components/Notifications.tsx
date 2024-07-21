@@ -1,5 +1,4 @@
 'use client'
-import Sidebar from '@/components/Sidebar';
 import { getUser, getUserNotifications } from '@/services/UserService';
 import { Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -28,7 +27,6 @@ const Notifications: React.FC = () => {
 
     return (
         <Flex style={{ display: 'flex', backgroundColor: '#000', color: '#fff', minHeight: '100vh' }}>
-            <Sidebar showText={false} />
             <div className='flex flex-row w-full'>
                 <aside style={{ width: '300px', borderRight: '1px solid #333', padding: '20px' }}>
                     <h1>Notificaciones</h1>
@@ -52,13 +50,6 @@ const Notifications: React.FC = () => {
                         })
                     }
                 </aside>
-                <main style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <p>Tus mensajes</p>
-                        <p>Envía fotos y mensajes privados a un amigo o grupo</p>
-                        <button style={{ backgroundColor: '#0095f6', color: '#fff', padding: '10px 20px', border: 'none', borderRadius: '5px' }}>Enviar mensaje</button>
-                    </div>
-                </main>
             </div>
         </Flex>
     );

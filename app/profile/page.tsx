@@ -3,36 +3,6 @@ import Sidebar from '@/components/Sidebar';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import React, { useEffect, useState } from 'react';
 
-// TODO eliminar cuando funcione consulta a bbdd
-// const profile = {
-//     username: 'miperfil_gz',
-//     name: 'Susino Develop',
-//     bio: 'Software developer | Fitness | Travel',
-//     link: 'https://linktr.ee/miperfil_gz',
-//     followers: 474,
-//     following: 219,
-//     posts: 42,
-//     highlights: [
-//         { id: 1, name: 'Valencia ES', image: 'https://via.placeholder.com/50' },
-//         { id: 2, name: 'Ruta Oeste PFBS', image: 'https://via.placeholder.com/50' },
-//         { id: 3, name: 'Tenerife IC', image: 'https://via.placeholder.com/50' },
-//         { id: 4, name: 'Oporto PT', image: 'https://via.placeholder.com/50' },
-//         { id: 5, name: 'Malta MT', image: 'https://via.placeholder.com/50' },
-//         { id: 6, name: 'Marrakech MA', image: 'https://via.placeholder.com/50' },
-//         { id: 7, name: 'Varsovia PL', image: 'https://via.placeholder.com/50' }
-//     ],
-//     postsImages: [
-//         'https://via.placeholder.com/200',
-//         'https://via.placeholder.com/200',
-//         'https://via.placeholder.com/200',
-//         'https://via.placeholder.com/200',
-//         'https://via.placeholder.com/200',
-//         'https://via.placeholder.com/200',
-//         'https://via.placeholder.com/200',
-//         'https://via.placeholder.com/200'
-//     ]
-// };
-
 const Profile: React.FC = () => {
 
     //TODO meter esto en un contexto React (ver como funciona en Next Js 14)
@@ -81,7 +51,7 @@ const Profile: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                     <img src={user.profile_img} alt="profile" style={{ borderRadius: '50%', marginRight: '20px', width: '150px', height: '150px' }} />
                     <div>
-                        <h2>{user.username}</h2>
+                        <h2 className='font-bold text-2xl my-5'>{user.username}</h2>
                         <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
                         <button style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Ver archivo</button>
                         <button style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Herramientas de anuncios</button>

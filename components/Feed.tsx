@@ -1,5 +1,5 @@
 'use client';
-import { Box, Image, VStack, Text, Modal, ModalContent } from "@chakra-ui/react";
+import { Box, Image, VStack, Text, Modal, ModalContent, ModalOverlay } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getUser } from "@/services/UserService";
 import ProfilePicture from "./ProfilePicture";
@@ -101,7 +101,8 @@ const Feed = () => {
           <div key={post.id} className="list-none">
             <Box >
               <div className="flex flex-row p-4 rounded-lg shadow-md">
-                <ProfilePicture user={user} borderColor="red" textColor="white" />
+                <ProfilePicture user={user} borderColor="red" />
+                <Text className="flex items-center text-white font-bold">{post.owner.username}</Text>
                 <Text className="flex items-center text-gray-500 mt-1 ml-2" fontSize="sm">{`• ${timeAgo(post.created_at)}`}</Text>
               </div>
               {/* TODO crear endpoint para imagenes segun usuario */}
@@ -123,7 +124,7 @@ const Feed = () => {
         onClose={() => setShowAllComments(false)}
       >
         {/*TODO revisar, esta llamada a funcion esta mal */}
-        {/* <ModalOverlay /> */}
+        <ModalOverlay bg="blackAlpha.800" />
         <ModalContent>
           {/* <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />

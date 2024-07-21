@@ -1,8 +1,9 @@
 import { PostWithCommentsAndUsers } from '@/types/PostWithCommentsAndUsers';
 import React from 'react';
 import ProfilePicture from './ProfilePicture';
-import "@/styles/globals.css";
 import { Image } from '@chakra-ui/react';
+import "@/styles/globals.css";
+import { timeAgo } from '@/utils/DateUtils';
 
 interface AllCommentsViewProps {
     post: PostWithCommentsAndUsers
@@ -14,13 +15,15 @@ const AllCommentsView = (props: AllCommentsViewProps) => {
             <Image className="h-[500px] w-[500px]" src={props.post.url} />
             <div className="p-4">
                 <div className="flex items-center mb-2">
-                    <ProfilePicture user={props.post.owner} borderColor='red' textColor='white' />
+                    <ProfilePicture user={props.post.owner} borderColor='red' />
+                    <strong className='text-white'>{props.post.owner.username}</strong>
                 </div>
 
                 <hr className='my-5' />
                 <div className="flex flex-row items-center mb-4">
                     {/* TODO revisar y sacar los datos de la bbdd1 */}
-                    <ProfilePicture user={props.post.owner} borderColor='red' textColor='white' />
+                    <ProfilePicture user={props.post.owner} borderColor='red' />
+                    <strong className='text-white'>{props.post.owner.username}</strong>
                     <p className='ml-2 text-gray-400'>Descripcion de la publicacion</p>
                 </div>
                 <div className="mb-4 h-80 overflow-y-auto no-scrollbar">
@@ -29,8 +32,14 @@ const AllCommentsView = (props: AllCommentsViewProps) => {
 
                             return (
                                 <div key={comment.id} className='flex flex-row items-center h-20'>
-                                    <ProfilePicture user={comment.user} borderColor='red' textColor='white' />
-                                    <p className='ml-2 text-gray-400'>{comment.content}</p>
+                                    <ProfilePicture user={comment.user} borderColor='red' />
+                                    <div className='flex flex-col'>
+                                        <div className='flex flex-row'>
+                                            <strong className='text-white'>{comment.user.username}</strong>
+                                            <p className='ml-2 text-gray-400'>{comment.content}</p>
+                                        </div>
+                                        <p className='text-gray-400 text-xs mt-2'>{timeAgo(comment.created_at)}</p>
+                                    </div>
                                 </div>
                             )
                         })
