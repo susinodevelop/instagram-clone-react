@@ -27,7 +27,7 @@ const AllCommentsView = (props: AllCommentsViewProps) => {
     }
 
     return (
-        <div className="flex flex-row w-full mx-auto font-sans border border-gray-900 bg-black">
+        <div className="flex flex-row w-full mx-auto font-sans border border-gray-900">
             <Image className="h-[500px] w-[500px]" src={props.post.url} />
             <div className="p-4">
                 <div className="flex items-center mb-2">

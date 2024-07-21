@@ -63,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ showText = true }) => {
   }
 
   return (
-    <Box as="nav" width={calculateWidth()} padding="20px" bg="black" color="white" height="100vh" className="flex flex-row">
+    <Box as="nav" width={calculateWidth()} padding="20px" color="white" className="flex flex-row fixed t-0 l-0">
       <VStack spacing="20px" align="start" >
         <Link href="/"><Icon as={FaInstagram} boxSize="10" /></Link>
         <Link href="/"><Icon as={FaHome} boxSize="6" />  {showText ? "Inicio" : ""}</Link>
