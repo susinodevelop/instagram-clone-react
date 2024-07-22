@@ -107,7 +107,15 @@ const Feed = () => {
                 <Text className="flex items-center text-gray-500 mt-1 ml-2" fontSize="sm">{`• ${timeAgo(post.created_at)}`}</Text>
               </div>
               {/* TODO crear endpoint para imagenes segun usuario */}
-              <Image className="h-[500px] w-[500px]" src={post.url} />
+              <div className="flex justify-center mb-[25px] border border-gray-900 bg-black max-h-[500px] max-w-[500px]">
+                <Image
+                  src={post.url}
+                  alt="Image post"
+                  objectFit="cover"
+                  maxWidth="500px"
+                  maxHeight="500px"
+                />
+              </div>
               <div>Le gusta a .... y mas</div> {/*TODO revisar*/}
               <div>
                 {showComments(post)}

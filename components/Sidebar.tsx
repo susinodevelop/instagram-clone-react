@@ -73,7 +73,7 @@ const Sidebar: React.FC = () => {
   }
 
   return (
-    <Box as="nav" width={calculateWidth()} padding="20px" color="white" className="flex fixed t-0 l-0 w-1/3">
+    <Box as="nav" zIndex="100000" width={calculateWidth()} padding="20px" color="white" className="flex fixed t-0 l-0 w-1/3">
       <VStack spacing="20px" align="start" >
         <Link href="/"><Icon as={FaInstagram} boxSize="10" /></Link>
         <Link href="/"><Icon as={FaHome} boxSize="6" />  {isShowText ? "Inicio" : ""}</Link>
@@ -90,9 +90,9 @@ const Sidebar: React.FC = () => {
         <Link href="/profile"><Icon as={FaUserCircle} boxSize="6" /> {isShowText ? "Perfil" : ""}</Link>
       </VStack>
       <div className="ml-[50px]">
-      {showNotifications && <Notifications />}
-      {showSearch && <Search />}
-      {showMessages && <ShowMessages />}
+        {showNotifications && <Notifications />}
+        {showSearch && <Search />}
+        {showMessages && <ShowMessages />}
       </div>
     </Box>
   );
