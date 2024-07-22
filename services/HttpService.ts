@@ -1,6 +1,8 @@
+const isServer = typeof window === 'undefined';
+const baseURL = isServer ? process.env.NEXT_PUBLIC_API_URL : '';
 
 export const useGET = async <T>(url: string): Promise<T> => {
-    const response = await fetch(url);
+    const response = await fetch(`${baseURL}${url}`);
     if (!response.ok) {
         throw new Error(`Failed to GET ${url}`);
     }
@@ -25,7 +27,7 @@ export const usePOST = async <T>(props: PostProps): Promise<T> => {
     const { pathParams = {}, queryParams = {}, bodyParams = {} } = props;
 
     // Plantilla de URL
-    let urlTemplate = props.url;
+    let urlTemplate = `${baseURL}${props.url}`;
 
     // Reemplazar los placeholders en pathParams
     Object.keys(pathParams).forEach(key => {
@@ -73,7 +75,7 @@ export const usePUT = async <T>(props: PutProps): Promise<T> => {
     const { pathParams = {}, queryParams = {}, bodyParams = {} } = props;
 
     // Plantilla de URL
-    let urlTemplate = props.url;
+    let urlTemplate = `${baseURL}${props.url}`;
 
     // Reemplazar los placeholders en pathParams
     Object.keys(pathParams).forEach(key => {
@@ -120,7 +122,7 @@ export const usePATCH = async <T>(props: PatchProps): Promise<T> => {
     const { pathParams = {}, queryParams = {}, bodyParams = {} } = props;
 
     // Plantilla de URL
-    let urlTemplate = props.url;
+    let urlTemplate = `${baseURL}${props.url}`;
 
     // Reemplazar los placeholders en pathParams
     Object.keys(pathParams).forEach(key => {
@@ -157,7 +159,7 @@ export const usePATCH = async <T>(props: PatchProps): Promise<T> => {
 };
 
 export const useDELETE = async <T>(url: string): Promise<T> => {
-    const response = await fetch(url);
+    const response = await fetch(`${baseURL}${url}`);
     if (!response.ok) {
         throw new Error(`Failed to DELETE ${url}`);
     }

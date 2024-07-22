@@ -12,15 +12,12 @@ import Search from "./Search";
 import ShowMessages from "./ShowMessages";
 import { usePathname, useRouter } from "next/navigation";
 
-export interface SidebarProps {
-  showText?: boolean
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ showText = true }) => {
+const Sidebar: React.FC = () => {
 
   const pathname = usePathname()
   const router = useRouter()
 
+  const [isShowText, setIsShowText] = useState<boolean>(true)
   const [showNotifications, setShowNotifications] = useState<boolean>(false)
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [showMessages, setShowMessages] = useState<boolean>(false)
@@ -28,11 +25,24 @@ const Sidebar: React.FC<SidebarProps> = ({ showText = true }) => {
   useEffect(() => {
     if (pathname === '/messages') {
       setShowMessages(true)
-      showText = false
+      setIsShowText(true)
     } else {
       setShowMessages(false)
     }
   }, [pathname])
+
+  useEffect(() => {
+    showText()
+  }, [showNotifications, showSearch, showMessages])
+
+  //TODO las variables estas meterlas en un contexto react
+  const showText = () => {
+    if (showNotifications || showSearch || showMessages) {
+      setIsShowText(false)
+    } else {
+      setIsShowText(true)
+    }
+  }
 
   const handleNotifications = () => {
     setShowNotifications(!showNotifications)
@@ -63,25 +73,27 @@ const Sidebar: React.FC<SidebarProps> = ({ showText = true }) => {
   }
 
   return (
-    <Box as="nav" width={calculateWidth()} padding="20px" color="white" className="flex flex-row fixed t-0 l-0">
+    <Box as="nav" width={calculateWidth()} padding="20px" color="white" className="flex fixed t-0 l-0 w-1/3">
       <VStack spacing="20px" align="start" >
         <Link href="/"><Icon as={FaInstagram} boxSize="10" /></Link>
-        <Link href="/"><Icon as={FaHome} boxSize="6" />  {showText ? "Inicio" : ""}</Link>
-        <Button variant="unstyled" onClick={handleSearch} ><Icon as={FaSearch} boxSize="6" />{showText ? "Búsqueda" : ""}</Button>
-        <Link href="/explore"><Icon as={FaCompass} boxSize="6" /> {showText ? "Explorar" : ""}</Link>
-        <Link href="/reels"><Icon as={TfiVideoClapper} boxSize="6" /> {showText ? "Reels" : ""}</Link>
+        <Link href="/"><Icon as={FaHome} boxSize="6" />  {isShowText ? "Inicio" : ""}</Link>
+        <Button variant="unstyled" onClick={handleSearch} ><Icon as={FaSearch} boxSize="6" />{isShowText ? "Búsqueda" : ""}</Button>
+        <Link href="/explore"><Icon as={FaCompass} boxSize="6" /> {isShowText ? "Explorar" : ""}</Link>
+        <Link href="/reels"><Icon as={TfiVideoClapper} boxSize="6" /> {isShowText ? "Reels" : ""}</Link>
 
         <Button variant="unstyled" onClick={handleShowMessages}>
-          <Icon as={SlPaperPlane} boxSize="6" /> {showText ? "Mensajes" : ""}
+          <Icon as={SlPaperPlane} boxSize="6" /> {isShowText ? "Mensajes" : ""}
         </Button>
 
-        <Button variant="unstyled" onClick={handleNotifications} ><Icon as={AiTwotoneHeart} boxSize="6" />{showText ? "Notificaciones" : ""}</Button>
-        <CreateButton showText={showText}></CreateButton>
-        <Link href="/profile"><Icon as={FaUserCircle} boxSize="6" /> {showText ? "Perfil" : ""}</Link>
+        <Button variant="unstyled" onClick={handleNotifications} ><Icon as={AiTwotoneHeart} boxSize="6" />{isShowText ? "Notificaciones" : ""}</Button>
+        <CreateButton showText={isShowText}></CreateButton>
+        <Link href="/profile"><Icon as={FaUserCircle} boxSize="6" /> {isShowText ? "Perfil" : ""}</Link>
       </VStack>
+      <div className="ml-[50px]">
       {showNotifications && <Notifications />}
       {showSearch && <Search />}
       {showMessages && <ShowMessages />}
+      </div>
     </Box>
   );
 };

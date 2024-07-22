@@ -1,26 +1,18 @@
-'use client'
-import Sidebar from "@/components/Sidebar";
 import { getAllPosts } from "@/services/PostService";
 import { Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-const Explore: React.FC = () => {
+export const metadata = {
+    title: 'Explorar',
+    description: 'Página de búsqueda de posts',
+}
 
-    const [posts, setPosts] = useState<Post[]>([])
+const Explore: React.FC = async () => {
 
-    // TODO revisar o porque hay que metelo nunha funcion
-    useEffect(() => {
-        const fetchAndSetPosts = async () => {
-            const result = await getAllPosts()
-            setPosts(result)
-        }
-
-        fetchAndSetPosts()
-    }, [])
+    const posts = await getAllPosts()
 
     return (
-        <Flex style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh', padding: '20px' }}>
-            <Sidebar />
+        <Flex style={{ color: '#fff', minHeight: '100vh', padding: '20px' }}>
             <h1>Galería</h1>
             <div style={{
                 display: 'grid',
