@@ -1,27 +1,15 @@
-'use client'
 import { getAllPosts } from "@/services/PostService";
 import { Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-//TODO separar los use effects en componentes y hacer la pagina server component
-// export const metadata = {
-//     title: 'Explorar',
-//     description: 'Página de búsqueda de posts',
-// }
+export const metadata = {
+    title: 'Explorar',
+    description: 'Página de búsqueda de posts',
+}
 
-const Explore: React.FC = () => {
+const Explore: React.FC = async () => {
 
-    const [posts, setPosts] = useState<Post[]>([])
-
-    // TODO revisar o porque hay que metelo nunha funcion
-    useEffect(() => {
-        const fetchAndSetPosts = async () => {
-            const result = await getAllPosts()
-            setPosts(result)
-        }
-
-        fetchAndSetPosts()
-    }, [])
+    const posts = await getAllPosts()
 
     return (
         <Flex style={{ color: '#fff', minHeight: '100vh', padding: '20px' }}>

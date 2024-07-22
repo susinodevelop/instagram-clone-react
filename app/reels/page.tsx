@@ -1,33 +1,28 @@
-'use client';
 import { getReel, getAllReels } from '@/services/ReelService';
-import { Flex, Box, Image, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Box, Image, Text } from '@chakra-ui/react';
+import type { Metadata } from 'next';
+import React from 'react';
 import { FaHeart, FaComment, FaPaperPlane, FaBookmark } from 'react-icons/fa';
 
-//TODO separar los use effects en componentes y hacer la pagina server component
-// export const metadata = {
-//     title: 'Reels',
-//     description: 'Página de reels',
-// }
+export const metadata: Metadata = {
+    title: 'Reels',
+    description: 'Página de reels',
+}
 
-const Reels: React.FC = () => {
-    const [reels, setReels] = useState<UserReel[]>([]);
+const Reels: React.FC = async () => {
 
-    useEffect(() => {
-        const fetchAndSetReels = async (): Promise<void> => {
-            const retrievedReels: Reel[] = await getAllReels();
+    const getReels = async (): Promise<UserReel[]> => {
+        const retrievedReels: Reel[] = await getAllReels();
 
-            const promises = retrievedReels.map(async (retrievedReel): Promise<UserReel> => {
-                const reel: UserReel = await getReel(retrievedReel.id);
-                return reel;
-            });
+        const promises = retrievedReels.map(async (retrievedReel): Promise<UserReel> => {
+            const reel: UserReel = await getReel(retrievedReel.id);
+            return reel;
+        });
 
-            const mappedReels: UserReel[] = await Promise.all(promises);
-            setReels(mappedReels);
-        };
+        return await Promise.all(promises);
+    };
 
-        fetchAndSetReels();
-    }, []);
+    const reels = await getReels()
 
     return (
         <Box flex="1" display="flex" flexDirection="column" alignItems="center" gap="20px" color="#fff">
