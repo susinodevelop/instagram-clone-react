@@ -1,52 +1,24 @@
-'use client'
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-//TODO separar los use effects en componentes y hacer la pagina server component
-// export const metadata = {
-//     title: 'Perfil',
-//     description: 'Página de perfil',
-// }
+export const metadata = {
+    title: 'Perfil',
+    description: 'Página de perfil',
+}
 
-const Profile: React.FC = () => {
-    // TODO: meter esto en un contexto React (ver como funciona en Next.js 14)
-    const [user, setUser] = useState<User>({
-        id: 1,
-        username: "",
-        biography_name: "",
-        biography_content: "",
-        biography_url: "",
-        profile_img: "",
-        created_at: ""
-    });
+const Profile: React.FC = async () => {
+    // TODO: meter el user id en contexto react cuando se añada autenticacion
+    const userId = 1
 
-    const [userPosts, setUserPosts] = useState<UserPost[]>([]);
-    // TODO: cambiar story por Highlight (crear en bbdd)
-    const [userHightlights, setUserHighlights] = useState<UserStory[]>([]);
+    const user: User = await getUser(userId)
+
+    const userPosts: UserPost[] = await getUserPosts(userId)
+
+    //TODO cambiar la peticion a las highlights cuando estén listas
+    const userHighlights: UserStory[] = await getUserStories(userId)
 
     // TODO: revisar el id que se le pasa aqui(debe obtenerse al autenticar usuario)
-    const fetchAndSetUser = async (): Promise<void> => {
-        const retrievedUser: User = await getUser(1);
-        setUser(retrievedUser);
-    };
-
-    const fetchAndSetUserPosts = async (): Promise<void> => {
-        const retrievedPosts: UserPost[] = await getUserPosts(1);
-        setUserPosts(retrievedPosts);
-    };
-
-    const fetchAndSetUserHighlights = async (): Promise<void> => {
-        // TODO: cambiar por fetch hightlights cuando lo haya
-        const retrievedStories: UserStory[] = await getUserStories(1);
-        setUserHighlights(retrievedStories);
-    };
-
-    useEffect(() => {
-        fetchAndSetUser();
-        fetchAndSetUserPosts();
-        fetchAndSetUserHighlights();
-    }, []);
 
     return (
         <Box className="mr-10 flex flex-col p-8 w-2/3 justify-center">
@@ -69,7 +41,7 @@ const Profile: React.FC = () => {
                     <a href={user.biography_url} style={{ color: '#0095f6', textDecoration: 'none' }}>{user.biography_url}</a>
                 </div>
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
-                    {userHightlights.map(highlight => (
+                    {userHighlights.map(highlight => (
                         <div key={highlight.id} style={{ marginRight: '10px', textAlign: 'center' }}>
                             <img src={highlight.miniature_url} alt={highlight.title} style={{ width: '60px', height: '60px', borderRadius: '50%', marginBottom: '5px' }} />
                             <p style={{ fontSize: '12px' }}>{highlight.title}</p>
