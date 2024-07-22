@@ -1,8 +1,9 @@
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
+import type { Metadata } from 'next';
 import React from 'react';
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'Perfil',
     description: 'Página de perfil',
 }

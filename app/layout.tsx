@@ -18,9 +18,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <head>
-        <title>Instagram Clone</title>
-      </head>
       <body className={`${inter.className} bg-black`}>
         <ChakraProvider>
           <div className="w-screen flex flex-row ">
