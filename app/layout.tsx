@@ -18,13 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} bg-black`}>
+      <body className={`${inter.className} bg-black text-white`}>
         <ChakraProvider>
           <div className="w-screen flex flex-row ">
-          <Sidebar />
-          <Box className="w-2/3 ml-[33.333333%]">
-          {children}
-          </Box>
+            <Sidebar />
+            <Box className="w-2/3 ml-[33.333333%]">
+              {children}
+            </Box>
           </div>
         </ChakraProvider>
       </body>

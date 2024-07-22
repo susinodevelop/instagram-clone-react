@@ -1,3 +1,4 @@
+import PostGrid from '@/components/PostsGrid';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
 import type { Metadata } from 'next';
@@ -56,11 +57,7 @@ const Profile: React.FC = async () => {
                         <span style={{ cursor: 'pointer' }}>GUARDADAS</span>
                         <span style={{ cursor: 'pointer' }}>ETIQUETADAS</span>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-                        {Array.isArray(userPosts) && userPosts.map((post, index) => (
-                            <img key={index} src={post.url} alt={`post-${index}`} style={{ width: '100%' }} />
-                        ))}
-                    </div>
+                    <PostGrid posts={userPosts} width='250px' height='250px' />
                 </div>
             </div>
         </Box>

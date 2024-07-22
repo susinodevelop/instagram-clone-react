@@ -25,11 +25,21 @@ const Reels: React.FC = async () => {
     const reels = await getReels()
 
     return (
-        <Box flex="1" display="flex" flexDirection="column" alignItems="center" gap="20px" color="#fff">
+        <Box
+            position="absolute"
+            left="0"
+            top="0"
+            width="100%"
+            display="flex"
+            flexDirection="column"
+            gap="20px"
+            alignItems="center"
+        >
             <Text as="h1">Reels</Text>
             {reels.map((reel, index) => (
-                <Box key={index} width="300px" position="relative">
-                    <Image src={reel.reel_url} alt="reel" width="100%" borderRadius="10px" />
+                <div key={index} className='w-[350px] p-[16px]'>
+                    <Box position="relative">
+                    <Image src={reel.reel_url} alt="reel" width="100%" height="605" borderRadius="10px" objectFit="cover"/>
                     <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
                         <Image src={reel.reel_url} alt={reel.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
                         <Text>{reel.username} • Seguir</Text>
@@ -45,7 +55,9 @@ const Reels: React.FC = async () => {
                         <FaPaperPlane />
                         <FaBookmark />
                     </Box>
+                    
                 </Box>
+                </div>
             ))}
         </Box>
     );
