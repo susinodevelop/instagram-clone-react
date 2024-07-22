@@ -26,13 +26,13 @@ INSERT INTO user_posts (id, user_id, post_id) VALUES
 
 -- Insert data into reels
 INSERT INTO reels (id, url, title, status, created_at) VALUES
-(1, 'https://images.pexels.com/photos/433989/pexels-photo-433989.jpeg', 'First Reel', 'active', '2024-01-05 14:00:00'),
-(2, 'https://images.pexels.com/photos/433989/pexels-photo-433989.jpeg', 'Second Reel', 'active', '2024-01-06 15:00:00'),
-(3, 'https://images.pexels.com/photos/567567/pexels-photo-567567.jpeg', 'Third Reel', 'active', '2024-01-20 15:00:00'),
-(4, 'https://images.pexels.com/photos/678678/pexels-photo-678678.jpeg', 'Fourth Reel', 'active', '2024-01-21 16:00:00'),
-(5, 'https://images.pexels.com/photos/789789/pexels-photo-789789.jpeg', 'Fifth Reel', 'active', '2024-01-22 17:00:00'),
-(6, 'https://images.pexels.com/photos/890890/pexels-photo-890890.jpeg', 'Sixth Reel', 'active', '2024-01-23 18:00:00'),
-(7, 'https://images.pexels.com/photos/901901/pexels-photo-901901.jpeg', 'Seventh Reel', 'active', '2024-01-24 19:00:00');
+(1, 'https://3vncmxpbop8djord.public.blob.vercel-storage.com/reel_city-j2zBPny7f3HSsGlMZc3TbNzuFx6JjG.mp4', 'First Reel', 'active', '2024-01-05 14:00:00'),
+(2, 'https://3vncmxpbop8djord.public.blob.vercel-storage.com/reel_heart-h9eTIYaUlIppukR3Yj6m28FaTZB7Kd.mp4', 'Second Reel', 'active', '2024-01-06 15:00:00'),
+(3, 'https://3vncmxpbop8djord.public.blob.vercel-storage.com/reel_mexican-4zXyuBpSrmrxQHAKgNbHsszzD6Floe.mp4', 'Third Reel', 'active', '2024-01-20 15:00:00'),
+(4, 'https://3vncmxpbop8djord.public.blob.vercel-storage.com/reel_road-l04xvOFbPR6EgTc3cmNNEy4XUx0pPb.mp4', 'Fourth Reel', 'active', '2024-01-21 16:00:00'),
+(5, 'https://3vncmxpbop8djord.public.blob.vercel-storage.com/reel_sunshine-zQRBjoSv2sdc80UmCtT7ZowwPCihpo.mp4', 'Fifth Reel', 'active', '2024-01-22 17:00:00'),
+(6, 'https://3vncmxpbop8djord.public.blob.vercel-storage.com/reel_city-j2zBPny7f3HSsGlMZc3TbNzuFx6JjG.mp4', 'Sixth Reel', 'active', '2024-01-23 18:00:00'),
+(7, 'https://3vncmxpbop8djord.public.blob.vercel-storage.com/reel_heart-h9eTIYaUlIppukR3Yj6m28FaTZB7Kd.mp4', 'Seventh Reel', 'active', '2024-01-24 19:00:00');
 
 
 -- Insert data into user_reels
