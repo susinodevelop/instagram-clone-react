@@ -1,8 +1,13 @@
 'use client'
-import Sidebar from "@/components/Sidebar";
 import { getAllPosts } from "@/services/PostService";
 import { Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+
+//TODO separar los use effects en componentes y hacer la pagina server component
+// export const metadata = {
+//     title: 'Explorar',
+//     description: 'Página de búsqueda de posts',
+// }
 
 const Explore: React.FC = () => {
 
@@ -19,8 +24,7 @@ const Explore: React.FC = () => {
     }, [])
 
     return (
-        <Flex style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh', padding: '20px' }}>
-            <Sidebar />
+        <Flex style={{ color: '#fff', minHeight: '100vh', padding: '20px' }}>
             <h1>Galería</h1>
             <div style={{
                 display: 'grid',

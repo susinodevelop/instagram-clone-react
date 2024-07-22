@@ -1,11 +1,16 @@
 'use client'
-import Sidebar from '@/components/Sidebar';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
+import { Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
-const Profile: React.FC = () => {
+//TODO separar los use effects en componentes y hacer la pagina server component
+// export const metadata = {
+//     title: 'Perfil',
+//     description: 'Página de perfil',
+// }
 
-    //TODO meter esto en un contexto React (ver como funciona en Next Js 14)
+const Profile: React.FC = () => {
+    // TODO: meter esto en un contexto React (ver como funciona en Next.js 14)
     const [user, setUser] = useState<User>({
         id: 1,
         username: "",
@@ -14,69 +19,55 @@ const Profile: React.FC = () => {
         biography_url: "",
         profile_img: "",
         created_at: ""
-    })
+    });
 
-    const [userPosts, setUserPosts] = useState<UserPost[]>([])
-    // TODO cambiar story por Highlight (crear en bbdd)
-    const [userHightlights, setUserHighlights] = useState<UserStory[]>([])
+    const [userPosts, setUserPosts] = useState<UserPost[]>([]);
+    // TODO: cambiar story por Highlight (crear en bbdd)
+    const [userHightlights, setUserHighlights] = useState<UserStory[]>([]);
 
-
-    //TODO revisar el id que se le pasa aqui(debe obtenerse al autenticar usuario)
+    // TODO: revisar el id que se le pasa aqui(debe obtenerse al autenticar usuario)
     const fetchAndSetUser = async (): Promise<void> => {
-        const retrievedUser: User = await getUser(1)
-        setUser(retrievedUser)
-    }
+        const retrievedUser: User = await getUser(1);
+        setUser(retrievedUser);
+    };
 
     const fetchAndSetUserPosts = async (): Promise<void> => {
-        const retrievedPosts: UserPost[] = await getUserPosts(1)
-        setUserPosts(retrievedPosts)
-    }
+        const retrievedPosts: UserPost[] = await getUserPosts(1);
+        setUserPosts(retrievedPosts);
+    };
 
     const fetchAndSetUserHighlights = async (): Promise<void> => {
-        //TODO cambiar por fetch hightlights cuando lo haya
-        const retrievedStories: UserStory[] = await getUserStories(1)
-        setUserHighlights(retrievedStories)
-    }
+        // TODO: cambiar por fetch hightlights cuando lo haya
+        const retrievedStories: UserStory[] = await getUserStories(1);
+        setUserHighlights(retrievedStories);
+    };
 
     useEffect(() => {
-        fetchAndSetUser()
-        fetchAndSetUserPosts()
-        fetchAndSetUserHighlights()
-    }, [])
+        fetchAndSetUser();
+        fetchAndSetUserPosts();
+        fetchAndSetUserHighlights();
+    }, []);
 
     return (
-        <div style={{ display: 'flex', backgroundColor: '#000', color: '#fff', minHeight: '100vh' }}>
-            <Sidebar />
-            <main style={{ flex: 1, padding: '20px' }}>
+        <Box className="mr-10 flex flex-col p-8 w-2/3 justify-center">
+            <div className='flex flex-col '>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                     <img src={user.profile_img} alt="profile" style={{ borderRadius: '50%', marginRight: '20px', width: '150px', height: '150px' }} />
                     <div>
-                        <h2 className='font-bold text-2xl my-5'>{user.username}</h2>
+                        <h2 className="font-bold text-2xl my-5">{user.username}</h2>
                         <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
-                        <button style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Ver archivo</button>
+                        <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Ver archivo</button>
                         <button style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Herramientas de anuncios</button>
                     </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                     <p style={{ marginRight: '20px' }}><strong>{userPosts.length}</strong> publicaciones</p>
-                    {/* <p style={{ marginRight: '20px' }}><strong>{profile.followers}</strong> seguidores</p> */}
-                    {/* <p><strong>{profile.following}</strong> seguidos</p> */}
                 </div>
                 <div style={{ marginBottom: '20px' }}>
                     <h3>{user.biography_name}</h3>
                     <p>{user.biography_content}</p>
                     <a href={user.biography_url} style={{ color: '#0095f6', textDecoration: 'none' }}>{user.biography_url}</a>
                 </div>
-                {/* 
-                TODO en vez de usar stories usar highlights
-                <div style={{ display: 'flex', marginBottom: '20px' }}>
-                    {profile.highlights.map(highlight => (
-                        <div key={highlight.id} style={{ marginRight: '10px', textAlign: 'center' }}>
-                            <img src={highlight.image} alt={highlight.name} style={{ width: '60px', height: '60px', borderRadius: '50%', marginBottom: '5px' }} />
-                            <p style={{ fontSize: '12px' }}>{highlight.name}</p>
-                        </div>
-                    ))}
-                </div> */}
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
                     {userHightlights.map(highlight => (
                         <div key={highlight.id} style={{ marginRight: '10px', textAlign: 'center' }}>
@@ -98,8 +89,8 @@ const Profile: React.FC = () => {
                         ))}
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </Box>
     );
 }
 
