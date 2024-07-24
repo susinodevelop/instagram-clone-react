@@ -25,7 +25,7 @@ const Feed = () => {
     created_at: "default"
   }) //TODO revisar
 
-  const users = new Map<number, User>()
+  const [users, setUsers] = useState<Map<number, User>>(new Map<number, User>())
 
   const getUserFromMap = async (id: number): Promise<User> => {
     let user: User;
@@ -47,8 +47,8 @@ const Feed = () => {
 
     const postsWithCommentsAndUsers = await Promise.all(
       posts.map(async (post) => {
-        
-        const postOwner = await getUserFromMap(post.user_owner_id)        
+
+        const postOwner = await getUserFromMap(post.user_owner_id)
         const comments: Comment[] = await getPostComments(post.id)
 
 
@@ -68,7 +68,7 @@ const Feed = () => {
   useEffect(() => {
     fetchAndSetUser()
     fetchAndSetPosts()
-    
+
   }, [])
 
   //TODO revisar el estado a true
