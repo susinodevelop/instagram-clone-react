@@ -9,11 +9,11 @@ interface PostGridProps {
 const PostGrid = (props: PostGridProps) => {
     return (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '5px' }}>
-            {Array.isArray(props.posts) && props.posts.map((post, index) => (
+            {Array.isArray(props.posts) && props.posts.map((post) => (
                 <Image
-                    key={index}
+                    key={post.id}
                     src={post.url}
-                    alt={`post-${index}`}
+                    alt={`post-${post.id}`}
                     width={props.width}
                     height={props.height}
                     objectFit="cover"
