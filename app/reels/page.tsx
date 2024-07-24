@@ -12,20 +12,20 @@ export const metadata: Metadata = {
 
 const Reels: React.FC = async () => {
 
-    const getReels = async (): Promise<ReelUser[]> => {
+    const users = new Map<number, User>()
 
-        const users = new Map<number, User>()
-
-        const getUserFromMap = async (id: number): Promise<User> => {
-            let user: User;
-            if (users.has(id)) {
-                user = users.get(id) as User
-            } else {
-                user = await getUser(id);
-                users.set(user.id, user)
-            }
-            return user
+    const getUserFromMap = async (id: number): Promise<User> => {
+        let user: User;
+        if (users.has(id)) {
+            user = users.get(id) as User
+        } else {
+            user = await getUser(id);
+            users.set(user.id, user)
         }
+        return user
+    }
+
+    const getReels = async (): Promise<ReelUser[]> => {
 
         const retrievedReels: Reel[] = await getAllReels();
 
