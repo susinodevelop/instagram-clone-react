@@ -1,6 +1,6 @@
 'use client';
 import { Box, Image, VStack, Text, Modal, ModalContent, ModalOverlay } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { getUser } from "@/services/UserService";
 import ProfilePicture from "./ProfilePicture";
 import { getAllPosts, getPostComments } from "@/services/PostService";
@@ -25,6 +25,19 @@ const Feed = () => {
     created_at: "default"
   }) //TODO revisar
 
+  const users = new Map<number, User>()
+
+  const getUserFromMap = async (id: number): Promise<User> => {
+    let user: User;
+    if (users.has(id)) {
+      user = users.get(id) as User
+    } else {
+      user = await getUser(id);
+      users.set(user.id, user)
+    }
+    return user
+  }
+
   const fetchAndSetUser = async () => {
     setUser(await getUser(1))
   }
@@ -34,27 +47,28 @@ const Feed = () => {
 
     const postsWithCommentsAndUsers = await Promise.all(
       posts.map(async (post) => {
-        const comments: Comment[] = await getPostComments(post.id);
+        
+        const postOwner = await getUserFromMap(post.user_owner_id)        
+        const comments: Comment[] = await getPostComments(post.id)
+
 
         const commentsWithUsers = await Promise.all(
           comments.map(async (comment) => {
-            const user: User = await getUser(comment.user_owner_id);
-            return { ...comment, user };
+            const commentOwner = await getUserFromMap(comment.user_owner_id)
+            return { ...comment, user: commentOwner };
           })
         );
 
-        const owner = await getUser(post.user_owner_id)
-
-        return { ...post, comments: commentsWithUsers, owner: owner };
+        return { ...post, comments: commentsWithUsers, owner: postOwner };
       })
     );
-
     setPosts(postsWithCommentsAndUsers);
   };
 
   useEffect(() => {
     fetchAndSetUser()
     fetchAndSetPosts()
+    
   }, [])
 
   //TODO revisar el estado a true
