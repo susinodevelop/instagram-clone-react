@@ -49,13 +49,8 @@ CREATE TABLE reels (
   url varchar(255),
   title varchar(255),
   status varchar(255),
-  created_at timestamp
-);
-
-CREATE TABLE user_reels (
-  id integer PRIMARY KEY,
-  user_id integer,
-  reel_id integer
+  created_at timestamp,
+  user_owner_id integer
 );
 
 CREATE TABLE tags (

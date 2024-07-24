@@ -28,15 +28,13 @@ export async function GET(request: Request, { params }: HandlerArgs) {
 
         const query = `
             SELECT 
-                reels.id as reel_id,
-                reels.title as reel_title,
-                reels.url as reel_url,
-                reels.status as reel_status,
-                users.username as username,
-                users.profile_img as user_profile_img
+                reels.id as id,
+                reels.title as title,
+                reels.url as url,
+                reels.status as status,
+                reels.created_at as created_at,
+                users.user_owner_id as user_owner_id
             FROM reels
-            INNER JOIN user_reels ON reels.id = user_reels.reel_id
-            INNER JOIN users ON user_reels.user_id = users.id
             WHERE reels.id = ?
         `;
 

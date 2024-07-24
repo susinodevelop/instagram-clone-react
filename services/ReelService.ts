@@ -6,6 +6,6 @@ export const getAllReels = async (): Promise<Reel[]> => {
     return await useGET(API_URL)
 }
 
-export const getReel = async (reelId: number): Promise<UserReel> => {
+export const getReel = async (reelId: number): Promise<Reel> => {
     return await useGET(`${API_URL}/${reelId}`)
 }

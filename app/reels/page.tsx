@@ -1,48 +1,62 @@
 import Reel from '@/components/Reel';
-import { getReel, getAllReels } from '@/services/ReelService';
+import { getAllReels } from '@/services/ReelService';
+import { getUser } from '@/services/UserService';
 import { Box, Text } from '@chakra-ui/react';
 import type { Metadata } from 'next';
-import React from 'react';
 
 export const metadata: Metadata = {
-    title: 'Reels',
-    description: 'Página de reels',
-}
+  title: 'Reels',
+  description: 'Página de reels',
+};
 
-const Reels: React.FC = async () => {
+const Reels = async () => {
+  // Mapa para cachear los usuarios
+  const users = new Map<number, User>();
 
-    const getReels = async (): Promise<UserReel[]> => {
-        const retrievedReels: Reel[] = await getAllReels();
+  const getUserFromMap = async (id: number): Promise<User> => {
+    if (users.has(id)) {
+      return users.get(id) as User;
+    } else {
+      const user = await getUser(id);
+      users.set(id, user);
+      return user;
+    }
+  };
 
-        const promises = retrievedReels.map(async (retrievedReel): Promise<UserReel> => {
-            const reel: UserReel = await getReel(retrievedReel.id);
-            return reel;
-        });
+  const getReels = async (): Promise<ReelUser[]> => {
+    const retrievedReels: Reel[] = await getAllReels();
 
-        return await Promise.all(promises);
-    };
-
-    const reels = await getReels()
-
-    return (
-        <Box
-            position="absolute"
-            left="0"
-            top="0"
-            width="100%"
-            display="flex"
-            flexDirection="column"
-            gap="20px"
-            alignItems="center"
-        >
-            <Text as="h1">Reels</Text>
-            {reels.map((reel, index) => (
-                <div key={index}>
-                    <Reel url={reel.reel_url} owner_username={reel.username} owner_profile_img={reel.user_profile_img} />
-                </div>
-            ))}
-        </Box>
+    const reelsWithUsers = await Promise.all(
+      retrievedReels.map(async (retrievedReel) => {
+        const user = await getUserFromMap(retrievedReel.user_owner_id);
+        return { ...retrievedReel, user };
+      })
     );
+
+    return reelsWithUsers;
+  };
+
+  const reels = await getReels();
+
+  return (
+    <Box
+      position="absolute"
+      left="0"
+      top="0"
+      width="100%"
+      display="flex"
+      flexDirection="column"
+      gap="20px"
+      alignItems="center"
+    >
+      <Text as="h1">Reels</Text>
+      {reels.map((reel, index) => (
+        <div key={index}>
+          <Reel reel={reel} user={reel.user} />
+        </div>
+      ))}
+    </Box>
+  );
 };
 
 export default Reels;
