@@ -11,7 +11,7 @@ interface AllCommentsViewProps {
     actualUser: User,
     post: PostWithCommentsAndUsers
 }
-const AllCommentsView = (props: AllCommentsViewProps) => {
+const AllCommentsModal = (props: AllCommentsViewProps) => {
 
     const [newComment, setNewComment] = useState<string>('')
 
@@ -73,4 +73,4 @@ const AllCommentsView = (props: AllCommentsViewProps) => {
     );
 };
 
-export default AllCommentsView;
+export default AllCommentsModal;
