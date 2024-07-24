@@ -1,7 +1,7 @@
 import PostGrid from "@/components/PostsGrid";
 import { getAllPosts } from "@/services/PostService";
-import { Box, Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Box } from "@chakra-ui/react";
+import React from "react";
 
 export const metadata = {
     title: 'Explorar',

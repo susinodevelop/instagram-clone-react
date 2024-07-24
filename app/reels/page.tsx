@@ -1,5 +1,5 @@
 import Reel from '@/components/Reel';
-import { getReel, getAllReels } from '@/services/ReelService';
+import { getAllReels } from '@/services/ReelService';
 import { getUser } from '@/services/UserService';
 import { Box, Text } from '@chakra-ui/react';
 import type { Metadata } from 'next';
@@ -16,16 +16,21 @@ const Reels: React.FC = async () => {
 
         const users = new Map<number, User>()
 
+        const getUserFromMap = async (id: number): Promise<User> => {
+            let user: User;
+            if (users.has(id)) {
+                user = users.get(id) as User
+            } else {
+                user = await getUser(id);
+                users.set(user.id, user)
+            }
+            return user
+        }
+
         const retrievedReels: Reel[] = await getAllReels();
 
         const promises = retrievedReels.map(async (retrievedReel): Promise<ReelUser> => {
-            let user: User;
-            if (users.has(retrievedReel.user_owner_id)) {
-                user = users.get(retrievedReel.user_owner_id) as User
-            } else {
-                user = await getUser(retrievedReel.user_owner_id)
-                users.set(user.id, user)
-            }
+            let user: User = await getUserFromMap(retrievedReel.user_owner_id)
 
             const reel: ReelUser = {
                 ...retrievedReel,
