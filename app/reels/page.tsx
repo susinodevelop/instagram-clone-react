@@ -24,7 +24,7 @@ const Reels = async () => {
         const retrievedReels: Reel[] = await getAllReels();
 
         for (const reel of retrievedReels) {
-            saveCacheUser(reel.id)
+            await saveCacheUser(reel.user_owner_id)
         }
         const reelsWithUsers = retrievedReels.map((reel) => {
             const user = users.get(reel.user_owner_id);
