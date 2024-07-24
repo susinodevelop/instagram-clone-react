@@ -25,7 +25,7 @@ const Feed = () => {
     created_at: "default"
   }) //TODO revisar
 
-  const [users, setUsers] = useState<Map<number, User>>(new Map<number, User>())
+  const users = new Map<number, User>()
 
   const getUserFromMap = async (id: number): Promise<User> => {
     let user: User;
