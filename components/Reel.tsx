@@ -3,11 +3,10 @@ import React from "react";
 import { FaBookmark, FaComment, FaHeart, FaPaperPlane } from "react-icons/fa";
 
 interface ReelProps {
-    url: string,
-    owner_username: string,
-    owner_profile_img: string,
+    reel: Reel,
+    user: User
 }
-export const Reel = (props: ReelProps) => {
+export const Reel = ({ reel, user }: ReelProps) => {
     return (
         <div className='w-[350px] p-[16px]'>
             <Box position="relative" >
@@ -22,11 +21,11 @@ export const Reel = (props: ReelProps) => {
                     overflow="hidden"
                     boxShadow="lg"
                 >
-                    <source src={props.url} type="video/mp4" width="100%" height="605" />
+                    <source src={reel.url} type="video/mp4" width="100%" height="605" />
                 </Box>
                 <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
-                    <Image src={props.owner_profile_img} alt={props.owner_username} width="40px" height="40px" borderRadius="50%" mr="10px" />
-                    <Text>{props.owner_username} • Seguir</Text>
+                    <Image src={user.profile_img} alt={user.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
+                    <Text>{user.username} • Seguir</Text>
                 </Box>
                 {/* <Box position="absolute" bottom="10px" left="10px">
             TODO: Add caption and music
