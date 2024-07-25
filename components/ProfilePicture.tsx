@@ -1,3 +1,4 @@
+'use client' //TODO revisar
 import React from 'react';
 import styled from 'styled-components';
 
