@@ -9,7 +9,9 @@ import { faFaceSmile } from '@fortawesome/free-solid-svg-icons';
 import "@/styles/globals.css";
 import { getUser } from '@/services/UserService';
 import { getPostComments } from '@/services/PostService';
-import { User } from '@/interface/User';
+import User from '@/interface/User';
+import Post from '@/interface/Post';
+import Comment from '@/interface/Comment';
 
 interface AllCommentsViewProps {
     post: Post

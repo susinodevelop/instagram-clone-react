@@ -1,5 +1,6 @@
 'use client';
-import { User } from '@/interface/User';
+import DirectMessage from '@/interface/DirectMessage';
+import User from '@/interface/User';
 import { getAllMessages } from '@/services/MessageService';
 import { getUser } from '@/services/UserService';
 import { Flex } from '@chakra-ui/react';

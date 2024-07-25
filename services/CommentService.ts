@@ -1,4 +1,4 @@
-import { User } from "@/interface/User";
+import User from "@/interface/User";
 import { useGET } from "./HttpService";
 
 const API_URL = '/api/comments';

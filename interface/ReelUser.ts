@@ -1,5 +1,6 @@
-import { User } from "./User";
+import Reel from "./Reel";
+import User from "./User";
 
-interface ReelUser extends Reel {
+export default interface ReelUser extends Reel {
     user: User
 }

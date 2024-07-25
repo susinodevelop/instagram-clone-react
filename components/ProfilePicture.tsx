@@ -1,5 +1,5 @@
 'use client' //TODO revisar
-import { User } from '@/interface/User';
+import User from '@/interface/User';
 import React from 'react';
 import styled from 'styled-components';
 

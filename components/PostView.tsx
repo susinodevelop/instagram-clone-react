@@ -6,7 +6,8 @@ import { getUser } from "@/services/UserService";
 import ProfilePicture from "./ProfilePicture";
 import CommentsView from "./CommentsView";
 import { timeAgo } from "@/utils/DateUtils";
-import { User } from '@/interface/User';
+import User from '@/interface/User';
+import Post from '@/interface/Post';
 
 interface PostViewProps {
     post: Post;

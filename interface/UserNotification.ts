@@ -1,4 +1,4 @@
-interface UserNotification {
+export default interface UserNotification {
     id: number,
     user_id: number,
     action_type: string,

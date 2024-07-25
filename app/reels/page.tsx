@@ -1,9 +1,11 @@
-import Reel from '@/components/Reel';
-import { User } from '@/interface/User';
+import ReelView from '@/components/ReelView';
+import User  from '@/interface/User';
 import { getAllReels } from '@/services/ReelService';
 import { getUser } from '@/services/UserService';
 import { Box, Text } from '@chakra-ui/react';
 import type { Metadata } from 'next';
+import ReelUser from '@/interface/ReelUser'
+import Reel from '@/interface/Reel';
 
 export const metadata: Metadata = {
     title: 'Reels',
@@ -51,7 +53,7 @@ const Reels = async () => {
             <Text as="h1">Reels</Text>
             {reels.map((reel) => (
                 <div key={reel.id}>
-                    <Reel reel={reel} user={reel.user} />
+                    <ReelView reel={reel} user={reel.user} />
                 </div>
             ))}
         </Box>

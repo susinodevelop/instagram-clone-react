@@ -1,3 +1,4 @@
+import Post from "@/interface/Post";
 import { Image } from "@chakra-ui/react";
 
 interface PostGridProps {

@@ -1,5 +1,9 @@
-import { User } from "@/interface/User";
+import User from "@/interface/User";
 import { useGET } from "./HttpService";
+import DirectMessage from "@/interface/DirectMessage";
+import UserNotification from "@/interface/UserNotification";
+import UserPost from "@/interface/UserPost";
+import UserStory from "@/interface/UserStory";
 
 const API_URL = '/api/users';
 

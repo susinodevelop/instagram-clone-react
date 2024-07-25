@@ -6,9 +6,11 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AllCommentsModal from "./AllCommentsModal";
 import { DEFAULT_USER } from "@/default_data/DefaultUser";
-import { User } from "@/interface/User";
+import User from "@/interface/User";
 import { getPostComments } from "@/services/PostService";
 import { getUser } from "@/services/UserService";
+import Post from "@/interface/Post";
+import Comment from "@/interface/Comment";
 
 interface CommentsViewProps {
     visibleComments: number;
@@ -23,7 +25,7 @@ const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) =>
     useEffect(() => {
         const loadData = async () => {
             const user = await getUser(post.user_owner_id);
-            const commentsData = await getPostComments(post.id);
+            const commentsData: Comment[] = await getPostComments(post.id);
             setOwner(user);
             setComments(commentsData);
         };

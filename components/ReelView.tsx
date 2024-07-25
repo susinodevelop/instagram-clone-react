@@ -1,13 +1,14 @@
-import { User } from "@/interface/User";
+import Reel from "@/interface/Reel";
+import User from "@/interface/User";
 import { Box, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import { FaBookmark, FaComment, FaHeart, FaPaperPlane } from "react-icons/fa";
 
-interface ReelProps {
+interface ReelViewProps {
     reel: Reel,
     user: User
 }
-export const Reel = ({ reel, user }: ReelProps) => {
+export const ReelView = ({ reel, user }: ReelViewProps) => {
     return (
         <div className='w-[350px] p-[16px]'>
             <Box position="relative" >
@@ -44,4 +45,4 @@ export const Reel = ({ reel, user }: ReelProps) => {
         </div>
     )
 }
-export default Reel;
+export default ReelView;
