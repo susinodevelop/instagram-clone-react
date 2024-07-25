@@ -1,4 +1,5 @@
 import Reel from '@/components/Reel';
+import { User } from '@/interface/User';
 import { getAllReels } from '@/services/ReelService';
 import { getUser } from '@/services/UserService';
 import { Box, Text } from '@chakra-ui/react';
