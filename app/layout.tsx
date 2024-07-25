@@ -10,12 +10,7 @@ export const metadata: Metadata = {
   title: "Instagram Clone",
   description: "Esta página es un proyecto personal de susinodevelop",
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang="es">
       <body className={`${inter.className} bg-black text-white`}>
@@ -31,3 +26,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default RootLayout;
