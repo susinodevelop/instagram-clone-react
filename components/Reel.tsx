@@ -1,3 +1,4 @@
+import { User } from "@/interface/User";
 import { Box, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import { FaBookmark, FaComment, FaHeart, FaPaperPlane } from "react-icons/fa";

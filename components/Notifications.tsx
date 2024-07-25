@@ -1,4 +1,5 @@
 'use client'
+import { User } from '@/interface/User';
 import { getUser, getUserNotifications } from '@/services/UserService';
 import { Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -15,7 +16,7 @@ const Notifications: React.FC = () => {
 
         // Fetch users for the notifications
         const userIds = Array.from(new Set(retrievedNotifications.map(n => n.action_user_id)));
-        const usersData = await Promise.all(userIds.map(id => getUser(id)));
+        const usersData: User[] = await Promise.all(userIds.map(id => getUser(id)));
         const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
 
         setUsers(usersMap);
