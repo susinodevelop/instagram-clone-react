@@ -14,7 +14,7 @@ const Explore: React.FC = async () => {
 
     return (
         <Box className="flex flex-col w-2/3 justify-center">
-            <PostGrid posts={posts} width="200px" height="200px" />
+            {posts && <PostGrid posts={posts} width="200px" height="200px" />}
         </Box>
     );
 }

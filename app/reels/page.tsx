@@ -1,5 +1,5 @@
 import ReelView from '@/components/ReelView';
-import User  from '@/interface/User';
+import User from '@/interface/User';
 import { getAllReels } from '@/services/ReelService';
 import { getUser } from '@/services/UserService';
 import { Box, Text } from '@chakra-ui/react';
@@ -51,7 +51,7 @@ const Reels = async () => {
             alignItems="center"
         >
             <Text as="h1">Reels</Text>
-            {reels.map((reel) => (
+            {reels && reels.map((reel) => (
                 <div key={reel.id}>
                     <ReelView reel={reel} user={reel.user} />
                 </div>
