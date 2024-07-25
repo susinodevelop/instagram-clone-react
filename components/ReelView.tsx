@@ -8,7 +8,7 @@ interface ReelViewProps {
     reel: Reel,
     user: User
 }
-export const ReelView = ({ reel, user }: ReelViewProps) => {
+const ReelView = ({ reel, user }: ReelViewProps) => {
     return (
         <div className='w-[350px] p-[16px]'>
             <Box position="relative" >
