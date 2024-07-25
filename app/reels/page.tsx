@@ -51,7 +51,7 @@ const Reels = async () => {
             alignItems="center"
         >
             <Text as="h1">Reels</Text>
-            {reels && reels.map((reel) => (
+            {reels && reels.map(reel => (
                 <div key={reel.id}>
                     <ReelView reel={reel} user={reel.user} />
                 </div>
