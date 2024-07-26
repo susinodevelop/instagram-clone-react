@@ -1,3 +1,4 @@
+'use client'
 import Reel from "@/interface/Reel";
 import User from "@/interface/User";
 import { getUser } from "@/services/UserService";
