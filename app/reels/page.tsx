@@ -5,12 +5,6 @@ import { getAllReels } from '@/services/ReelService';
 import { Box, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-//TODO como hacer este cambio en client component
-// export const metadata: Metadata = {
-//     title: 'Reels',
-//     description: 'Página de reels',
-// };
-
 const Reels = () => {
 
     const [reels, setReels] = useState<Reel[]>([])
@@ -20,6 +14,7 @@ const Reels = () => {
     }
 
     useEffect(() => {
+        document.title = 'Reels'
         fetchData()
     }, [])
 

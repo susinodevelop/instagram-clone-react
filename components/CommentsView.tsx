@@ -5,7 +5,6 @@ import { Modal, ModalContent, ModalOverlay } from "@chakra-ui/react";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AllCommentsModal from "./AllCommentsModal";
-import { DEFAULT_USER } from "@/default_data/DefaultUser";
 import User from "@/interface/User";
 import { getPostComments } from "@/services/PostService";
 import { getUser } from "@/services/UserService";
@@ -18,7 +17,7 @@ interface CommentsViewProps {
 }
 
 const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) => {
-    const [owner, setOwner] = useState<User>(DEFAULT_USER);
+    const [owner, setOwner] = useState<User>();
     const [comments, setComments] = useState<Comment[]>([]);
     const [isAllCommentsVisible, setAllCommentsVisibility] = useState<boolean>(false);
 
@@ -37,15 +36,20 @@ const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) =>
     return (
         <>
             <div>
-                <p className='text-gray-400 w-[500px]'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
-                <ul>
-                    {comments.slice(-visibleComments).map((comment) => (
-                        <li key={comment.id} className="my-2">
-                            <span className="font-bold">{owner.username}  </span>
-                            {comment.content}
-                        </li>
-                    ))}
-                </ul>
+                {
+                    owner &&
+                    <div>
+                        <p className='text-gray-400 w-[500px]'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
+                        <ul>
+                            {comments.slice(-visibleComments).map((comment) => (
+                                <li key={comment.id} className="my-2">
+                                    <span className="font-bold">{owner.username}  </span>
+                                    {comment.content}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                }
                 {
                     visibleComments < comments.length &&
                     <button className="text-gray-500 text-sm my-2" onClick={() => setAllCommentsVisibility(true)}>

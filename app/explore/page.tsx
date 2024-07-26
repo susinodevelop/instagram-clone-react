@@ -5,12 +5,6 @@ import { getAllPosts } from "@/services/PostService";
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-//TODO como hacer este cambio en client component
-// export const metadata = {
-//     title: 'Explorar',
-//     description: 'Página de búsqueda de posts',
-// }
-
 const Explore: React.FC = () => {
 
     const [posts, setPosts] = useState<Post[]>([])
@@ -20,6 +14,7 @@ const Explore: React.FC = () => {
     }
 
     useEffect(() => {
+        document.title = 'Explorar'
         fetchData()
     }, [])
 
