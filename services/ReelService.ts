@@ -1,3 +1,4 @@
+import Reel from "@/interface/Reel";
 import { useGET } from "./HttpService";
 
 const API_URL = '/api/reels';

@@ -1,4 +1,4 @@
-interface UserPost {
+export default interface UserPost {
     id: number,
     description: string,
     url: string,

@@ -1,12 +1,25 @@
+import Reel from "@/interface/Reel";
+import User from "@/interface/User";
+import { getUser } from "@/services/UserService";
 import { Box, Image, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaBookmark, FaComment, FaHeart, FaPaperPlane } from "react-icons/fa";
 
-interface ReelProps {
-    reel: Reel,
-    user: User
+interface ReelViewProps {
+    reel: Reel
 }
-export const Reel = ({ reel, user }: ReelProps) => {
+const ReelView = ({ reel }: ReelViewProps) => {
+
+    const [user, setUser] = useState<User>()
+
+    const fetchData = async () => {
+        setUser(await getUser(reel.user_owner_id))
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
     return (
         <div className='w-[350px] p-[16px]'>
             <Box position="relative" >
@@ -23,10 +36,13 @@ export const Reel = ({ reel, user }: ReelProps) => {
                 >
                     <source src={reel.url} type="video/mp4" width="100%" height="605" />
                 </Box>
-                <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
-                    <Image src={user.profile_img} alt={user.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
-                    <Text>{user.username} • Seguir</Text>
-                </Box>
+                {
+                    user &&
+                    <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
+                        <Image src={user.profile_img} alt={user.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
+                        <Text>{user.username} • Seguir</Text>
+                    </Box>
+                }
                 {/* <Box position="absolute" bottom="10px" left="10px">
             TODO: Add caption and music
             <Text>{reel.caption}</Text>
@@ -43,4 +59,4 @@ export const Reel = ({ reel, user }: ReelProps) => {
         </div>
     )
 }
-export default Reel;
+export default ReelView;

@@ -1,3 +1,5 @@
+'use client' //TODO revisar
+import User from '@/interface/User';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -28,6 +30,10 @@ border-radius: 50%;
 border:  ${({ $borderColor }) => $borderColor ? `2px solid ${$borderColor}` : ''}; // Color del fondo de la imagen
 `;
 
+interface ProfilePictureProps {
+    user: User,
+    borderColor: string
+}
 const ProfilePicture = (props: ProfilePictureProps) => {
 
     return (

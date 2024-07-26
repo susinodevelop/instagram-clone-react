@@ -1,4 +1,6 @@
+import UserPost from "@/interface/UserPost";
 import { useGET } from "./HttpService";
+import Comment from "@/interface/Comment";
 
 const API_URL = '/api/posts';
 

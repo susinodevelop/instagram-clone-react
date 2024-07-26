@@ -1,3 +1,5 @@
+'use client'
+import Post from "@/interface/Post";
 import { Image } from "@chakra-ui/react";
 
 interface PostGridProps {
@@ -6,16 +8,16 @@ interface PostGridProps {
     height: string
 }
 
-const PostGrid = (props: PostGridProps) => {
+const PostGrid = ({ posts, width, height }: PostGridProps) => {
     return (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '5px' }}>
-            {Array.isArray(props.posts) && props.posts.map((post, index) => (
+            {posts && posts.map((post) => (
                 <Image
-                    key={index}
+                    key={post.id}
                     src={post.url}
-                    alt={`post-${index}`}
-                    width={props.width}
-                    height={props.height}
+                    alt={`post-${post.id}`}
+                    width={width}
+                    height={height}
                     objectFit="cover"
                 />
             ))}

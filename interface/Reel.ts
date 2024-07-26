@@ -1,4 +1,4 @@
-interface Reel {
+export default interface Reel {
     id: number,
     url: string,
     title: string,

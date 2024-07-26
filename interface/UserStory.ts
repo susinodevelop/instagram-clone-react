@@ -1,4 +1,4 @@
-interface UserStory {
+export default interface UserStory {
     id: number,
     title: string,
     url: string,

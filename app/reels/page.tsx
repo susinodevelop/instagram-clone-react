@@ -1,62 +1,47 @@
-import Reel from '@/components/Reel';
+'use client'
+import ReelView from '@/components/ReelView';
+import Reel from '@/interface/Reel';
 import { getAllReels } from '@/services/ReelService';
-import { getUser } from '@/services/UserService';
 import { Box, Text } from '@chakra-ui/react';
-import type { Metadata } from 'next';
+import { useEffect, useState } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Reels',
-  description: 'Página de reels',
-};
+//TODO como hacer este cambio en client component
+// export const metadata: Metadata = {
+//     title: 'Reels',
+//     description: 'Página de reels',
+// };
 
-const Reels = async () => {
-  // Mapa para cachear los usuarios
-  const users = new Map<number, User>();
+const Reels = () => {
 
-  const getUserFromMap = async (id: number): Promise<User> => {
-    if (users.has(id)) {
-      return users.get(id) as User;
-    } else {
-      const user = await getUser(id);
-      users.set(id, user);
-      return user;
+    const [reels, setReels] = useState<Reel[]>([])
+
+    const fetchData = async () => {
+        setReels(await getAllReels())
     }
-  };
 
-  const getReels = async (): Promise<ReelUser[]> => {
-    const retrievedReels: Reel[] = await getAllReels();
+    useEffect(() => {
+        fetchData()
+    }, [])
 
-    const reelsWithUsers = await Promise.all(
-      retrievedReels.map(async (retrievedReel) => {
-        const user = await getUserFromMap(retrievedReel.user_owner_id);
-        return { ...retrievedReel, user };
-      })
+    return (
+        <Box
+            position="absolute"
+            left="0"
+            top="0"
+            width="100%"
+            display="flex"
+            flexDirection="column"
+            gap="20px"
+            alignItems="center"
+        >
+            <Text as="h1">Reels</Text>
+            {reels && reels.map(reel => (
+                <div key={reel.id}>
+                    <ReelView reel={reel} />
+                </div>
+            ))}
+        </Box>
     );
-
-    return reelsWithUsers;
-  };
-
-  const reels = await getReels();
-
-  return (
-    <Box
-      position="absolute"
-      left="0"
-      top="0"
-      width="100%"
-      display="flex"
-      flexDirection="column"
-      gap="20px"
-      alignItems="center"
-    >
-      <Text as="h1">Reels</Text>
-      {reels.map((reel, index) => (
-        <div key={index}>
-          <Reel reel={reel} user={reel.user} />
-        </div>
-      ))}
-    </Box>
-  );
 };
 
 export default Reels;

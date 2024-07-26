@@ -1,4 +1,4 @@
-interface DirectMessage {
+export default interface DirectMessage {
     id: number,
     user_id: number,
     action_user_id: number,
