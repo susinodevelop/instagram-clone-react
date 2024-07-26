@@ -9,8 +9,9 @@ import { FaBookmark, FaComment, FaHeart, FaPaperPlane } from "react-icons/fa";
 interface ReelViewProps {
     reel: Reel
 }
-const ReelView = ({ reel }: ReelViewProps) => {
+const ReelView = (props: ReelViewProps) => {
 
+    const [reel, setReel] = useState<Reel>(props.reel)
     const [user, setUser] = useState<User>()
 
     const fetchData = async () => {

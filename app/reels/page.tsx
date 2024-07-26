@@ -1,22 +1,15 @@
-'use client'
 import ReelView from '@/components/ReelView';
-import Reel from '@/interface/Reel';
 import { getAllReels } from '@/services/ReelService';
 import { Box, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 
-const Reels = () => {
+export const metadata = {
+    title: 'Reels',
+    description: 'Página de reels',
+}
 
-    const [reels, setReels] = useState<Reel[]>([])
+const Reels = async () => {
 
-    const fetchData = async () => {
-        setReels(await getAllReels())
-    }
-
-    useEffect(() => {
-        document.title = 'Reels'
-        fetchData()
-    }, [])
+    const reels = await getAllReels()
 
     return (
         <Box

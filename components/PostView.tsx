@@ -1,5 +1,4 @@
-'use client'; // Indica que es un componente del cliente
-
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Box, Image, Text } from "@chakra-ui/react";
 import { getUser } from "@/services/UserService";
@@ -13,8 +12,9 @@ interface PostViewProps {
     post: Post;
 }
 
-const PostView: React.FC<PostViewProps> = ({ post }) => {
-    const [owner, setOwner] = useState<User | null>(null);
+const PostView: React.FC<PostViewProps> = (props) => {
+    const [post, setPost] = useState<Post>(props.post)
+    const [owner, setOwner] = useState<User>();
 
     useEffect(() => {
         const fetchOwner = async () => {
@@ -24,7 +24,8 @@ const PostView: React.FC<PostViewProps> = ({ post }) => {
         fetchOwner();
     }, [post.user_owner_id]);
 
-    if (!owner) return null;
+    //TODO revisar
+    if (!(post && owner)) return <></>
 
     return (
         <div className="list-none">
