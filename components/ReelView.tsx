@@ -27,10 +27,13 @@ const ReelView = async ({ reel }: ReelViewProps) => {
                 >
                     <source src={reel.url} type="video/mp4" width="100%" height="605" />
                 </Box>
-                <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
-                    <Image src={user.profile_img} alt={user.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
-                    <Text>{user.username} • Seguir</Text>
-                </Box>
+                {
+                    user &&
+                    <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
+                        <Image src={user.profile_img} alt={user.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
+                        <Text>{user.username} • Seguir</Text>
+                    </Box>
+                }
                 {/* <Box position="absolute" bottom="10px" left="10px">
             TODO: Add caption and music
             <Text>{reel.caption}</Text>
