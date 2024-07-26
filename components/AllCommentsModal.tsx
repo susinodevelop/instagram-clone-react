@@ -8,43 +8,47 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmile } from '@fortawesome/free-solid-svg-icons';
 import "@/styles/globals.css";
 import { getUser } from '@/services/UserService';
-import { getPostComments } from '@/services/PostService';
+import { addNewPostComment, getPostComments } from '@/services/PostService';
 import User from '@/interface/User';
 import Post from '@/interface/Post';
 import Comment from '@/interface/Comment';
+import NewComment from '@/interface/NewComment';
 
 interface AllCommentsViewProps {
     post: Post
 }
 
 const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
-    const [actualUser, setActualUser] = useState<User | null>(null);
-    const [owner, setOwner] = useState<User | null>(null);
+    const [actualUser, setActualUser] = useState<User>();
+    const [owner, setOwner] = useState<User>();
     const [comments, setComments] = useState<Comment[]>([]);
     const [users, setUsers] = useState<Map<number, User>>(new Map());
     const [newComment, setNewComment] = useState<string>('');
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const fetchedActualUser = await getUser(1);
-            setActualUser(fetchedActualUser);
+    const fetchComments = async () => {
+        const fetchedComments = await getPostComments(post.id);
+        setComments(fetchedComments);
 
-            const fetchedOwner = await getUser(post.user_owner_id);
-            setOwner(fetchedOwner);
-
-            const fetchedComments = await getPostComments(post.id);
-            setComments(fetchedComments);
-
-            const userMap = new Map<number, User>();
-            for (const comment of fetchedComments) {
-                if (!userMap.has(comment.user_owner_id)) {
-                    const user = await getUser(comment.user_owner_id);
-                    userMap.set(user.id, user);
-                }
+        const userMap = new Map<number, User>();
+        for (const comment of fetchedComments) {
+            if (!userMap.has(comment.user_owner_id)) {
+                const user = await getUser(comment.user_owner_id);
+                userMap.set(user.id, user);
             }
-            setUsers(userMap);
-        };
+        }
+        setUsers(userMap);
+    }
 
+    const fetchData = async () => {
+        const fetchedActualUser = await getUser(1);
+        setActualUser(fetchedActualUser);
+
+        const fetchedOwner = await getUser(post.user_owner_id);
+        setOwner(fetchedOwner);
+
+        fetchComments()
+    };
+    useEffect(() => {
         fetchData();
     }, [post]);
 
@@ -52,9 +56,16 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
         setNewComment(event.target.value);
     };
 
-    const saveNewComment = (event: MouseEvent<HTMLButtonElement>) => {
+    const saveNewComment = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        //TODO guardar comentario nuevo
+        const newCommentData: NewComment = {
+            content: newComment,
+            user_owner_id: actualUser!.id //TODO revisar este forzado y comprobacion undefined
+        }
+        await addNewPostComment(post.id, newCommentData)
+        await fetchComments()
+        setNewComment("")
+        alert("Añadido comentarion") //TODO eliminar
     };
 
     return (
@@ -99,7 +110,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
                     <p>Les gusta a <strong>username</strong> y <strong>personas más</strong></p>
                 </div>
                 <div className="border-t border-t-gray-400 pt-4 w-full border-b border-b-gray-800 flex flex-row">
-                    <input name="newCommentInputText" type="text" placeholder="Añade un comentario..." onChange={handleCommentInputChange} className="w-full text-white p-2 focus:outline-none bg-black" />
+                    <input name="newCommentInputText" type="text" placeholder="Añade un comentario..." value={newComment} onChange={handleCommentInputChange} className="w-full text-white p-2 focus:outline-none bg-black" />
                     <button onClick={saveNewComment}><span className='text-blue-500'>Publicar</span></button>
                     <button><FontAwesomeIcon icon={faFaceSmile} className="ml-1" /></button>
                 </div>
