@@ -1,27 +1,36 @@
+'use client'
 import PostGrid from '@/components/PostsGrid';
 import User from '@/interface/User';
 import UserPost from '@/interface/UserPost';
 import UserStory from '@/interface/UserStory';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
-import type { Metadata } from 'next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export const metadata: Metadata = {
-    title: 'Perfil',
-    description: 'Página de perfil',
-}
+//TODO como hacer este cambio en client component
+// export const metadata: Metadata = {
+//     title: 'Perfil',
+//     description: 'Página de perfil',
+// }
 
-const Profile: React.FC = async () => {
+const Profile: React.FC = () => {
     // TODO: meter el user id en contexto react cuando se añada autenticacion
     const userId = 1
 
-    const user: User = await getUser(userId)
+    const [user, setUser] = useState<User>()
+    const [userPosts, setUserPosts] = useState<UserPost[]>([])
+    const [userHighlights, setUserHighlights] = useState<UserStory[]>([])
 
-    const userPosts: UserPost[] = await getUserPosts(userId)
+    const fetchData = async () => {
+        setUser(await getUser(userId))
+        setUserPosts(await getUserPosts(userId))
+        //TODO cambiar la peticion a las highlights cuando estén listas
+        setUserHighlights(await getUserStories(userId))
+    }
 
-    //TODO cambiar la peticion a las highlights cuando estén listas
-    const userHighlights: UserStory[] = await getUserStories(userId)
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     // TODO: revisar el id que se le pasa aqui(debe obtenerse al autenticar usuario)
 

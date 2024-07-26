@@ -1,16 +1,27 @@
+'use client'
 import ReelView from '@/components/ReelView';
+import Reel from '@/interface/Reel';
 import { getAllReels } from '@/services/ReelService';
 import { Box, Text } from '@chakra-ui/react';
-import type { Metadata } from 'next';
+import { useEffect, useState } from 'react';
 
-export const metadata: Metadata = {
-    title: 'Reels',
-    description: 'Página de reels',
-};
+//TODO como hacer este cambio en client component
+// export const metadata: Metadata = {
+//     title: 'Reels',
+//     description: 'Página de reels',
+// };
 
-const Reels = async () => {
+const Reels = () => {
 
-    const reels = await getAllReels();
+    const [reels, setReels] = useState<Reel[]>([])
+
+    const fetchData = async () => {
+        setReels(await getAllReels())
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     return (
         <Box

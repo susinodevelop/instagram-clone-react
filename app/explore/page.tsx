@@ -1,16 +1,27 @@
+'use client'
 import PostGrid from "@/components/PostsGrid";
+import Post from "@/interface/Post";
 import { getAllPosts } from "@/services/PostService";
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export const metadata = {
-    title: 'Explorar',
-    description: 'Página de búsqueda de posts',
-}
+//TODO como hacer este cambio en client component
+// export const metadata = {
+//     title: 'Explorar',
+//     description: 'Página de búsqueda de posts',
+// }
 
-const Explore: React.FC = async () => {
+const Explore: React.FC = () => {
 
-    const posts = await getAllPosts()
+    const [posts, setPosts] = useState<Post[]>([])
+
+    const fetchData = async () => {
+        setPosts(await getAllPosts())
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     return (
         <Box className="flex flex-col w-2/3 justify-center">
