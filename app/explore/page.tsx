@@ -1,22 +1,16 @@
-'use client'
 import PostGrid from "@/components/PostsGrid";
-import Post from "@/interface/Post";
 import { getAllPosts } from "@/services/PostService";
 import { Box } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const Explore: React.FC = () => {
+export const metadata = {
+    title: 'Explorar',
+    description: 'Página de búsqueda de posts',
+}
 
-    const [posts, setPosts] = useState<Post[]>([])
+const Explore: React.FC = async () => {
 
-    const fetchData = async () => {
-        setPosts(await getAllPosts())
-    }
-
-    useEffect(() => {
-        document.title = 'Explorar'
-        fetchData()
-    }, [])
+    const posts = await getAllPosts()
 
     return (
         <Box className="flex flex-col w-2/3 justify-center">

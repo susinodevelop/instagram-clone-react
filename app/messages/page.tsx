@@ -1,13 +1,12 @@
-'use client'
 import { Flex } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import React from 'react';
 
+export const metadata = {
+    title: 'Mensajes',
+    description: 'Página de mensajes',
+}
 // TODO revisar e hacer fetching co usuario sender do mensajes
 const Messages: React.FC = () => {
-
-    useEffect(() => {
-        document.title = 'Mensajes'
-    }, [])
 
     return (
         <Flex style={{ display: 'flex', color: '#fff', minHeight: '100vh', justifyContent: 'center', alignItems: 'center' }}>

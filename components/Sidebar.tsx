@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, VStack, Link, Icon, Button } from "@chakra-ui/react";
+import { Box, VStack, Icon, Button } from "@chakra-ui/react";
 import { AiTwotoneHeart } from "react-icons/ai";
 import { FaHome, FaSearch, FaCompass, FaInstagram, FaUserCircle } from "react-icons/fa";
 import { SlPaperPlane } from "react-icons/sl";
@@ -11,6 +11,7 @@ import Notifications from "./Notifications";
 import Search from "./Search";
 import ShowMessages from "./ShowMessages";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Sidebar: React.FC = () => {
 

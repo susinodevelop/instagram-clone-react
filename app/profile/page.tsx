@@ -1,33 +1,22 @@
-'use client'
 import PostGrid from '@/components/PostsGrid';
-import User from '@/interface/User';
-import UserPost from '@/interface/UserPost';
-import UserStory from '@/interface/UserStory';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import type { Metadata } from 'next';
+import React from 'react';
 
-const Profile: React.FC = () => {
+export const metadata: Metadata = {
+    title: 'Perfil',
+    description: 'Página de perfil',
+}
+
+const Profile: React.FC = async () => {
     // TODO: meter el user id en contexto react cuando se añada autenticacion
     const userId = 1
 
-    const [user, setUser] = useState<User>()
-    const [userPosts, setUserPosts] = useState<UserPost[]>([])
-    const [userHighlights, setUserHighlights] = useState<UserStory[]>([])
-
-    const fetchData = async () => {
-        setUser(await getUser(userId))
-        setUserPosts(await getUserPosts(userId))
-        //TODO cambiar la peticion a las highlights cuando estén listas
-        setUserHighlights(await getUserStories(userId))
-    }
-
-    useEffect(() => {
-        document.title = 'Perfil'
-        fetchData()
-    }, [])
-
-    // TODO: revisar el id que se le pasa aqui(debe obtenerse al autenticar usuario)
+    const user = await getUser(userId)
+    const userPosts = await getUserPosts(userId)
+    //TODO cambiar la peticion a las highlights cuando estén listas
+    const userHighlights = await getUserStories(userId)
 
     return (
         <Box className="mr-10 flex flex-col p-8 w-2/3 justify-center">
