@@ -7,16 +7,16 @@ interface PostGridProps {
     height: string
 }
 
-const PostGrid = (props: PostGridProps) => {
+const PostGrid = ({ posts, width, height }: PostGridProps) => {
     return (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '5px' }}>
-            {props.posts.map((post) => (
+            {posts && posts.map((post) => (
                 <Image
                     key={post.id}
                     src={post.url}
                     alt={`post-${post.id}`}
-                    width={props.width}
-                    height={props.height}
+                    width={width}
+                    height={height}
                     objectFit="cover"
                 />
             ))}
