@@ -1,14 +1,16 @@
 import Reel from "@/interface/Reel";
-import User from "@/interface/User";
+import { getUser } from "@/services/UserService";
 import { Box, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import { FaBookmark, FaComment, FaHeart, FaPaperPlane } from "react-icons/fa";
 
 interface ReelViewProps {
-    reel: Reel,
-    user: User
+    reel: Reel
 }
-const ReelView = ({ reel, user }: ReelViewProps) => {
+const ReelView = async ({ reel }: ReelViewProps) => {
+
+    const user = await getUser(reel.user_owner_id)
+
     return (
         <div className='w-[350px] p-[16px]'>
             <Box position="relative" >

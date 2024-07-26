@@ -13,31 +13,8 @@ export const metadata: Metadata = {
 };
 
 const Reels = async () => {
-    // Mapa para cachear los usuarios
-    const users = new Map<number, User>();
 
-    const saveCacheUser = async (id: number) => {
-        if (!users.has(id)) {
-            const user = await getUser(id);
-            users.set(user.id, user);
-        }
-    }
-
-    const getReels = async (): Promise<ReelUser[]> => {
-        const retrievedReels: Reel[] = await getAllReels();
-
-        for (const reel of retrievedReels) {
-            await saveCacheUser(reel.user_owner_id)
-        }
-        const reelsWithUsers = retrievedReels.map((reel) => {
-            const user = users.get(reel.user_owner_id);
-            return { ...reel, user } as ReelUser;
-        });
-
-        return reelsWithUsers;
-    };
-
-    const reels = await getReels();
+    const reels = await getAllReels();
 
     return (
         <Box
@@ -53,7 +30,7 @@ const Reels = async () => {
             <Text as="h1">Reels</Text>
             {reels && reels.map(reel => (
                 <div key={reel.id}>
-                    <ReelView reel={reel} user={reel.user} />
+                    <ReelView reel={reel} />
                 </div>
             ))}
         </Box>
