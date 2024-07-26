@@ -1,11 +1,7 @@
 import ReelView from '@/components/ReelView';
-import User from '@/interface/User';
 import { getAllReels } from '@/services/ReelService';
-import { getUser } from '@/services/UserService';
 import { Box, Text } from '@chakra-ui/react';
 import type { Metadata } from 'next';
-import ReelUser from '@/interface/ReelUser'
-import Reel from '@/interface/Reel';
 
 export const metadata: Metadata = {
     title: 'Reels',
