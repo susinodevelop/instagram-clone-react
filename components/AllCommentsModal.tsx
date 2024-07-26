@@ -1,8 +1,8 @@
 'use client'
 
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import ProfilePicture from './ProfilePicture';
-import { Image } from '@chakra-ui/react';
+import { Image, useToast } from '@chakra-ui/react';
 import { timeAgo } from '@/utils/DateUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmile } from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +24,8 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
     const [comments, setComments] = useState<Comment[]>([]);
     const [users, setUsers] = useState<Map<number, User>>(new Map());
     const [newComment, setNewComment] = useState<string>('');
+    const toast = useToast()
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const fetchComments = async () => {
         const fetchedComments = await getPostComments(post.id);
@@ -48,9 +50,20 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
 
         fetchComments()
     };
+
+    const scrollToBottom = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+        }
+    };
+
     useEffect(() => {
         fetchData();
     }, [post]);
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [comments]);
 
     const handleCommentInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setNewComment(event.target.value);
@@ -58,6 +71,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
 
     const saveNewComment = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        if (newComment === '') return
         const newCommentData: NewComment = {
             content: newComment,
             user_owner_id: actualUser!.id //TODO revisar este forzado y comprobacion undefined
@@ -65,8 +79,17 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
         await addNewPostComment(post.id, newCommentData)
         await fetchComments()
         setNewComment("")
-        alert("Añadido comentarion") //TODO eliminar
+        toast({
+            title: "Se ha añadido un mensaje.",
+            description: "Tu mensaje se ha añadido con exito.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+            position: "top-right",
+        });
     };
+
+
 
     return (
         <div className="flex flex-row w-full mx-auto font-sans border border-gray-900 bg-black">
@@ -85,7 +108,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
                         </div>
                     </>
                 )}
-                <div className="mb-4 h-80 overflow-y-auto no-scrollbar">
+                <div ref={scrollContainerRef} className="mb-4 h-80 overflow-y-auto no-scrollbar">
                     {comments.map(comment => {
                         const user = users.get(comment.user_owner_id);
                         return (
