@@ -19,6 +19,7 @@ const Search: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                     <FaSearch style={{ marginRight: '10px' }} />
                     <input
+                        name="profile-search"
                         type="text"
                         placeholder="Busca"
                         style={{

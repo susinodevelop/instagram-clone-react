@@ -7,12 +7,6 @@ import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
-//TODO como hacer este cambio en client component
-// export const metadata: Metadata = {
-//     title: 'Perfil',
-//     description: 'Página de perfil',
-// }
-
 const Profile: React.FC = () => {
     // TODO: meter el user id en contexto react cuando se añada autenticacion
     const userId = 1
@@ -29,6 +23,7 @@ const Profile: React.FC = () => {
     }
 
     useEffect(() => {
+        document.title = 'Perfil'
         fetchData()
     }, [])
 
