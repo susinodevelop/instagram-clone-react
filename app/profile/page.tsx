@@ -28,25 +28,35 @@ const Profile: React.FC = async () => {
     return (
         <Box className="mr-10 flex flex-col p-8 w-2/3 justify-center">
             <div className='flex flex-col '>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                    <img src={user.profile_img} alt="profile" style={{ borderRadius: '50%', marginRight: '20px', width: '150px', height: '150px' }} />
-                    <div>
-                        <h2 className="font-bold text-2xl my-5">{user.username}</h2>
-                        <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
-                        <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Ver archivo</button>
-                        <button style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Herramientas de anuncios</button>
+                {
+                    user &&
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+                        <img src={user.profile_img} alt="profile" style={{ borderRadius: '50%', marginRight: '20px', width: '150px', height: '150px' }} />
+                        <div>
+                            <h2 className="font-bold text-2xl my-5">{user.username}</h2>
+                            <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
+                            <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Ver archivo</button>
+                            <button style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Herramientas de anuncios</button>
+                        </div>
                     </div>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                    <p style={{ marginRight: '20px' }}><strong>{userPosts.length}</strong> publicaciones</p>
-                </div>
-                <div style={{ marginBottom: '20px' }}>
-                    <h3>{user.biography_name}</h3>
-                    <p>{user.biography_content}</p>
-                    <a href={user.biography_url} style={{ color: '#0095f6', textDecoration: 'none' }}>{user.biography_url}</a>
-                </div>
+                }
+
+                {
+                    userPosts &&
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+                        <p style={{ marginRight: '20px' }}><strong>{userPosts.length}</strong> publicaciones</p>
+                    </div>
+                }
+                {
+                    user &&
+                    <div style={{ marginBottom: '20px' }}>
+                        <h3>{user.biography_name}</h3>
+                        <p>{user.biography_content}</p>
+                        <a href={user.biography_url} style={{ color: '#0095f6', textDecoration: 'none' }}>{user.biography_url}</a>
+                    </div>
+                }
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
-                    {userHighlights.map(highlight => (
+                    {userHighlights && userHighlights.map(highlight => (
                         <div key={highlight.id} style={{ marginRight: '10px', textAlign: 'center' }}>
                             <img src={highlight.miniature_url} alt={highlight.title} style={{ width: '60px', height: '60px', borderRadius: '50%', marginBottom: '5px' }} />
                             <p style={{ fontSize: '12px' }}>{highlight.title}</p>
@@ -60,7 +70,10 @@ const Profile: React.FC = async () => {
                         <span style={{ cursor: 'pointer' }}>GUARDADAS</span>
                         <span style={{ cursor: 'pointer' }}>ETIQUETADAS</span>
                     </div>
-                    <PostGrid posts={userPosts} width='250px' height='250px' />
+                    {
+                        userPosts &&
+                        <PostGrid posts={userPosts} width='250px' height='250px' />
+                    }
                 </div>
             </div>
         </Box>
