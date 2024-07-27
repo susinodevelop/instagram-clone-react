@@ -1,8 +1,4 @@
-// pages/profile.js
 import PostGrid from '@/components/PostsGrid';
-import Post from '@/interface/Post';
-import User from '@/interface/User';
-import UserStory from '@/interface/UserStory';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
 import type { Metadata } from 'next';
@@ -13,28 +9,15 @@ export const metadata: Metadata = {
     description: 'Página de perfil',
 }
 
-interface ProfileProps {
-    user: User,
-    userPosts: Post[],
-    userHighlights: UserStory[]
-}
+const Profile: React.FC = async () => {
+    // TODO: meter el user id en contexto react cuando se añada autenticacion
+    const userId = 1
 
-export const getServerSideProps = async () => {
-    const userId = 1; // Reemplaza con la lógica para obtener el userId
-    const user = await getUser(userId);
-    const userPosts = await getUserPosts(userId);
-    const userHighlights = await getUserStories(userId);
+    const user = await getUser(userId)
+    const userPosts = await getUserPosts(userId)
+    //TODO cambiar la peticion a las highlights cuando estén listas
+    const userHighlights = await getUserStories(userId)
 
-    return {
-        props: {
-            user,
-            userPosts,
-            userHighlights,
-        } as ProfileProps,
-    };
-}
-
-const Profile = ({ user, userPosts, userHighlights }: ProfileProps) => {
     return (
         <Box className="mr-10 flex flex-col p-8 w-2/3 justify-center">
             <div className='flex flex-col '>
