@@ -23,7 +23,7 @@ const fetchWithBaseUrl = async (url: string, options?: RequestInit) => {
 export const useGET = async <T>(url: string): Promise<T> => {
     const response = await fetchWithBaseUrl(url);
     try {
-        return (await response.json()) as T;
+        return await response.json();
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${url}`);
@@ -64,7 +64,7 @@ export const usePOST = async <T>(props: RequestProps): Promise<T> => {
         body: JSON.stringify(props.bodyParams),
     });
     try {
-        return (await response.json()) as T;
+        return await response.json();
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
@@ -79,7 +79,7 @@ export const usePUT = async <T>(props: RequestProps): Promise<T> => {
         body: JSON.stringify(props.bodyParams),
     });
     try {
-        return (await response.json()) as T;
+        return await response.json();
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
@@ -94,7 +94,7 @@ export const usePATCH = async <T>(props: RequestProps): Promise<T> => {
         body: JSON.stringify(props.bodyParams),
     });
     try {
-        return (await response.json()) as T;
+        return await response.json();
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
@@ -104,7 +104,7 @@ export const usePATCH = async <T>(props: RequestProps): Promise<T> => {
 export const useDELETE = async <T>(url: string): Promise<T> => {
     const response = await fetchWithBaseUrl(url, { method: 'DELETE' });
     try {
-        return (await response.json()) as T;
+        return await response.json();
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${url}`);
