@@ -2,8 +2,7 @@
 import User from '@/interface/User';
 import UserNotification from '@/interface/UserNotification';
 import { getUser, getUserNotifications } from '@/services/UserService';
-import { Flex } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Flex, Image } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
 const Notifications: React.FC = () => {

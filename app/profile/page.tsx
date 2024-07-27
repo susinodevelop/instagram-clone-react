@@ -1,8 +1,7 @@
 import PostGrid from '@/components/PostsGrid';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
-import { Box } from '@chakra-ui/react';
+import { Box, Image } from '@chakra-ui/react';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import React from 'react';
 
 export const metadata: Metadata = {

@@ -1,6 +1,5 @@
 'use client'
-import { Flex } from "@chakra-ui/react";
-import Image from "next/image";
+import { Flex, Image } from "@chakra-ui/react";
 import React from "react"
 import { FaSearch, FaTimes } from "react-icons/fa";
 

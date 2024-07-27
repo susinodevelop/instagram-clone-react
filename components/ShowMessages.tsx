@@ -3,8 +3,7 @@ import DirectMessage from '@/interface/DirectMessage';
 import User from '@/interface/User';
 import { getAllMessages } from '@/services/MessageService';
 import { getUser } from '@/services/UserService';
-import { Flex } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Flex, Image } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
 // TODO remove 
