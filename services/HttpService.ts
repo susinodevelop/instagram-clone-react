@@ -1,5 +1,5 @@
 const isServer = typeof window === 'undefined';
-const baseURL = isServer ? process.env.NEXT_PUBLIC_API_URL : '';
+const baseURL = isServer ? process.env.NEXT_PUBLIC_API_URL || `https://${process.env.VERCEL_URL}` : '';
 
 if (isServer && !baseURL) {
     throw new Error('NEXT_PUBLIC_API_URL is not defined');
