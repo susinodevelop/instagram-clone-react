@@ -2,5 +2,4 @@ node_modules
 .next
 database.sqlite
 .vercel
-.env.development
-.env.production
+.env
