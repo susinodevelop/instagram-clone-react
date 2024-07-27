@@ -49,7 +49,7 @@ const Profile: React.FC = async () => {
                     </div>
                 }
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
-                    {userHighlights && userHighlights.map(highlight => (
+                    {userHighlights && Array.isArray(userHighlights) && userHighlights.map(highlight => (
                         <div key={highlight.id} style={{ marginRight: '10px', textAlign: 'center' }}>
                             <img src={highlight.miniature_url} alt={highlight.title} style={{ width: '60px', height: '60px', borderRadius: '50%', marginBottom: '5px' }} />
                             <p style={{ fontSize: '12px' }}>{highlight.title}</p>
