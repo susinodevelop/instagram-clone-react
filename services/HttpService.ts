@@ -12,6 +12,7 @@ const defaultHeaders = {
 const fetchWithBaseUrl = async (url: string, options?: RequestInit) => {
     console.log(`Fetching: ${baseURL}${url}. Options ${JSON.stringify(options)}`)
     const response = await fetch(`${baseURL}${url}`, options);
+    console.log(`Response: ${JSON.stringify(response)}`)
     if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Failed to fetch: ${response.status} ${response.statusText} - ${errorText}
