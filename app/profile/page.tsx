@@ -2,6 +2,7 @@ import PostGrid from '@/components/PostsGrid';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box } from '@chakra-ui/react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import React from 'react';
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ const Profile: React.FC = async () => {
                 {
                     user &&
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                        <img src={user.profile_img} alt="profile" style={{ borderRadius: '50%', marginRight: '20px', width: '150px', height: '150px' }} />
+                        <Image src={user.profile_img} alt="profile" style={{ borderRadius: '50%', marginRight: '20px', width: '150px', height: '150px' }} />
                         <div>
                             <h2 className="font-bold text-2xl my-5">{user.username}</h2>
                             <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
@@ -51,7 +52,7 @@ const Profile: React.FC = async () => {
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
                     {userHighlights && Array.isArray(userHighlights) && userHighlights.map(highlight => (
                         <div key={highlight.id} style={{ marginRight: '10px', textAlign: 'center' }}>
-                            <img src={highlight.miniature_url} alt={highlight.title} style={{ width: '60px', height: '60px', borderRadius: '50%', marginBottom: '5px' }} />
+                            <Image src={highlight.miniature_url} alt={highlight.title} style={{ width: '60px', height: '60px', borderRadius: '50%', marginBottom: '5px' }} />
                             <p style={{ fontSize: '12px' }}>{highlight.title}</p>
                         </div>
                     ))}
