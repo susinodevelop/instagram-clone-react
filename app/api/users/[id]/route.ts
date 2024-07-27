@@ -30,7 +30,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                                 users.biography_url as biography_url,
                                 users.profile_img as profile_img,
                                 users.created_at as created_at
-                            FROM public.users
+                            FROM users
                             WHERE users.id = ${id}`
 
         if (result.rowCount === 0) {

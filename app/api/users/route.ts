@@ -3,11 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-
-    console.log("Obteniendo datos de usuarios")
-    const result = await sql`SELECT * FROM public.users`
-
-    console.log("Datos de usuarios obtenidos" + JSON.stringify(result))
+    const result = await sql`SELECT * FROM users`
     const users = result.rowCount === 0 ? [] : result.rows
 
     return new NextResponse(JSON.stringify(users), {
@@ -17,7 +13,6 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.log("ERROR ABURRIDO" + JSON.stringify(error))
     return new NextResponse(JSON.stringify({ error: 'Failed to fetch data' }), {
       status: 500,
       headers: {
