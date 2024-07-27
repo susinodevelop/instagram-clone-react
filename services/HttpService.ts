@@ -1,9 +1,8 @@
-const isServer = typeof window === 'undefined';
-const baseURL = isServer ? process.env.NEXT_PUBLIC_API_URL || `https://${process.env.VERCEL_URL}` : '';
-
-if (isServer && !baseURL) {
+if (!process.env.VERCEL_URL && !process.env.NEXT_PUBLIC_API_URL) {
     throw new Error('NEXT_PUBLIC_API_URL is not defined');
 }
+
+const baseURL = process.env.NEXT_PUBLIC_API_URL || `https://${process.env.VERCEL_URL}`
 
 const defaultHeaders = {
     'Content-Type': 'application/json',
