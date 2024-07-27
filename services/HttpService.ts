@@ -4,14 +4,14 @@ const baseURL = isServer ? process.env.NEXT_PUBLIC_API_URL : '';
 export const useGET = async <T>(url: string): Promise<T> => {
     const response = await fetch(`${baseURL}${url}`);
     if (!response.ok) {
-        throw new Error(`Failed to GET ${url}`);
+        throw new Error(`Failed to GET ${baseURL}${url}`);
     }
     try {
         const result = await response.json();
         return result as T;
     } catch (error) {
         console.error(error);
-        throw new Error(`Failed to parse JSON from ${url}`);
+        throw new Error(`Failed to parse JSON from ${baseURL}${url}`);
     }
 }
 
@@ -51,7 +51,7 @@ export const usePOST = async <T>(props: PostProps): Promise<T> => {
     });
 
     if (!response.ok) {
-        throw new Error(`Failed to fetch post at ${urlTemplate}`);
+        throw new Error(`Failed to fetch post at ${baseURL}${urlTemplate}`);
     }
 
     try {
@@ -99,7 +99,7 @@ export const usePUT = async <T>(props: PutProps): Promise<T> => {
     });
 
     if (!response.ok) {
-        throw new Error(`Failed to fetch put at ${urlTemplate}`);
+        throw new Error(`Failed to fetch put at ${baseURL}${urlTemplate}`);
     }
 
     try {
@@ -146,7 +146,7 @@ export const usePATCH = async <T>(props: PatchProps): Promise<T> => {
     });
 
     if (!response.ok) {
-        throw new Error(`Failed to fetch PATCH at ${urlTemplate}`);
+        throw new Error(`Failed to fetch PATCH at ${baseURL}${urlTemplate}`);
     }
 
     try {
@@ -169,6 +169,6 @@ export const useDELETE = async <T>(url: string): Promise<T> => {
         return result as T;
     } catch (error) {
         console.error(error);
-        throw new Error(`Failed to parse JSON from ${url}`);
+        throw new Error(`Failed to parse JSON from ${baseURL}${url}`);
     }
 }
