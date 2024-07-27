@@ -13,7 +13,8 @@ const fetchWithBaseUrl = async (url: string, options?: RequestInit) => {
     const response = await fetch(`${baseURL}${url}`, options);
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Failed to fetch: ${response.status} ${response.statusText} - ${errorText}`);
+        throw new Error(`Failed to fetch: ${response.status} ${response.statusText} - ${errorText}
+                         Url: ${baseURL}${url}`);
     }
     return response;
 };
