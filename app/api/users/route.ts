@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   try {
 
     console.log("Obteniendo datos de usuarios")
-    const result = await sql`SELECT * FROM users`
+    const result = await sql`SELECT * FROM verceldb.public.users`
 
     console.log("Datos de usuarios obtenidos" + JSON.stringify(result))
     const users = result.rowCount === 0 ? [] : result.rows
