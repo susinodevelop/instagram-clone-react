@@ -1,5 +1,5 @@
+import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
-import { openDB } from "@/lib/db";
 
 interface GetParams {
     id: string
@@ -10,14 +10,10 @@ interface HandlerArgs {
 }
 export async function GET(request: Request, { params }: HandlerArgs) {
 
-
     try {
-        const db = await openDB();
-        // Extracting the 'id' parameter from the URL query
-        const id = params.id
+        const { id } = params
 
         if (!id) {
-            // Return a 400 Bad Request if 'id' is not provided
             return new NextResponse(JSON.stringify({ error: 'ID is required' }), {
                 status: 400,
                 headers: {
@@ -26,7 +22,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
             });
         }
 
-        const query = `
+        const result = await sql`
             SELECT 
                 users.id as id,
                 users.username as username,
@@ -37,14 +33,10 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                 users.created_at as created_at
             FROM users
             INNER JOIN comments ON comments.user_owner_id = users.id
-            WHERE comments.id = ?
-        `;
+            WHERE comments.id = ${id}`
 
-        const user = await db.get(query, id);
-
-        if (!user) {
-            // Return a 404 Not Found if no reel is found for the given 'id'
-            return new NextResponse(JSON.stringify({ error: 'User not found' }), {
+        if (result.rowCount === 0) {
+            return new NextResponse(JSON.stringify({ error: 'Comment not found' }), {
                 status: 404,
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,7 +44,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
             });
         }
 
-        // Return the found reel with a 200 OK status
+        const user = result.rows[0]
         return new NextResponse(JSON.stringify(user), {
             status: 200,
             headers: {

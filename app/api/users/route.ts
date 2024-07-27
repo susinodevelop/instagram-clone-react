@@ -1,18 +1,21 @@
-import { openDB } from "@/lib/db";
+import { sql } from "@vercel/postgres";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-    const db = await openDB();
 
-    const users = await db.all('SELECT * FROM users')
-    return new Response(JSON.stringify(users), {
+    const result = await sql`SELECT * FROM users`
+
+    const users = result.rowCount === 0 ? [] : result.rows
+
+    return new NextResponse(JSON.stringify(users), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
       },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to fetch data' }), {
+    return new NextResponse(JSON.stringify({ error: 'Failed to fetch data' }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',

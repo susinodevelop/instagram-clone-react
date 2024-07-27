@@ -1,11 +1,12 @@
-import { openDB } from "@/lib/db";
+import { sql } from "@vercel/postgres";
 
 export async function GET(request: Request) {
   try {
-    const db = await openDB();
 
-    const users = await db.all('SELECT * FROM posts');
-    return new Response(JSON.stringify(users), {
+    const result = await sql`SELECT * FROM posts`
+
+    const posts = result.rowCount === 0 ? [] : result.rows
+    return new Response(JSON.stringify(posts), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

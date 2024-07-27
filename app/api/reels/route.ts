@@ -1,10 +1,11 @@
-import { openDB } from "@/lib/db";
+import { sql } from "@vercel/postgres";
 
 export async function GET(request: Request) {
   try {
-    const db = await openDB();
 
-    const reels = await db.all('SELECT * FROM reels')
+    const result = await sql`SELECT * FROM reels`
+
+    const reels = result.rowCount === 0 ? [] : result.rows
     return new Response(JSON.stringify(reels), {
       status: 200,
       headers: {
