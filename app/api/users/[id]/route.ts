@@ -1,3 +1,4 @@
+import User from '@/interface/User';
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
@@ -42,7 +43,7 @@ export async function GET(request: Request, { params }: HandlerArgs) {
             });
         }
 
-        const user = result.rows[0]
+        const user: User = result.rows[0] as User
         return new NextResponse(JSON.stringify(user), {
             status: 200,
             headers: {

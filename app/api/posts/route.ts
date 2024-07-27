@@ -1,3 +1,4 @@
+import Post from "@/interface/Post";
 import { sql } from "@vercel/postgres";
 
 export async function GET(request: Request) {
@@ -5,7 +6,7 @@ export async function GET(request: Request) {
 
     const result = await sql`SELECT * FROM posts`
 
-    const posts = result.rowCount === 0 ? [] : result.rows
+    const posts: Post[] = result.rowCount === 0 ? [] : result.rows as Post[]
     return new Response(JSON.stringify(posts), {
       status: 200,
       headers: {

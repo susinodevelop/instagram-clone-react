@@ -1,3 +1,4 @@
+import Reel from "@/interface/Reel";
 import { sql } from "@vercel/postgres";
 
 export async function GET(request: Request) {
@@ -5,7 +6,7 @@ export async function GET(request: Request) {
 
     const result = await sql`SELECT * FROM reels`
 
-    const reels = result.rowCount === 0 ? [] : result.rows
+    const reels: Reel[] = result.rowCount === 0 ? [] : result.rows as Reel[]
     return new Response(JSON.stringify(reels), {
       status: 200,
       headers: {
