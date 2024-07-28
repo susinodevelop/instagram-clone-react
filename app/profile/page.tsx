@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 import PostGrid from '@/components/PostsGrid';
 import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
 import { Box, Image } from '@chakra-ui/react';

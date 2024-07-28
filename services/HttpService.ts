@@ -2,16 +2,16 @@ if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
     throw new Error('NEXT_PUBLIC_VERCEL_URL is not defined');
 }
 
-const baseURL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+const baseURL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 
 const defaultHeaders = {
     'Content-Type': 'application/json',
 };
 
 const fetchWithBaseUrl = async (url: string, options?: RequestInit) => {
-    console.log(`Fetching: ${baseURL}${url}. Options ${JSON.stringify(options)}`)
+    console.log(`Fetching: ${baseURL}${url}. Options ${JSON.stringify(options)}`);
     const response = await fetch(`${baseURL}${url}`, options);
-    console.log(`Response: ${JSON.stringify(response)}`)
+    console.log(`Response: ${JSON.stringify(response)}`);
     if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Failed to fetch: ${response.status} ${response.statusText} - ${errorText}
@@ -20,14 +20,13 @@ const fetchWithBaseUrl = async (url: string, options?: RequestInit) => {
     return response;
 };
 
-export const useGET = async <T>(url: string): Promise<T> => {
-    const response = await fetchWithBaseUrl(url);
+export const useGET = async <T>(url: string, options?: RequestInit): Promise<T> => {
+    const response = await fetchWithBaseUrl(url, options);
     try {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
-
             const text = await response.text();
             console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
@@ -64,19 +63,19 @@ const buildUrlWithParams = (url: string, pathParams?: Record<string, string>, qu
     return urlTemplate;
 };
 
-export const usePOST = async <T>(props: RequestProps): Promise<T> => {
+export const usePOST = async <T>(props: RequestProps, options?: RequestInit): Promise<T> => {
     const urlTemplate = buildUrlWithParams(props.url, props.pathParams, props.queryParams);
     const response = await fetchWithBaseUrl(urlTemplate, {
         method: 'POST',
         headers: defaultHeaders,
         body: JSON.stringify(props.bodyParams),
+        ...options,
     });
     try {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
-
             const text = await response.text();
             console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
@@ -87,19 +86,19 @@ export const usePOST = async <T>(props: RequestProps): Promise<T> => {
     }
 };
 
-export const usePUT = async <T>(props: RequestProps): Promise<T> => {
+export const usePUT = async <T>(props: RequestProps, options?: RequestInit): Promise<T> => {
     const urlTemplate = buildUrlWithParams(props.url, props.pathParams, props.queryParams);
     const response = await fetchWithBaseUrl(urlTemplate, {
         method: 'PUT',
         headers: defaultHeaders,
         body: JSON.stringify(props.bodyParams),
+        ...options,
     });
     try {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
-
             const text = await response.text();
             console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
@@ -110,19 +109,19 @@ export const usePUT = async <T>(props: RequestProps): Promise<T> => {
     }
 };
 
-export const usePATCH = async <T>(props: RequestProps): Promise<T> => {
+export const usePATCH = async <T>(props: RequestProps, options?: RequestInit): Promise<T> => {
     const urlTemplate = buildUrlWithParams(props.url, props.pathParams, props.queryParams);
     const response = await fetchWithBaseUrl(urlTemplate, {
         method: 'PATCH',
         headers: defaultHeaders,
         body: JSON.stringify(props.bodyParams),
+        ...options,
     });
     try {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
-
             const text = await response.text();
             console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
@@ -133,14 +132,13 @@ export const usePATCH = async <T>(props: RequestProps): Promise<T> => {
     }
 };
 
-export const useDELETE = async <T>(url: string): Promise<T> => {
-    const response = await fetchWithBaseUrl(url, { method: 'DELETE' });
+export const useDELETE = async <T>(url: string, options?: RequestInit): Promise<T> => {
+    const response = await fetchWithBaseUrl(url, { method: 'DELETE', ...options });
     try {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
-
             const text = await response.text();
             console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);

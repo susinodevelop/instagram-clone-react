@@ -8,25 +8,25 @@ import UserStory from "@/interface/UserStory";
 const API_URL = '/api/users';
 
 export const getAllUsers = async (): Promise<User[]> => {
-    return await useGET(API_URL)
+    return await useGET(API_URL, { cache: 'no-store' })
 }
 
 export const getUser = async (userId: number): Promise<User> => {
-    return await useGET(`${API_URL}/${userId}`)
+    return await useGET(`${API_URL}/${userId}`, { cache: 'no-store' })
 }
 
 export const getUserPosts = async (userId: number): Promise<UserPost[]> => {
-    return await useGET(`${API_URL}/${userId}/posts`)
+    return await useGET(`${API_URL}/${userId}/posts`, { cache: 'no-store' })
 }
 
 export const getUserStories = async (userId: number): Promise<UserStory[]> => {
-    return await useGET(`${API_URL}/${userId}/stories`)
+    return await useGET(`${API_URL}/${userId}/stories`, { cache: 'no-store' })
 }
 
 export const getUserNotifications = async (userId: number): Promise<UserNotification[]> => {
-    return await useGET(`${API_URL}/${userId}/notifications`)
+    return await useGET(`${API_URL}/${userId}/notifications`, { cache: 'no-store' })
 }
 
 export const getUserMessages = async (userId: number): Promise<DirectMessage[]> => {
-    return await useGET(`${API_URL}/${userId}/messages`)
+    return await useGET(`${API_URL}/${userId}/messages`, { cache: 'no-store' })
 }
