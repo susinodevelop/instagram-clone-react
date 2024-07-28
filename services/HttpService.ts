@@ -1,4 +1,4 @@
-if (!process.env.VERCEL_URL && !process.env.NEXT_PUBLIC_API_URL) {
+if (!process.env.NEXT_PUBLIC_VERCEL_URL && !process.env.NEXT_PUBLIC_API_URL) {
     throw new Error('NEXT_PUBLIC_API_URL is not defined');
 }
 
