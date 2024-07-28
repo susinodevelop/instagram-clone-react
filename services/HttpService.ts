@@ -1,9 +1,8 @@
-if (!process.env.NEXT_PUBLIC_VERCEL_URL && !process.env.NEXT_PUBLIC_API_URL) {
-    throw new Error('NEXT_PUBLIC_API_URL is not defined');
+if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
+    throw new Error('NEXT_PUBLIC_VERCEL_URL is not defined');
 }
 
-// const baseURL = process.env.NEXT_PUBLIC_API_URL || `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-const baseURL = process.env.NEXT_PUBLIC_API_URL || `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+const baseURL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
 
 const defaultHeaders = {
     'Content-Type': 'application/json',
