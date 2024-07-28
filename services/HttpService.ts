@@ -28,6 +28,9 @@ export const useGET = async <T>(url: string): Promise<T> => {
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
+
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
         }
     } catch (error) {
@@ -74,6 +77,9 @@ export const usePOST = async <T>(props: RequestProps): Promise<T> => {
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
+
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
         }
     } catch (error) {
@@ -94,6 +100,9 @@ export const usePUT = async <T>(props: RequestProps): Promise<T> => {
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
+
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
         }
     } catch (error) {
@@ -114,6 +123,9 @@ export const usePATCH = async <T>(props: RequestProps): Promise<T> => {
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
+
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
         }
     } catch (error) {
@@ -129,6 +141,9 @@ export const useDELETE = async <T>(url: string): Promise<T> => {
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
+
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
             throw new Error(`Unexpected content-type: ${contentType}`);
         }
     } catch (error) {
