@@ -6,11 +6,11 @@ import NewComment from "@/interface/NewComment";
 const API_URL = '/api/posts';
 
 export const getAllPosts = async (): Promise<UserPost[]> => {
-    return await useGET(API_URL);
+    return await useGET(API_URL, { cache: 'no-store' });
 }
 
 export const getPostComments = async (postId: number): Promise<Comment[]> => {
-    return await useGET(`${API_URL}/${postId}/comments`)
+    return await useGET(`${API_URL}/${postId}/comments`, { cache: 'no-store' })
 }
 
 export const addNewPostComment = async (postId: number, comment: NewComment): Promise<void> => {

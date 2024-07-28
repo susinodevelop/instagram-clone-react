@@ -8,5 +8,5 @@ export const getAllComments = async (): Promise<Comment[]> => {
 }
 
 export const getCommentUser = async (commentId: number): Promise<User[]> => {
-    return await useGET(`${API_URL}/${commentId}/user`)
+    return await useGET(`${API_URL}/${commentId}/user`, { cache: 'no-store' })
 }

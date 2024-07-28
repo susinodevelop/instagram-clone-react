@@ -1,174 +1,150 @@
-const isServer = typeof window === 'undefined';
-const baseURL = isServer ? process.env.NEXT_PUBLIC_API_URL : '';
+if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
+    throw new Error('NEXT_PUBLIC_VERCEL_URL is not defined');
+}
 
-export const useGET = async <T>(url: string): Promise<T> => {
-    const response = await fetch(`${baseURL}${url}`);
+const baseURL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+
+const defaultHeaders = {
+    'Content-Type': 'application/json',
+};
+
+const fetchWithBaseUrl = async (url: string, options?: RequestInit) => {
+    console.log(`Fetching: ${baseURL}${url}. Options ${JSON.stringify(options)}`);
+    const response = await fetch(`${baseURL}${url}`, options);
+    console.log(`Response: ${JSON.stringify(response)}`);
     if (!response.ok) {
-        throw new Error(`Failed to GET ${url}`);
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch: ${response.status} ${response.statusText} - ${errorText}
+                         Url: ${baseURL}${url}`);
     }
+    return response;
+};
+
+export const useGET = async <T>(url: string, options?: RequestInit): Promise<T> => {
+    const response = await fetchWithBaseUrl(url, options);
     try {
-        const result = await response.json();
-        return result as T;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${url}`);
     }
-}
+};
 
-
-interface PostProps {
+interface RequestProps {
     url: string;
     pathParams?: Record<string, string>;
     queryParams?: Record<string, string>;
     bodyParams?: any;
 }
 
-export const usePOST = async <T>(props: PostProps): Promise<T> => {
-    const { pathParams = {}, queryParams = {}, bodyParams = {} } = props;
+const buildUrlWithParams = (url: string, pathParams?: Record<string, string>, queryParams?: Record<string, string>) => {
+    let urlTemplate = url;
 
-    // Plantilla de URL
-    let urlTemplate = `${baseURL}${props.url}`;
-
-    // Reemplazar los placeholders en pathParams
-    Object.keys(pathParams).forEach(key => {
-        const value = pathParams[key];
-        urlTemplate = urlTemplate.replace(`{${key}}`, value);
-    });
-
-    // Construir la cadena de consulta (query string)
-    const queryString = new URLSearchParams(queryParams).toString();
-    if (queryString) {
-        urlTemplate += `?${queryString}`;
+    if (pathParams) {
+        Object.keys(pathParams).forEach(key => {
+            urlTemplate = urlTemplate.replace(`{${key}}`, pathParams[key]);
+        });
     }
 
-    // Realizar la solicitud POST con fetch
-    const response = await fetch(urlTemplate, {
+    if (queryParams) {
+        const queryString = new URLSearchParams(queryParams).toString();
+        if (queryString) {
+            urlTemplate += `?${queryString}`;
+        }
+    }
+
+    return urlTemplate;
+};
+
+export const usePOST = async <T>(props: RequestProps, options?: RequestInit): Promise<T> => {
+    const urlTemplate = buildUrlWithParams(props.url, props.pathParams, props.queryParams);
+    const response = await fetchWithBaseUrl(urlTemplate, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bodyParams),
+        headers: defaultHeaders,
+        body: JSON.stringify(props.bodyParams),
+        ...options,
     });
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch post at ${urlTemplate}`);
-    }
-
     try {
-        const result = await response.json();
-        return result as T;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
     }
 };
 
-
-interface PutProps {
-    url: string;
-    pathParams?: Record<string, string>;
-    queryParams?: Record<string, string>;
-    bodyParams?: any;
-}
-
-export const usePUT = async <T>(props: PutProps): Promise<T> => {
-    const { pathParams = {}, queryParams = {}, bodyParams = {} } = props;
-
-    // Plantilla de URL
-    let urlTemplate = `${baseURL}${props.url}`;
-
-    // Reemplazar los placeholders en pathParams
-    Object.keys(pathParams).forEach(key => {
-        const value = pathParams[key];
-        urlTemplate = urlTemplate.replace(`{${key}}`, value);
-    });
-
-    // Construir la cadena de consulta (query string)
-    const queryString = new URLSearchParams(queryParams).toString();
-    if (queryString) {
-        urlTemplate += `?${queryString}`;
-    }
-
-    // Realizar la solicitud POST con fetch
-    const response = await fetch(urlTemplate, {
+export const usePUT = async <T>(props: RequestProps, options?: RequestInit): Promise<T> => {
+    const urlTemplate = buildUrlWithParams(props.url, props.pathParams, props.queryParams);
+    const response = await fetchWithBaseUrl(urlTemplate, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bodyParams),
+        headers: defaultHeaders,
+        body: JSON.stringify(props.bodyParams),
+        ...options,
     });
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch put at ${urlTemplate}`);
-    }
-
     try {
-        const result = await response.json();
-        return result as T;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
     }
 };
 
-interface PatchProps {
-    url: string;
-    pathParams?: Record<string, string>;
-    queryParams?: Record<string, string>;
-    bodyParams?: any;
-}
-
-export const usePATCH = async <T>(props: PatchProps): Promise<T> => {
-    const { pathParams = {}, queryParams = {}, bodyParams = {} } = props;
-
-    // Plantilla de URL
-    let urlTemplate = `${baseURL}${props.url}`;
-
-    // Reemplazar los placeholders en pathParams
-    Object.keys(pathParams).forEach(key => {
-        const value = pathParams[key];
-        urlTemplate = urlTemplate.replace(`{${key}}`, value);
-    });
-
-    // Construir la cadena de consulta (query string)
-    const queryString = new URLSearchParams(queryParams).toString();
-    if (queryString) {
-        urlTemplate += `?${queryString}`;
-    }
-
-    // Realizar la solicitud POST con fetch
-    const response = await fetch(urlTemplate, {
+export const usePATCH = async <T>(props: RequestProps, options?: RequestInit): Promise<T> => {
+    const urlTemplate = buildUrlWithParams(props.url, props.pathParams, props.queryParams);
+    const response = await fetchWithBaseUrl(urlTemplate, {
         method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bodyParams),
+        headers: defaultHeaders,
+        body: JSON.stringify(props.bodyParams),
+        ...options,
     });
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch PATCH at ${urlTemplate}`);
-    }
-
     try {
-        const result = await response.json();
-        return result as T;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
     }
 };
 
-export const useDELETE = async <T>(url: string): Promise<T> => {
-    const response = await fetch(`${baseURL}${url}`);
-    if (!response.ok) {
-        throw new Error(`Failed to DELETE ${url}`);
-    }
-
+export const useDELETE = async <T>(url: string, options?: RequestInit): Promise<T> => {
+    const response = await fetchWithBaseUrl(url, { method: 'DELETE', ...options });
     try {
-        const result = await response.json();
-        return result as T;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            const text = await response.text();
+            console.warn(`Expected JSON, but got: ${text}`);
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${url}`);
     }
-}
+};

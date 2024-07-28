@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { openDB } from "@/lib/db";
 import NewComment from '@/interface/NewComment';
+import { sql } from '@vercel/postgres';
 
 interface GetParams {
     id: string
@@ -11,14 +11,10 @@ interface GetHandlerArgs {
 }
 export async function GET(request: Request, { params }: GetHandlerArgs) {
 
-
     try {
-        const db = await openDB();
-        // Extracting the 'id' parameter from the URL query
-        const id = params.id
+        const { id } = params
 
         if (!id) {
-            // Return a 400 Bad Request if 'id' is not provided
             return new NextResponse(JSON.stringify({ error: 'ID is required' }), {
                 status: 400,
                 headers: {
@@ -27,7 +23,7 @@ export async function GET(request: Request, { params }: GetHandlerArgs) {
             });
         }
 
-        const query = `
+        const result = await sql`
             SELECT 
                 comments.id as id,
                 comments.content as content,
@@ -35,14 +31,11 @@ export async function GET(request: Request, { params }: GetHandlerArgs) {
                 comments.user_owner_id as user_owner_id
             FROM comments
             INNER JOIN post_comments ON post_comments.comment_id = comments.id
-            WHERE post_comments.post_id = ?
-        `;
+            WHERE post_comments.post_id = ${id}
+        `
 
-        const comments = await db.all(query, id);
-
-        if (!comments) {
-            // Return a 404 Not Found if no reel is found for the given 'id'
-            return new NextResponse(JSON.stringify({ error: 'User not found' }), {
+        if (result.rowCount === 0) {
+            return new NextResponse(JSON.stringify({ error: 'Comments not found' }), {
                 status: 404,
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,7 +43,7 @@ export async function GET(request: Request, { params }: GetHandlerArgs) {
             });
         }
 
-        // Return the found reel with a 200 OK status
+        const comments = result.rows
         return new NextResponse(JSON.stringify(comments), {
             status: 200,
             headers: {
@@ -59,7 +52,6 @@ export async function GET(request: Request, { params }: GetHandlerArgs) {
         });
     } catch (error) {
         console.error(error);
-        // Return a 500 Internal Server Error if there was a problem executing the query
         return new NextResponse(JSON.stringify({ error: 'Failed to fetch data' }), {
             status: 500,
             headers: {
@@ -77,14 +69,10 @@ interface PostHandlerArgs {
 
 export async function POST(request: Request, { params }: PostHandlerArgs) {
     try {
-        const db = await openDB();
         const { id } = params;
         const comment: NewComment = await request.json();
 
-        // Validaciones básicas
         if (!id || !comment || !comment.content || !comment.user_owner_id) {
-            console.log("request " + JSON.stringify(comment))
-            console.log("path params " + JSON.stringify(params))
             return new NextResponse(JSON.stringify({ error: 'Post ID, Comment Content, and User Owner ID are required' }), {
                 status: 400,
                 headers: {
@@ -94,27 +82,38 @@ export async function POST(request: Request, { params }: PostHandlerArgs) {
         }
 
         // Insertar el comentario en la tabla de comentarios
-        const insertCommentQuery = `
+        let result = await sql`
             INSERT INTO comments 
-            (
-             content,
-             created_at,
-             user_owner_id
-            )
-            VALUES (?, datetime('now'), ?)
-        `;
+            (content, created_at, user_owner_id)
+            VALUES (${comment.content}, NOW(), ${comment.user_owner_id})
+            RETURNING id`
 
-        const result = await db.run(insertCommentQuery, comment.content, comment.user_owner_id);
+        // Verificar si se obtuvo el ID correctamente
+        console.log("firts result" + JSON.stringify(result)) //TODO eliminar
+        if (result.rowCount == 0) {
+            return new NextResponse(JSON.stringify({ error: 'Failed to insert comment' }), {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
 
-        // Obtener el ID del comentario recién insertado
-        const newCommentId = result.lastID;
+        const newCommentId = result.rows[0].id;
 
         // Relacionar el comentario con el post en la tabla intermedia
-        const insertPostCommentQuery = `
+        result = await sql`
             INSERT INTO post_comments (post_id, comment_id)
-            VALUES (?, ?)
-        `;
-        await db.run(insertPostCommentQuery, id, newCommentId);
+            VALUES (${id}, ${newCommentId})`
+        console.log("second result" + JSON.stringify(result)) //TODO eliminar
+        if (result.rowCount === 0) {
+            return new NextResponse(JSON.stringify({ error: 'Failed to insert comment' }), {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
 
         return new NextResponse(JSON.stringify({ success: true, commentId: newCommentId }), {
             status: 201,

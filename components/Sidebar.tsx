@@ -32,10 +32,6 @@ const Sidebar: React.FC = () => {
     }
   }, [pathname])
 
-  useEffect(() => {
-    showText()
-  }, [showNotifications, showSearch, showMessages])
-
   //TODO las variables estas meterlas en un contexto react
   const showText = () => {
     if (showNotifications || showSearch || showMessages) {
@@ -44,6 +40,10 @@ const Sidebar: React.FC = () => {
       setIsShowText(true)
     }
   }
+
+  useEffect(() => {
+    showText()
+  }, [showNotifications, showSearch, showMessages])
 
   const handleNotifications = () => {
     setShowNotifications(!showNotifications)

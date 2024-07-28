@@ -41,16 +41,6 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
         setUsers(userMap);
     }
 
-    const fetchData = async () => {
-        const fetchedActualUser = await getUser(1);
-        setActualUser(fetchedActualUser);
-
-        const fetchedOwner = await getUser(post.user_owner_id);
-        setOwner(fetchedOwner);
-
-        fetchComments()
-    };
-
     const scrollToBottom = () => {
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
@@ -58,6 +48,16 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
     };
 
     useEffect(() => {
+        const fetchData = async () => {
+            const fetchedActualUser = await getUser(1);
+            setActualUser(fetchedActualUser);
+
+            const fetchedOwner = await getUser(post.user_owner_id);
+            setOwner(fetchedOwner);
+
+            fetchComments()
+        };
+
         fetchData();
     }, [post]);
 
@@ -93,7 +93,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
 
     return (
         <div className="flex flex-row w-full mx-auto font-sans border border-gray-900 bg-black">
-            <Image className="h-[500px] w-[500px]" src={post.url} />
+            <Image className="h-[500px] w-[500px]" src={post.url} alt={post.description} />
             <div className="p-4">
                 {owner && (
                     <>

@@ -1,5 +1,5 @@
+import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
-import { openDB } from "@/lib/db";
 
 interface GetParams {
     id: string
@@ -12,12 +12,9 @@ export async function GET(request: Request, { params }: HandlerArgs) {
 
 
     try {
-        const db = await openDB();
-        // Extracting the 'id' parameter from the URL query
-        const id = params.id
+        const { id } = params
 
         if (!id) {
-            // Return a 400 Bad Request if 'id' is not provided
             return new NextResponse(JSON.stringify({ error: 'ID is required' }), {
                 status: 400,
                 headers: {
@@ -26,22 +23,18 @@ export async function GET(request: Request, { params }: HandlerArgs) {
             });
         }
 
-        const query = `
-            SELECT 
-                stories.id as id,
-                stories.title as title,
-                stories.url as url,
-                stories.miniature_url as miniature_url,
-                stories.created_at as created_at
-            FROM stories
-            INNER JOIN user_stories ON user_stories.story_id = stories.id
-            WHERE user_stories.user_id = ?
-        `;
+        const result = await sql`
+                            SELECT 
+                                stories.id as id,
+                                stories.title as title,
+                                stories.url as url,
+                                stories.miniature_url as miniature_url,
+                                stories.created_at as created_at
+                            FROM stories
+                            INNER JOIN user_stories ON user_stories.story_id = stories.id
+                            WHERE user_stories.user_id = ${id}`
 
-        const posts = await db.all(query, id);
-
-        if (!posts) {
-            // Return a 404 Not Found if no reel is found for the given 'id'
+        if (result.rowCount === 0) {
             return new NextResponse(JSON.stringify({ error: 'User Stories not found' }), {
                 status: 404,
                 headers: {
@@ -50,8 +43,8 @@ export async function GET(request: Request, { params }: HandlerArgs) {
             });
         }
 
-        // Return the found reel with a 200 OK status
-        return new NextResponse(JSON.stringify(posts), {
+        const stories = result.rows
+        return new NextResponse(JSON.stringify(stories), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json'
@@ -59,7 +52,6 @@ export async function GET(request: Request, { params }: HandlerArgs) {
         });
     } catch (error) {
         console.error(error);
-        // Return a 500 Internal Server Error if there was a problem executing the query
         return new NextResponse(JSON.stringify({ error: 'Failed to fetch data' }), {
             status: 500,
             headers: {

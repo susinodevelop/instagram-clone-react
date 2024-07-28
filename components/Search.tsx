@@ -1,5 +1,5 @@
 'use client'
-import { Flex } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import React from "react"
 import { FaSearch, FaTimes } from "react-icons/fa";
 
@@ -39,7 +39,7 @@ const Search: React.FC = () => {
                     <ul style={{ listStyleType: 'none', padding: '0' }}>
                         {recentSearches.map((search, index) => (
                             <li key={index} style={{ display: 'flex', alignItems: 'center', marginTop: '15px' }}>
-                                <img
+                                <Image
                                     src={`https://via.placeholder.com/50`}
                                     alt={search.username}
                                     style={{ borderRadius: '50%', marginRight: '10px' }}
