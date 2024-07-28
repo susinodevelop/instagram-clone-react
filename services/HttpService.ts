@@ -2,8 +2,7 @@ if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
     throw new Error('NEXT_PUBLIC_VERCEL_URL is not defined');
 }
 
-// const baseURL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-const baseURL = `https://localhost`
+const baseURL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
 
 const defaultHeaders = {
     'Content-Type': 'application/json',
