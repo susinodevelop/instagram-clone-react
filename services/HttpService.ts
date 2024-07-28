@@ -3,7 +3,7 @@ if (!process.env.NEXT_PUBLIC_VERCEL_URL && !process.env.NEXT_PUBLIC_API_URL) {
 }
 
 // const baseURL = process.env.NEXT_PUBLIC_API_URL || `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-const baseURL = process.env.NEXT_PUBLIC_API_URL || `http://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+const baseURL = process.env.NEXT_PUBLIC_API_URL || `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
 
 const defaultHeaders = {
     'Content-Type': 'application/json',
@@ -24,7 +24,12 @@ const fetchWithBaseUrl = async (url: string, options?: RequestInit) => {
 export const useGET = async <T>(url: string): Promise<T> => {
     const response = await fetchWithBaseUrl(url);
     try {
-        return await response.json();
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${url}`);
@@ -65,7 +70,12 @@ export const usePOST = async <T>(props: RequestProps): Promise<T> => {
         body: JSON.stringify(props.bodyParams),
     });
     try {
-        return await response.json();
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
@@ -80,7 +90,12 @@ export const usePUT = async <T>(props: RequestProps): Promise<T> => {
         body: JSON.stringify(props.bodyParams),
     });
     try {
-        return await response.json();
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
@@ -95,7 +110,12 @@ export const usePATCH = async <T>(props: RequestProps): Promise<T> => {
         body: JSON.stringify(props.bodyParams),
     });
     try {
-        return await response.json();
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${props.url}`);
@@ -105,7 +125,12 @@ export const usePATCH = async <T>(props: RequestProps): Promise<T> => {
 export const useDELETE = async <T>(url: string): Promise<T> => {
     const response = await fetchWithBaseUrl(url, { method: 'DELETE' });
     try {
-        return await response.json();
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            throw new Error(`Unexpected content-type: ${contentType}`);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(`Failed to parse JSON from ${url}`);
