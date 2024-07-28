@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 import PostGrid from "@/components/PostsGrid";
 import { getAllPosts } from "@/services/PostService";
 import { Box } from "@chakra-ui/react";

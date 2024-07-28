@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 import { VStack } from "@chakra-ui/react";
 import { getAllPosts } from "@/services/PostService";
 import PostView from "./PostView";

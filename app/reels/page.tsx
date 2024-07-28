@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 import ReelView from '@/components/ReelView';
 import { getAllReels } from '@/services/ReelService';
 import { Box, Text } from '@chakra-ui/react';
