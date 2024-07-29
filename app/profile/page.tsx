@@ -1,22 +1,67 @@
+'use client'
 import PostGrid from '@/components/PostsGrid';
-import { getUser, getUserPosts, getUserStories } from '@/services/UserService';
-import { Box, Image } from '@chakra-ui/react';
+import ReelView from '@/components/ReelView';
+import Post from '@/interface/Post';
+import Reel from '@/interface/Reel';
+import User from '@/interface/User';
+import UserStory from '@/interface/UserStory';
+import { getUser, getUserPosts, getUserReels, getUserStories } from '@/services/UserService';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Image } from '@chakra-ui/react';
 import type { Metadata } from 'next';
-import React from 'react';
+import { getuid } from 'process';
+import React, { useEffect, useState } from 'react';
+import { LuCameraOff } from 'react-icons/lu';
 
-export const metadata: Metadata = {
-    title: 'Perfil',
-    description: 'Página de perfil',
-}
+//TODO convertir la pagina en un componente de servidor
+//TODO crear un nuevo componente llamado ProvileView y meter toda la logica de cliente ahi
+// export const metadata: Metadata = {
+//     title: 'Perfil',
+//     description: 'Página de perfil',
+// }
 
-const Profile: React.FC = async () => {
+const Profile: React.FC = () => {
     // TODO: meter el user id en contexto react cuando se añada autenticacion
     const userId = 1
 
-    const user = await getUser(userId)
-    const userPosts = await getUserPosts(userId)
-    //TODO cambiar la peticion a las highlights cuando estén listas
-    const userHighlights = await getUserStories(userId)
+    const [user, setUser] = useState<User>()
+    const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
+    const [userHighlights, setUserHighlights] = useState<UserStory[]>([])
+    const [userPosts, setUserPosts] = useState<Post[]>([])
+    const [userReels, setUserReels] = useState<Reel[]>([])
+    const [userSavedPosts, setUserSavedPosts] = useState<Post[]>([])
+    const [userTaggedPosts, setUserTaggedPosts] = useState<Post[]>([])
+
+    //TODO en un futuro añadir los post guardados y con etiquetaciones
+
+    const fetchAndSetPosts = async () => setUserPosts(await getUserPosts(userId))
+    const fetchAndSetReels = async () => setUserReels(await getUserReels(userId))
+
+    const handleTabChange = (index: number) => setActiveTabIndex(index)
+
+    useEffect(() => {
+        const fetchInitialData = async () => {
+            setUser(await getUser(userId))
+            //TODO cambiar la peticion a las highlights cuando estén listas
+            setUserHighlights(await getUserStories(userId))
+            setUserPosts(await getUserPosts(userId)) //TODO optimizar
+        }
+        fetchInitialData()
+    }, [])
+
+    useEffect(() => {
+        switch (activeTabIndex) {
+            case 0:
+                fetchAndSetPosts()
+            case 1:
+                fetchAndSetReels()
+            case 2:
+            //TODO por implementar guardadas;
+            case 3:
+            //TODO por implementar etiquetadas
+            default:
+                fetchAndSetPosts()
+        }
+    }, [activeTabIndex])
 
     return (
         <Box className="mr-10 flex flex-col p-8 w-2/3 justify-center">
@@ -57,19 +102,99 @@ const Profile: React.FC = async () => {
                     ))}
                 </div>
                 <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px', borderBottom: '1px solid #333', paddingBottom: '10px' }}>
-                        <span style={{ cursor: 'pointer' }}>PUBLICACIONES</span>
-                        <span style={{ cursor: 'pointer' }}>REELS</span>
-                        <span style={{ cursor: 'pointer' }}>GUARDADAS</span>
-                        <span style={{ cursor: 'pointer' }}>ETIQUETADAS</span>
-                    </div>
-                    {
-                        userPosts &&
-                        <PostGrid posts={userPosts} width='250px' height='250px' />
-                    }
+                    <Tabs isFitted variant="enclosed" onChange={handleTabChange}>
+                        <TabList mb="1em">
+                            <Tab>PUBLICACIONES</Tab>
+                            <Tab>REELS</Tab>
+                            <Tab>GUARDADAS</Tab>
+                            <Tab>ETIQUETADAS</Tab>
+                        </TabList>
+                        <TabPanels>
+                            <TabPanel tabIndex={0}>
+                                <Box>
+                                    {
+                                        userPosts && userPosts.length > 0 ? (
+                                            <div className='w-full h-full'>
+                                                {/* TODO por que hace falta un div aqui */}
+                                                {/* TODO revisar el tema de los tamaños en los grid de imagenes */}
+                                                <PostGrid posts={userPosts} width='250px' height='250px' />
+                                            </div>
+                                        ) : (
+                                            <div className='flex flex-col items-center justify-center h-full'>
+                                                <p>No hay publicaciones disponibles</p>
+                                                <LuCameraOff />
+                                            </div>
+                                        )
+                                    }
+                                </Box>
+                            </TabPanel>
+                            <TabPanel tabIndex={1}>
+                                <Box>
+                                    {
+                                        userReels && userReels.length > 0 ?
+                                            (
+                                                userReels.map(reel => (
+                                                    <div key={reel.id}>
+                                                        {/* //TODO crear un <ReelsGrid> */}
+                                                        {/* TODO revisar tamaño y como se esta dibujando en el profile */}
+                                                        {/* TODO crear nuevo componente para ello */}
+                                                        <ReelView reel={reel} />
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div className='flex flex-col items-center justify-center h-full'>
+                                                    <p>No hay publicaciones disponibles</p>
+                                                    <LuCameraOff />
+                                                </div>
+                                            )
+                                    }
+                                </Box>
+                            </TabPanel>
+                            <TabPanel tabIndex={2}>
+                                <Box>
+                                    {/* Contenido para la pestaña de Guardadas */}
+                                    {
+                                        userSavedPosts && userSavedPosts.length > 0 ? (
+                                            <div>
+                                                {/* TODO por que hace falta un div aqui */}
+                                                {/* TODO revisar el tema de los tamaños en los grid de imagenes */}
+                                                <PostGrid posts={userSavedPosts} width='250px' height='250px' />
+                                            </div>
+                                        ) : (
+                                            <div className='flex flex-col items-center justify-center h-full'>
+                                                <p>No hay publicaciones disponibles</p>
+                                                <LuCameraOff />
+                                            </div>
+                                        )
+                                    }
+                                </Box>
+                            </TabPanel>
+                            <TabPanel tabIndex={3}>
+                                <Box>
+                                    {/* Contenido para la pestaña de Etiquetadas */}
+                                    {
+                                        userTaggedPosts && userTaggedPosts.length > 0 ? (
+                                            <div>
+                                                {/* TODO por que hace falta un div aqui */}
+                                                {/* TODO revisar el tema de los tamaños en los grid de imagenes */}
+                                                <PostGrid posts={userTaggedPosts} width='250px' height='250px' />
+                                            </div>
+                                        ) : (
+                                            <div className='flex flex-col items-center justify-center h-full'>
+                                                <p>No hay publicaciones disponibles</p>
+                                                <LuCameraOff />
+                                            </div>
+                                        )
+                                    }
+                                </Box>
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
+
                 </div>
             </div>
         </Box>
+
     );
 }
 

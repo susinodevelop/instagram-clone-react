@@ -4,6 +4,7 @@ import DirectMessage from "@/interface/DirectMessage";
 import UserNotification from "@/interface/UserNotification";
 import UserPost from "@/interface/UserPost";
 import UserStory from "@/interface/UserStory";
+import Reel from "@/interface/Reel";
 
 const API_URL = '/api/users';
 
@@ -29,4 +30,8 @@ export const getUserNotifications = async (userId: number): Promise<UserNotifica
 
 export const getUserMessages = async (userId: number): Promise<DirectMessage[]> => {
     return await useGET(`${API_URL}/${userId}/messages`, { cache: 'no-store' })
+}
+
+export const getUserReels = async (userId: number): Promise<Reel[]> => {
+    return await useGET(`${API_URL}/${userId}/reels`, { cache: 'no-store' })
 }
