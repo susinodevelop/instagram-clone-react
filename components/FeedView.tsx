@@ -2,7 +2,7 @@ import { VStack } from "@chakra-ui/react";
 import { getAllPosts } from "@/services/PostService";
 import PostView from "./PostView";
 
-const Feed = async () => {
+const FeedView = async () => {
 
   const posts = await getAllPosts()
 
@@ -18,4 +18,4 @@ const Feed = async () => {
   );
 };
 
-export default Feed;
+export default FeedView;
