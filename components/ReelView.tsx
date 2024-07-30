@@ -5,13 +5,14 @@ import React, { useState } from "react";
 
 interface ReelViewProps {
     reel: Reel,
-    width: string,
-    height: string,
-    withControls?: boolean
+    width?: string,
+    height?: string,
+    withControls?: boolean,
+    className?: string  
 }
-const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = true }: ReelViewProps) => {
 
-    const [thisReel, setThisReel] = useState<Reel>(reel)
+const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = false, className }: ReelViewProps) => {
+    const [thisReel, setThisReel] = useState<Reel>(reel);
 
     return (
         <Box
@@ -22,9 +23,11 @@ const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = true }
             width={width}
             height={height}
             style={{ objectFit: 'cover' }}
+            className={className}
         >
             <source src={thisReel.url} type="video/mp4" />
         </Box>
-    )
+    );
 }
+
 export default ReelView;

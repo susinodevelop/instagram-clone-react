@@ -133,7 +133,7 @@ const Profile: React.FC = () => {
                                         userReels && userReels.length > 0 ?
                                             (
                                                 userReels.map(reel => (
-                                                    <ReelView key={reel.id} reel={reel} width='150px' height='200px' withControls={false} />
+                                                    <ReelView key={reel.id} reel={reel} width='150px' height='200px' withControls={false} className='m-1'/>
                                                 ))
                                             ) : (
                                                 <div className='flex flex-col items-center justify-center h-full'>
