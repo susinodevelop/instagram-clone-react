@@ -10,11 +10,12 @@ import ReelView from "./ReelView";
 interface ReelContainerViewProps {
     reel: Reel
     width: string,
-    heigh: string,
+    height: string,
+    withControls: boolean,
 }
-const ReelContainerView = (props: ReelContainerViewProps) => {
+const ReelContainerView = ({ reel, width = 'auto', height = 'auto', withControls = true }: ReelContainerViewProps) => {
 
-    const [reel, setReel] = useState<Reel>(props.reel)
+    const [thisReel, setThisReel] = useState<Reel>(reel)
     const [user, setUser] = useState<User>()
 
     const fetchData = async () => {
@@ -26,9 +27,9 @@ const ReelContainerView = (props: ReelContainerViewProps) => {
     }, [])
 
     return (
-        <div className='w-[350px] p-[16px]'>
+        <div style={{ width: width, padding: '16px' }}>
             <Box position="relative" >
-                <ReelView reel={reel} width="350px" height="auto" />
+                <ReelView reel={reel} width={width} height={height} withControls={withControls} />
                 {
                     user &&
                     <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
