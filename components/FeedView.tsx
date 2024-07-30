@@ -8,7 +8,6 @@ const FeedView = async () => {
 
   return (
     <VStack spacing="10px" padding="20px" bg="black" color="white" flex="1">
-
       {
         posts.map(post => (
           <PostView key={post.id} post={post} />
