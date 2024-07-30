@@ -63,7 +63,7 @@ const Profile: React.FC = () => {
     }, [activeTabIndex])
 
     return (
-        <Box className="mr-10 flex flex-col p-8 w-2/3 justify-center">
+        <Box className="mr-10 flex flex-col p-8 w-5/6 justify-center">
             <div className='flex flex-col '>
                 {
                     user &&
@@ -132,7 +132,7 @@ const Profile: React.FC = () => {
                                         userReels && userReels.length > 0 ?
                                             (
                                                 userReels.map(reel => (
-                                                    <ReelView key={reel.id} reel={reel} width='150px' height='200px' withControls={false} className='m-1' />
+                                                    <ReelView key={reel.id} reel={reel} width='23%' height='auto' withControls={false} className='m-1' />
                                                 ))
                                             ) : (
                                                 <div className='flex flex-col items-center justify-center h-full'>

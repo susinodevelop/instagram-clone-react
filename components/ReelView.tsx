@@ -8,7 +8,7 @@ interface ReelViewProps {
     width?: string,
     height?: string,
     withControls?: boolean,
-    className?: string  
+    className?: string
 }
 
 const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = false, className }: ReelViewProps) => {
@@ -22,7 +22,7 @@ const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = false,
             overflow="hidden"
             width={width}
             height={height}
-            style={{ objectFit: 'cover' }}
+            objectFit={'cover'}
             className={className}
         >
             <source src={thisReel.url} type="video/mp4" />
