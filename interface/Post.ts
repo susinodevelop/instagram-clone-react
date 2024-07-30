@@ -4,5 +4,6 @@ export default interface Post {
     url: string,
     status: string,
     created_at: string,
-    user_owner_id: number
+    user_owner_id: number,
+    type: 'post'
 }

@@ -5,4 +5,5 @@ export default interface Reel {
     status: string,
     created_at: string,
     user_owner_id: number,
+    type: 'reel'
 }
