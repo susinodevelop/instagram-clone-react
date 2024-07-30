@@ -8,7 +8,6 @@ import UserStory from '@/interface/UserStory';
 import { getUser, getUserPosts, getUserReels, getUserStories } from '@/services/UserService';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Image } from '@chakra-ui/react';
 import type { Metadata } from 'next';
-import { getuid } from 'process';
 import React, { useEffect, useState } from 'react';
 import { LuCameraOff } from 'react-icons/lu';
 
@@ -129,17 +128,12 @@ const Profile: React.FC = () => {
                                 </Box>
                             </TabPanel>
                             <TabPanel tabIndex={1}>
-                                <Box>
+                                <Box className='flex flex-wrap'>
                                     {
                                         userReels && userReels.length > 0 ?
                                             (
                                                 userReels.map(reel => (
-                                                    <div key={reel.id}>
-                                                        {/* //TODO crear un <ReelsGrid> */}
-                                                        {/* TODO revisar tamaño y como se esta dibujando en el profile */}
-                                                        {/* TODO crear nuevo componente para ello */}
-                                                        <ReelView reel={reel} />
-                                                    </div>
+                                                    <ReelView key={reel.id} reel={reel} width='150px' height='200px' withControls={false} />
                                                 ))
                                             ) : (
                                                 <div className='flex flex-col items-center justify-center h-full'>
