@@ -2,7 +2,7 @@
 import StoryView from "@/components/StoryView"
 import Story from "@/interface/Story"
 import { Box, Flex } from "@chakra-ui/react"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { useState } from "react"
 import { RxCross2 } from "react-icons/rx"
 
@@ -12,13 +12,7 @@ interface StoriesViewer {
 
 const StoriesViewer = ({ stories }: StoriesViewer) => {
 
-    const router = useRouter()
     const [storiesToShow, setStoriesToShow] = useState<Story[]>(stories)
-
-    //TODO recibir la url de redireccion desde parámetros
-    const handleRedirectToPreviousLink = () => {
-        router.push("/profile")
-    }
 
     return (
 
@@ -68,9 +62,10 @@ const StoriesViewer = ({ stories }: StoriesViewer) => {
                 top="20px"
                 right="20px"
                 cursor="pointer"
-                onClick={handleRedirectToPreviousLink}
             >
-                <RxCross2 size="50px" color="white" />
+                <Link href="/profile" >
+                    <RxCross2 size="50px" color="white" />
+                </Link>
             </Box>
         </Flex>
     )
