@@ -10,33 +10,32 @@ import { FaRegHeart } from "react-icons/fa";
 import { SlPaperPlane } from "react-icons/sl";
 
 interface StoryViewProps {
-    story: Story
+    story: Story;
 }
 
 const StoryView = ({ story }: StoryViewProps) => {
-
-    const [currentStory, setCurrentStory] = useState<Story>(story);
-    const [storyOwner, setStoryOwner] = useState<User>()
-    const [answer, setAnswer] = useState<string>('')
+    const [storyOwner, setStoryOwner] = useState<User | undefined>();
+    const [answer, setAnswer] = useState<string>('');
 
     const handleOnChangeAnswer = (event: ChangeEvent<HTMLInputElement>) => {
-        setAnswer(event.target.value)
-    }
+        setAnswer(event.target.value);
+    };
 
-    const handleLikeStory = () => alert("Me ha gustado la foto") //TODO revisar y añadir like en bbdd
+    const handleLikeStory = () => alert("Me ha gustado la foto"); //TODO: Implementar funcionalidad de like
 
-    const handleSendComment = () => alert("Mensaje enviado") //TODO revisar y añadir comentario en bbdd
+    const handleSendComment = () => alert("Mensaje enviado"); //TODO: Implementar funcionalidad de comentario
 
     useEffect(() => {
         const loadInitialData = async () => {
-            setStoryOwner(await getUser(currentStory.user_owner_id)) //TODO revisar
-        }
-        loadInitialData()
-    }, [])
+            const owner = await getUser(story.user_owner_id);
+            setStoryOwner(owner);
+        };
+        loadInitialData();
+    }, [story.user_owner_id]); // Dependencia correcta para recargar cuando cambia el ID del propietario
 
     return (
         <>
-            {currentStory && storyOwner &&
+            {story && storyOwner &&
                 <Box
                     position="relative"
                     height="90vh"
@@ -46,19 +45,20 @@ const StoryView = ({ story }: StoryViewProps) => {
                 >
                     <Box position="absolute" top="20px" left="20px" display="flex" alignItems="center" className="z-20">
                         <div className="relative w-[40px] h-[40px] mr-[10px]">
-                            {/* TODO revisar las propiedades de la imagen que no muestren warnings en la consola */}
-                            <Image src={storyOwner.profile_img}
+                            <Image
+                                src={storyOwner.profile_img}
                                 alt={storyOwner.username}
                                 fill
                                 sizes="40px"
-                                className="rounded-full" />
+                                className="rounded-full"
+                            />
                         </div>
-                        <Text>{storyOwner.username} </Text>
+                        <Text>{storyOwner.username}</Text>
                         <Text className="ml-2 text-xs text-gray-300">•</Text>
-                        <Text className="ml-1 text-xs text-gray-300">{timeAgo(currentStory.created_at)}</Text>
+                        <Text className="ml-1 text-xs text-gray-300">{timeAgo(story.created_at)}</Text>
                     </Box>
                     <Image
-                        src={currentStory.url}
+                        src={story.url}
                         alt={storyOwner.username}
                         fill
                         sizes="(max-width: 768px) 90vw, (max-width: 1200px) 75vw, 60vw"
@@ -67,14 +67,15 @@ const StoryView = ({ story }: StoryViewProps) => {
                     />
                     <Box position="absolute" bottom={5} left={5}>
                         <div className="flex flex-row items-center justify-center">
-                            <Input id={`anser-story-${storyOwner.username}`}
+                            <Input
+                                id={`answer-story-${storyOwner.username}`}
                                 value={answer}
                                 placeholder={`Responder a ${storyOwner.username}`}
                                 size="lg"
                                 variant="outline"
                                 outline="1px solid white"
-                                color="white" // Color del texto  
-                                _placeholder={{ color: 'white' }} // Color del placeholder
+                                color="white"
+                                _placeholder={{ color: 'white' }}
                                 borderRadius="2xl"
                                 onChange={handleOnChangeAnswer}
                             />
@@ -82,10 +83,10 @@ const StoryView = ({ story }: StoryViewProps) => {
                             <SlPaperPlane size="50px" className="mr-[20px]" onClick={handleSendComment} />
                         </div>
                     </Box>
-                </Box >
+                </Box>
             }
         </>
-    )
-}
+    );
+};
 
 export default StoryView;

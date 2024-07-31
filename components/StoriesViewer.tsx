@@ -3,7 +3,7 @@ import StoryView from "@/components/StoryView";
 import Story from "@/interface/Story";
 import { Box, Flex } from "@chakra-ui/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
@@ -12,22 +12,16 @@ interface StoriesViewerProps {
 }
 
 const StoriesViewer = ({ stories }: StoriesViewerProps) => {
-
-    const [currentStories, setCurrentStories] = useState<Story[]>(stories)
-    const [currentStory, setCurrentStory] = useState<Story>(stories[0])
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
+        setCurrentIndex((prevIndex) => prevIndex === (stories.length - 1) ? 0 : prevIndex + 1);
     };
 
     const handlePrev = () => {
-        setCurrentIndex((prevIndex) => prevIndex === 0 ? stories.length - 1 : prevIndex - 1);
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? stories.length - 1 : prevIndex - 1));
     };
 
-    useEffect(() => {
-        setCurrentStory(currentStories[currentIndex])
-    }, [currentIndex])
     return (
         <Flex
             justifyContent="center"
@@ -64,7 +58,7 @@ const StoriesViewer = ({ stories }: StoriesViewerProps) => {
             </Box>
 
             <Flex flexDirection="row" gap={4} maxW="90%">
-                <StoryView story={currentStory} />
+                <StoryView story={stories[currentIndex]} />
             </Flex>
 
             <Box
@@ -78,10 +72,7 @@ const StoriesViewer = ({ stories }: StoriesViewerProps) => {
                 _hover={{ backgroundColor: "white" }}
                 onClick={handleNext}
             >
-                <IoIosArrowDropright
-                    size={25}
-                    color="gray"
-                />
+                <IoIosArrowDropright size={25} color="gray" />
             </Box>
         </Flex>
     );
