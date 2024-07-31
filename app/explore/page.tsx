@@ -17,7 +17,7 @@ const Explore: React.FC = async () => {
     const posts = (await getAllPosts() as Post[]).map(post => ({ ...post, type: 'post' }))
     const reels = (await getAllReels() as Reel[]).map(reel => ({ ...reel, type: 'reel' }))
 
-    const allPublications = [...posts, ...reels].sort(() => Math.random() - 0.5);
+    const allPublications = [...posts, ...reels].sort(() => Math.random() - 0.5)
 
     return (
         <Box
@@ -33,42 +33,51 @@ const Explore: React.FC = async () => {
             <SimpleGrid
                 columns={{ base: 2, md: 3 }}
                 spacing={4}
-                autoRows="minmax(100px, auto)"
                 className="w-2/4"
             >
                 {allPublications.map((publication, index) => {
                     let resultHtml;
                     if (publication.type === "post") {
-                        const post = publication as Post
-                        resultHtml = <Image
-                            src={post.url}
-                            alt={post.description}
-                            objectFit="cover"
-                            w="100%"
-                            h="100%"
-                            transition="transform 0.3s"
-                            _hover={{ transform: 'scale(1.05)' }}
-                        />
+                        const post = publication as Post;
+                        resultHtml = (
+                            <Image
+                                src={post.url}
+                                alt={post.description}
+                                objectFit="cover"
+                                w="100%"
+                                h="100%"
+                                aspectRatio="1 / 1" 
+                                transition="transform 0.3s"
+                                _hover={{ transform: 'scale(1.05)' }}
+                            />
+                        );
                     } else if (publication.type === "reel") {
-                        resultHtml = <ReelView reel={publication as Reel} width="150px" />
+                        resultHtml = (
+                            <ReelView
+                                reel={publication as Reel}
+                                width="100%"
+                                height="100%"
+                                className="aspect-9/16"
+                            />
+                        );
                     }
 
                     return (
                         <Box
                             key={index}
-                            gridColumn={index % 7 === 0 ? 'span 2' : 'span 1'}
-                            gridRow={index % 7 === 0 ? 'span 2' : 'span 1'}
+                            gridColumn={index % 3 === 2 ? 'span 1' : 'span 1'}
+                            gridRow={publication.type === "reel" ? 'span 2' : 'span 1'}
                             overflow="hidden"
                             borderRadius="md"
                             position="relative"
                         >
                             {resultHtml}
                         </Box>
-                    )
+                    );
                 })}
             </SimpleGrid>
         </Box>
-    )
+    );
 }
 
 export default Explore;
