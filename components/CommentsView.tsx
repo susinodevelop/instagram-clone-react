@@ -65,7 +65,7 @@ const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) =>
                 onClose={turnOffModal}
             >
                 <ModalOverlay bg="blackAlpha.800" />
-                <ModalContent>
+                <ModalContent marginX={50}>
                     {post && <AllCommentsModal post={post} />}
                 </ModalContent>
             </Modal>

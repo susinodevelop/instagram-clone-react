@@ -2,10 +2,11 @@
 import Reel from "@/interface/Reel";
 import User from "@/interface/User";
 import { getUser } from "@/services/UserService";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FaBookmark, FaComment, FaHeart, FaPaperPlane } from "react-icons/fa";
 import ReelView from "./ReelView";
+import Image from "next/image";
 
 interface ReelContainerViewProps {
     reel: Reel
@@ -33,7 +34,9 @@ const ReelContainerView = ({ reel, width = 'auto', height = 'auto', withControls
                 {
                     user &&
                     <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
-                        <Image src={user.profile_img} alt={user.username} width="40px" height="40px" borderRadius="50%" mr="10px" />
+                        <div className="relative w-[40px] h-[40px] mr-[10px]">
+                            <Image src={user.profile_img} alt={user.username} fill sizes="40px" className="rounded-full" />
+                        </div>
                         <Text>{user.username} • Seguir</Text>
                     </Box>
                 }

@@ -1,12 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { getUser } from "@/services/UserService";
 import ProfilePicture from "./ProfilePicture";
 import CommentsView from "./CommentsView";
 import { timeAgo } from "@/utils/DateUtils";
 import User from '@/interface/User';
 import Post from '@/interface/Post';
+import Image from 'next/image';
 
 interface PostViewProps {
     post: Post;
@@ -39,9 +40,9 @@ const PostView: React.FC<PostViewProps> = (props) => {
                     <Image
                         src={post.url}
                         alt={post.description}
-                        objectFit="cover"
-                        maxWidth="500px"
-                        maxHeight="500px"
+                        width={500}
+                        height={500}
+                        priority={true}
                     />
                 </div>
                 <div>Le gusta a .... y más</div>

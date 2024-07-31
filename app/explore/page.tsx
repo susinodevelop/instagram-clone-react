@@ -1,10 +1,10 @@
-import PostGrid from "@/components/PostsGrid";
 import ReelView from "@/components/ReelView";
 import Post from "@/interface/Post";
 import Reel from "@/interface/Reel";
 import { getAllPosts } from "@/services/PostService";
 import { getAllReels } from "@/services/ReelService";
-import { Box, Image, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
+import Image from "next/image";
 import React from "react";
 
 export const metadata = {
@@ -33,7 +33,7 @@ const Explore: React.FC = async () => {
             <SimpleGrid
                 columns={{ base: 2, md: 3 }}
                 spacing={1}
-                className="w-2/4"
+                className="w-3/4"
             >
                 {allPublications.map((publication, index) => {
                     let resultHtml;
@@ -41,26 +41,29 @@ const Explore: React.FC = async () => {
                     if (publication.type === "post") {
                         const post = publication as Post;
                         resultHtml = (
-                            <Image
-                                src={post.url}
-                                alt={post.description}
-                                objectFit="cover"
-                                w="100%"
-                                h="100%"
-                                aspectRatio="1 / 1" 
-                                transition="transform 0.3s"
-                                _hover={{ transform: 'scale(1.05)' }}
-                            />
+                            <div className="relative w-full aspect-square">
+                                <Image
+                                    src={post.url}
+                                    alt={post.description}
+                                    fill
+                                    className="aspect-square transition-transform duration-300 hover:scale-105"
+                                    priority
+                                    style={{ objectFit: "cover" }}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
+                            </div>
                         );
                     } else if (publication.type === "reel") {
                         const reel = publication as Reel;
                         resultHtml = (
-                            <ReelView
-                                reel={reel}
-                                width="100%"
-                                height="100%"
-                                className="aspect-9/16"
-                            />
+                            <div className="w-full h-full">
+                                <ReelView
+                                    reel={reel}
+                                    width="100%"
+                                    height="100%"
+                                    className="aspect-9/16 transition-transform duration-300 hover:scale-105"
+                                />
+                            </div>
                         );
                     }
 
