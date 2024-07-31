@@ -61,7 +61,7 @@ const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) =>
             <Modal
                 isOpen={isAllCommentsVisible}
                 isCentered={true}
-                size="4xl"
+                size="6xl"
                 onClose={turnOffModal}
             >
                 <ModalOverlay bg="blackAlpha.800" />
