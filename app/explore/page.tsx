@@ -14,10 +14,10 @@ export const metadata = {
 
 const Explore: React.FC = async () => {
 
-    const posts = (await getAllPosts() as Post[]).map(post => ({ ...post, type: 'post' }))
-    const reels = (await getAllReels() as Reel[]).map(reel => ({ ...reel, type: 'reel' }))
+    const posts = (await getAllPosts() as Post[]).map(post => ({ ...post, type: 'post' }));
+    const reels = (await getAllReels() as Reel[]).map(reel => ({ ...reel, type: 'reel' }));
 
-    const allPublications = [...posts, ...reels].sort(() => Math.random() - 0.5)
+    const allPublications = [...posts, ...reels].sort(() => Math.random() - 0.5);
 
     return (
         <Box
@@ -37,6 +37,7 @@ const Explore: React.FC = async () => {
             >
                 {allPublications.map((publication, index) => {
                     let resultHtml;
+
                     if (publication.type === "post") {
                         const post = publication as Post;
                         resultHtml = (
@@ -52,9 +53,10 @@ const Explore: React.FC = async () => {
                             />
                         );
                     } else if (publication.type === "reel") {
+                        const reel = publication as Reel;
                         resultHtml = (
                             <ReelView
-                                reel={publication as Reel}
+                                reel={reel}
                                 width="100%"
                                 height="100%"
                                 className="aspect-9/16"
@@ -65,7 +67,7 @@ const Explore: React.FC = async () => {
                     return (
                         <Box
                             key={index}
-                            gridColumn={index % 3 === 2 ? 'span 1' : 'span 1'}
+                            gridColumn="span 1"
                             gridRow={publication.type === "reel" ? 'span 2' : 'span 1'}
                             overflow="hidden"
                             borderRadius="md"
