@@ -4,5 +4,5 @@ export default interface Reel {
     title: string,
     status: string,
     created_at: string,
-    user_owner_id: number,
+    user_owner_id: number
 }

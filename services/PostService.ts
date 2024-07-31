@@ -1,11 +1,11 @@
-import UserPost from "@/interface/UserPost";
 import { useGET, usePOST } from "./HttpService";
 import Comment from "@/interface/Comment";
 import NewComment from "@/interface/NewComment";
+import Post from "@/interface/Post";
 
 const API_URL = '/api/posts';
 
-export const getAllPosts = async (): Promise<UserPost[]> => {
+export const getAllPosts = async (): Promise<Post[]> => {
     return await useGET(API_URL, { cache: 'no-store' });
 }
 

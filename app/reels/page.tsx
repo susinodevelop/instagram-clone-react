@@ -1,4 +1,4 @@
-import ReelView from '@/components/ReelView';
+import ReelContainerView from '@/components/ReelContainerView';
 import { getAllReels } from '@/services/ReelService';
 import { Box, Text } from '@chakra-ui/react';
 
@@ -23,11 +23,12 @@ const Reels = async () => {
             alignItems="center"
         >
             <Text as="h1">Reels</Text>
-            {reels && reels.map(reel => (
-                <div key={reel.id}>
-                    <ReelView reel={reel} />
-                </div>
-            ))}
+            {
+                reels && reels.map(reel => (
+                    <div key={reel.id}>
+                        <ReelContainerView reel={reel} width='350px' height='auto' withControls={true} />
+                    </div>
+                ))}
         </Box>
     );
 };

@@ -38,7 +38,7 @@ const PostView: React.FC<PostViewProps> = (props) => {
                 <div className="flex justify-center mb-[25px] border border-gray-900 bg-black max-h-[500px] max-w-[500px]">
                     <Image
                         src={post.url}
-                        alt="Image post"
+                        alt={post.description}
                         objectFit="cover"
                         maxWidth="500px"
                         maxHeight="500px"

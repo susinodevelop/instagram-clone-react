@@ -1,9 +1,10 @@
 import User from "@/interface/User";
 import { useGET } from "./HttpService";
 import DirectMessage from "@/interface/DirectMessage";
-import UserNotification from "@/interface/UserNotification";
-import UserPost from "@/interface/UserPost";
+import Reel from "@/interface/Reel";
+import Post from "@/interface/Post";
 import UserStory from "@/interface/UserStory";
+import UserNotification from "@/interface/UserNotification";
 
 const API_URL = '/api/users';
 
@@ -15,7 +16,7 @@ export const getUser = async (userId: number): Promise<User> => {
     return await useGET(`${API_URL}/${userId}`, { cache: 'no-store' })
 }
 
-export const getUserPosts = async (userId: number): Promise<UserPost[]> => {
+export const getUserPosts = async (userId: number): Promise<Post[]> => {
     return await useGET(`${API_URL}/${userId}/posts`, { cache: 'no-store' })
 }
 
@@ -29,4 +30,8 @@ export const getUserNotifications = async (userId: number): Promise<UserNotifica
 
 export const getUserMessages = async (userId: number): Promise<DirectMessage[]> => {
     return await useGET(`${API_URL}/${userId}/messages`, { cache: 'no-store' })
+}
+
+export const getUserReels = async (userId: number): Promise<Reel[]> => {
+    return await useGET(`${API_URL}/${userId}/reels`, { cache: 'no-store' })
 }
