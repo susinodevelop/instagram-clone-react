@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import ProfilePicture from './ProfilePicture';
-import { Image, useToast } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import { timeAgo } from '@/utils/DateUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmile } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,7 @@ import User from '@/interface/User';
 import Post from '@/interface/Post';
 import Comment from '@/interface/Comment';
 import NewComment from '@/interface/NewComment';
+import Image from 'next/image';
 
 interface AllCommentsViewProps {
     post: Post
@@ -89,12 +90,17 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
         });
     };
 
-
-
     return (
-        <div className="flex flex-row w-full mx-auto font-sans border border-gray-900 bg-black">
-            <Image className="w-2/3" aspectRatio="1:1" src={post.url} alt={post.description} />
-            <div className="p-4 w-1/3">
+        <div className="flex flex-row w-full font-sans border border-gray-900 bg-black w-full h-full z-10">
+            <div className="relative w-2/3">
+                <Image
+                    src={post.url}
+                    alt={post.description}
+                    fill={true}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+            </div>
+            <div className="p-4 w-1/3 relative">
                 {owner && (
                     <>
                         <div className="flex items-center mb-2">

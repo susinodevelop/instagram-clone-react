@@ -1,14 +1,14 @@
 'use client'
 import AllCommentsModal from '@/components/AllCommentsModal';
-import PostGrid from '@/components/PostsGrid';
 import ReelView from '@/components/ReelView';
 import Post from '@/interface/Post';
 import Reel from '@/interface/Reel';
 import User from '@/interface/User';
 import UserStory from '@/interface/UserStory';
 import { getUser, getUserPosts, getUserReels, getUserStories } from '@/services/UserService';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Image, Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import React, { MouseEvent, useEffect, useState } from 'react';
 import { LuCameraOff } from 'react-icons/lu';
 
@@ -18,6 +18,8 @@ import { LuCameraOff } from 'react-icons/lu';
 //     title: 'Perfil',
 //     description: 'Página de perfil',
 // }
+
+const TAMAÑO_IMAGEN_1_1 = 250
 
 const Profile: React.FC = () => {
     // TODO: meter el user id en contexto react cuando se añada autenticacion
@@ -83,7 +85,14 @@ const Profile: React.FC = () => {
                     {
                         user &&
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                            <Image src={user.profile_img} alt="profile" style={{ borderRadius: '50%', marginRight: '20px', width: '150px', height: '150px' }} />
+                            <div className='relative w-[150px] h-[150px] mr-[20px]'>
+                                <Image src={user.profile_img}
+                                    alt={user.username}
+                                    fill
+                                    sizes="50px"
+                                    className="rounded-full"
+                                />
+                            </div>
                             <div>
                                 <h2 className="font-bold text-2xl my-5">{user.username}</h2>
                                 <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
@@ -109,7 +118,14 @@ const Profile: React.FC = () => {
                     <div style={{ display: 'flex', marginBottom: '20px' }}>
                         {userHighlights && Array.isArray(userHighlights) && userHighlights.map(highlight => (
                             <div key={highlight.id} style={{ marginRight: '10px', textAlign: 'center' }}>
-                                <Image src={highlight.miniature_url} alt={highlight.title} style={{ width: '60px', height: '60px', borderRadius: '50%', marginBottom: '5px' }} />
+                                <div className='relative w-[60px] h-[60px] mb-[5px]'>
+                                    <Image src={highlight.miniature_url}
+                                        alt={highlight.title}
+                                        fill
+                                        sizes='60px'
+                                        className='rounded-full'
+                                    />
+                                </div>
                                 <p style={{ fontSize: '12px' }}>{highlight.title}</p>
                             </div>
                         ))}
@@ -132,16 +148,18 @@ const Profile: React.FC = () => {
                                                     {/* TODO revisar el tema de los tamaños en los grid de imagenes */}
                                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '5px' }}>
                                                         {userPosts && userPosts.map((post) => (
-                                                            <Image
-                                                                key={post.id}
-                                                                src={post.url}
-                                                                alt={`post-${post.id}`}
-                                                                width="250px"
-                                                                height="250px"
-                                                                objectFit="cover"
-                                                                onClick={() => handleActiveClick(post)}
-                                                                className="cursor-pointer"
-                                                            />
+                                                            <div key={post.id} className='relative w-full aspect-square'>
+                                                                <Image
+                                                                    src={post.url}
+                                                                    alt={`post-${post.id}`}
+                                                                    fill
+                                                                    sizes={`${TAMAÑO_IMAGEN_1_1}px`}
+                                                                    style={{ objectFit: "cover" }}
+                                                                    onClick={() => handleActiveClick(post)}
+                                                                    className="aspect-square cursor-pointer"
+                                                                    priority
+                                                                />
+                                                            </div>
                                                         ))}
                                                     </div>
                                                 </div>
@@ -181,16 +199,18 @@ const Profile: React.FC = () => {
                                                     {/* TODO revisar el tema de los tamaños en los grid de imagenes */}
                                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '5px' }}>
                                                         {userSavedPosts && userSavedPosts.map((post) => (
-                                                            <Image
-                                                                key={post.id}
-                                                                src={post.url}
-                                                                alt={`post-${post.id}`}
-                                                                width="250px"
-                                                                height="250px"
-                                                                objectFit="cover"
-                                                                onClick={() => handleActiveClick(post)}
-                                                                className="cursor-pointer"
-                                                            />
+                                                            <div key={post.id} className='relative w-full aspect-square'>
+                                                                <Image
+                                                                    src={post.url}
+                                                                    alt={`post-${post.id}`}
+                                                                    fill
+                                                                    sizes={`${TAMAÑO_IMAGEN_1_1}px`}
+                                                                    style={{ objectFit: "cover" }}
+                                                                    onClick={() => handleActiveClick(post)}
+                                                                    className="aspect-square cursor-pointer"
+                                                                    priority
+                                                                />
+                                                            </div>
                                                         ))}
                                                     </div>
                                                 </div>
@@ -213,16 +233,18 @@ const Profile: React.FC = () => {
                                                     {/* TODO revisar el tema de los tamaños en los grid de imagenes */}
                                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '5px' }}>
                                                         {userTaggedPosts && userTaggedPosts.map((post) => (
-                                                            <Image
-                                                                key={post.id}
-                                                                src={post.url}
-                                                                alt={`post-${post.id}`}
-                                                                width="250px"
-                                                                height="250px"
-                                                                objectFit="cover"
-                                                                onClick={() => handleActiveClick(post)}
-                                                                className="cursor-pointer"
-                                                            />
+                                                            <div key={post.id} className='relative w-full aspect-square'>
+                                                                <Image
+                                                                    src={post.url}
+                                                                    alt={`post-${post.id}`}
+                                                                    fill
+                                                                    sizes={`${TAMAÑO_IMAGEN_1_1}px`}
+                                                                    style={{ objectFit: "cover" }}
+                                                                    onClick={() => handleActiveClick(post)}
+                                                                    className="aspect-square cursor-pointer"
+                                                                    priority
+                                                                />
+                                                            </div>
                                                         ))}
                                                     </div> </div>
                                             ) : (
@@ -248,7 +270,7 @@ const Profile: React.FC = () => {
                 onClose={closeModal}
             >
                 <ModalOverlay bg="blackAlpha.800" />
-                <ModalContent>
+                <ModalContent className='mx-[150px]'>
                     {/* TODO revisar para que admita reels tambien */}
                     {activePost && <AllCommentsModal post={activePost as Post} />}
                 </ModalContent>

@@ -2,7 +2,8 @@
 import User from '@/interface/User';
 import UserNotification from '@/interface/UserNotification';
 import { getUser, getUserNotifications } from '@/services/UserService';
-import { Flex, Image } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 const Notifications: React.FC = () => {
@@ -41,12 +42,30 @@ const Notifications: React.FC = () => {
 
                             return (
                                 <div key={notification.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                                    <Image src={actionUser.profile_img} alt={actionUser.username} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
+                                    <div className="relative w-[50px] h-[50px] mr-[10px]">
+                                        <Image src={actionUser.profile_img}
+                                            alt={actionUser.username}
+                                            fill
+                                            sizes='50px'
+                                            className='rounded-full'
+                                        />
+                                    </div>
                                     <div style={{ flex: '1' }}>
                                         <p style={{ margin: '0' }}>{actionUser.username}</p>
                                         <p style={{ margin: '0', color: '#777' }}>{notification.created_at}</p>
                                     </div>
-                                    {notification.related_entity_type === 'story' && <Image src={actionUser.profile_img} alt="story" style={{ width: '50px', height: '50px', borderRadius: '10px' }} />}
+                                    {
+                                        notification.related_entity_type === 'story' &&
+                                        <div className="relative w-[50px] h-[50px] ml-[10px]">
+                                            {/*TODO aqui mostrar el line de la story relacionada*/}
+                                            <Image src={actionUser.profile_img}
+                                                alt={actionUser.username}
+                                                fill
+                                                sizes='50px'
+                                                className='rounded-[10px]'
+                                            />
+                                        </div>
+                                    }
                                 </div>
                             )
                         })

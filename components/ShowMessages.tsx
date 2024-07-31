@@ -3,7 +3,9 @@ import DirectMessage from '@/interface/DirectMessage';
 import User from '@/interface/User';
 import { getAllMessages } from '@/services/MessageService';
 import { getUser } from '@/services/UserService';
-import { Flex, Image } from '@chakra-ui/react';
+import { timeAgo } from '@/utils/DateUtils';
+import { Flex } from '@chakra-ui/react';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 // TODO remove 
@@ -66,12 +68,20 @@ const ShowMessages: React.FC = () => {
 
                         return (
                             <div key={message.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                                {/* TODO introducir enlace entre mensaje y usuario y meter aqui la foto de perfil del usuario que envio el mensaje */}
-                                <Image src={actionUser.profile_img} /*TODO revisar */ alt={'Imagen placeholder'} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
+                                <div className='relative w-[50px] h-[50px] mr-[10px]'>
+                                    <Image
+                                        src={actionUser.profile_img}
+                                        alt={actionUser.username}
+                                        fill
+                                        sizes='50px'
+                                        className='rounded-full'
+                                    />
+                                    {/* TODO revisar el mensaje de timepo de carga de consola */}
+                                </div>
                                 <div>
                                     <p style={{ margin: '0', fontWeight: 'bold' }}>{actionUser.username}</p>
                                     <p style={{ margin: '0', color: '#bbb' }}>{message.content}</p>
-                                    <p style={{ margin: '0', color: '#777' }}>{message.created_at}</p>
+                                    <p style={{ margin: '0', color: '#777' }}>{timeAgo(message.created_at)}</p>
                                 </div>
                             </div>
                         )

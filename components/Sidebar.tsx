@@ -74,7 +74,7 @@ const Sidebar: React.FC = () => {
   }
 
   return (
-    <Box as="nav" zIndex="100000" width={calculateWidth()} padding="20px" color="white" className="flex fixed t-0 l-0 w-1/3">
+    <Box as="nav" zIndex="1" width={calculateWidth()} padding="20px" color="white" className="flex fixed t-0 l-0 w-1/3 h-screen bg-black">
       <VStack spacing="20px" align="start" >
         <Link href="/"><Icon as={FaInstagram} boxSize="10" /></Link>
         <Link href="/"><Icon as={FaHome} boxSize="6" />  {isShowText ? "Inicio" : ""}</Link>
