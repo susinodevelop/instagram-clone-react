@@ -1,6 +1,5 @@
 import StoriesViewer from "@/components/StoriesViewer"
 import { getUserStories } from "@/services/UserService"
-import { useSearchParams } from "next/navigation"
 
 const StoriesPage = async () => {
 
