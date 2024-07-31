@@ -14,8 +14,8 @@ export const metadata = {
 
 const Explore: React.FC = async () => {
 
-    const posts: Post[] = await getAllPosts()
-    const reels: Reel[] = await getAllReels()
+    const posts = (await getAllPosts() as Post[]).map(post => ({ ...post, type: 'post' }))
+    const reels = (await getAllReels() as Reel[]).map(reel => ({ ...reel, type: 'reel' }))
 
     const allPublications = [...posts, ...reels].sort(() => Math.random() - 0.5);
 
@@ -36,30 +36,36 @@ const Explore: React.FC = async () => {
                 autoRows="minmax(100px, auto)"
                 className="w-2/4"
             >
-                {allPublications.map((publication, index) => (
-                    <Box
-                        key={index}
-                        gridColumn={index % 7 === 0 ? 'span 2' : 'span 1'}
-                        gridRow={index % 7 === 0 ? 'span 2' : 'span 1'}
-                        overflow="hidden"
-                        borderRadius="md"
-                        position="relative"
-                    >
-                        {publication.type === 'reel' ? (
-                            <ReelView reel={publication as Reel} />
-                        ) : (
-                            <Image
-                                src={publication.url}
-                                alt={publication.description}
-                                objectFit="cover"
-                                w="100%"
-                                h="100%"
-                                transition="transform 0.3s"
-                                _hover={{ transform: 'scale(1.05)' }}
-                            />
-                        )}
-                    </Box>
-                ))}
+                {allPublications.map((publication, index) => {
+                    let resultHtml;
+                    if (publication.type === "post") {
+                        const post = publication as Post
+                        resultHtml = <Image
+                            src={post.url}
+                            alt={post.description}
+                            objectFit="cover"
+                            w="100%"
+                            h="100%"
+                            transition="transform 0.3s"
+                            _hover={{ transform: 'scale(1.05)' }}
+                        />
+                    } else if (publication.type === "reel") {
+                        resultHtml = <ReelView reel={publication as Reel} width="150px" />
+                    }
+
+                    return (
+                        <Box
+                            key={index}
+                            gridColumn={index % 7 === 0 ? 'span 2' : 'span 1'}
+                            gridRow={index % 7 === 0 ? 'span 2' : 'span 1'}
+                            overflow="hidden"
+                            borderRadius="md"
+                            position="relative"
+                        >
+                            {resultHtml}
+                        </Box>
+                    )
+                })}
             </SimpleGrid>
         </Box>
     )
