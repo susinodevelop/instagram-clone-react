@@ -3,7 +3,7 @@ import StoryView from "@/components/StoryView";
 import Story from "@/interface/Story";
 import { Box, Flex } from "@chakra-ui/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
@@ -15,18 +15,19 @@ const StoriesViewer = ({ stories }: StoriesViewerProps) => {
 
     const [currentStories, setCurrentStories] = useState<Story[]>(stories)
     const [currentStory, setCurrentStory] = useState<Story>(stories[0])
-    const [currentIndex, setCurrentIndex] = useState(1);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
-        setCurrentStory(currentStories[currentIndex])
     };
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) => prevIndex === 0 ? stories.length - 1 : prevIndex - 1);
-        setCurrentStory(currentStories[currentIndex])
     };
 
+    useEffect(() => {
+        setCurrentStory(currentStories[currentIndex])
+    }, [currentIndex])
     return (
         <Flex
             justifyContent="center"
