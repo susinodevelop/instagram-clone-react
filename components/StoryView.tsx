@@ -23,16 +23,20 @@ const StoryView = ({ story }: StoryViewProps) => {
         setAnswer(event.target.value)
     }
 
+    const handleLikeStory = () => alert("Me ha gustado la foto") //TODO revisar y añadir like en bbdd
+
+    const handleSendComment = () => alert("Mensaje enviado") //TODO revisar y añadir comentario en bbdd
+
     useEffect(() => {
         const loadInitialData = async () => {
-            setStoryOwner(await getUser(1)) //TODO revisar
+            setStoryOwner(await getUser(currentStory.user_owner_id)) //TODO revisar
         }
         loadInitialData()
     }, [])
 
     return (
         <>
-            {story && storyOwner &&
+            {currentStory && storyOwner &&
                 <Box
                     position="relative"
                     height="90vh"
@@ -74,8 +78,8 @@ const StoryView = ({ story }: StoryViewProps) => {
                                 borderRadius="2xl"
                                 onChange={handleOnChangeAnswer}
                             />
-                            <FaRegHeart size="50px" className="m-[20px]" />
-                            <SlPaperPlane size="50px" className="mr-[20px]" />
+                            <FaRegHeart size="50px" className="m-[20px]" onClick={handleLikeStory} />
+                            <SlPaperPlane size="50px" className="mr-[20px]" onClick={handleSendComment} />
                         </div>
                     </Box>
                 </Box >
