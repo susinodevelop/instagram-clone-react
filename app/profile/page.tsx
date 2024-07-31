@@ -36,6 +36,8 @@ const Profile: React.FC = () => {
 
     const fetchAndSetPosts = async () => setUserPosts(await getUserPosts(userId))
     const fetchAndSetReels = async () => setUserReels(await getUserReels(userId))
+    const fetchAndSetSavedPosts = async () => setUserSavedPosts([]) //TODO cargar saved posts
+    const fetchAndSetTaggedPosts = async () => setUserTaggedPosts([]) //TODO cargar tagged posts
 
     const handleTabChange = (index: number) => setActiveTabIndex(index)
 
@@ -66,9 +68,9 @@ const Profile: React.FC = () => {
             case 1:
                 fetchAndSetReels()
             case 2:
-            //TODO por implementar guardadas;
+                fetchAndSetSavedPosts()
             case 3:
-            //TODO por implementar etiquetadas
+                fetchAndSetTaggedPosts()
             default:
                 fetchAndSetPosts()
         }

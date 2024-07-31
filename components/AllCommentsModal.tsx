@@ -93,7 +93,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
 
     return (
         <div className="flex flex-row w-full mx-auto font-sans border border-gray-900 bg-black">
-            <Image className="w-2/3 h-auto" aspectRatio="1:1" src={post.url} alt={post.description} />
+            <Image className="w-2/3" aspectRatio="1:1" src={post.url} alt={post.description} />
             <div className="p-4 w-1/3">
                 {owner && (
                     <>
