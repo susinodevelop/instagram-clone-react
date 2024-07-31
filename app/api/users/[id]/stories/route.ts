@@ -29,10 +29,10 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                                 stories.title as title,
                                 stories.url as url,
                                 stories.miniature_url as miniature_url,
-                                stories.created_at as created_at
+                                stories.created_at as created_at,
+                                stories.user_owner_id as user_owner_id
                             FROM stories
-                            INNER JOIN user_stories ON user_stories.story_id = stories.id
-                            WHERE user_stories.user_id = ${id}`
+                            WHERE stories.user_owner_id = ${id}`
 
         if (result.rowCount === 0) {
             return new NextResponse(JSON.stringify({ error: 'User Stories not found' }), {

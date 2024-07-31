@@ -4,13 +4,14 @@ import ReelView from '@/components/ReelView';
 import Post from '@/interface/Post';
 import Reel from '@/interface/Reel';
 import User from '@/interface/User';
-import UserStory from '@/interface/UserStory';
+import Story from '@/interface/Story';
 import { getUser, getUserPosts, getUserReels, getUserStories } from '@/services/UserService';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LuCameraOff } from 'react-icons/lu';
+import Link from 'next/link';
 
 //TODO convertir la pagina en un componente de servidor
 //TODO crear un nuevo componente llamado ProvileView y meter toda la logica de cliente ahi
@@ -27,7 +28,7 @@ const Profile: React.FC = () => {
 
     const [user, setUser] = useState<User>()
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
-    const [userHighlights, setUserHighlights] = useState<UserStory[]>([])
+    const [userHighlights, setUserHighlights] = useState<Story[]>([])
     const [userPosts, setUserPosts] = useState<Post[]>([])
     const [userReels, setUserReels] = useState<Reel[]>([])
     const [userSavedPosts, setUserSavedPosts] = useState<Post[]>([])
@@ -85,14 +86,18 @@ const Profile: React.FC = () => {
                     {
                         user &&
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                            <div className='relative w-[150px] h-[150px] mr-[20px]'>
-                                <Image src={user.profile_img}
-                                    alt={user.username}
-                                    fill
-                                    sizes="50px"
-                                    className="rounded-full"
-                                />
-                            </div>
+                            <Link
+                                href="/stories">
+                                <div className='relative w-[150px] h-[150px] mr-[20px]'>
+                                    <Image src={user.profile_img}
+                                        alt={user.username}
+                                        fill
+                                        sizes="50px"
+                                        className="rounded-full cursor-pointer p-1 outline outline-gray-700"
+                                        style={{ outlineWidth: '2px' }}
+                                    />
+                                </div>
+                            </Link>
                             <div>
                                 <h2 className="font-bold text-2xl my-5">{user.username}</h2>
                                 <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
