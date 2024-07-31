@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ChakraProvider } from "@chakra-ui/react";
 import "./globals.css";
-import { Box, ChakraProvider } from "@chakra-ui/react";
-import Sidebar from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,12 +14,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     <html lang="es">
       <body className={`${inter.className} bg-black text-white`}>
         <ChakraProvider>
-          <div className="w-screen flex flex-row ">
-            <Sidebar />
-            <Box className="w-2/3 ml-[33.333333%]">
-              {children}
-            </Box>
-          </div>
+          {children}
         </ChakraProvider>
       </body>
     </html>

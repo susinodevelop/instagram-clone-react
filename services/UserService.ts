@@ -3,7 +3,7 @@ import { useGET } from "./HttpService";
 import DirectMessage from "@/interface/DirectMessage";
 import Reel from "@/interface/Reel";
 import Post from "@/interface/Post";
-import UserStory from "@/interface/UserStory";
+import Story from "@/interface/Story";
 import UserNotification from "@/interface/UserNotification";
 
 const API_URL = '/api/users';
@@ -20,7 +20,7 @@ export const getUserPosts = async (userId: number): Promise<Post[]> => {
     return await useGET(`${API_URL}/${userId}/posts`, { cache: 'no-store' })
 }
 
-export const getUserStories = async (userId: number): Promise<UserStory[]> => {
+export const getUserStories = async (userId: number): Promise<Story[]> => {
     return await useGET(`${API_URL}/${userId}/stories`, { cache: 'no-store' })
 }
 

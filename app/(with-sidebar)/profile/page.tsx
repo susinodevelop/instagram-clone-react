@@ -4,13 +4,14 @@ import ReelView from '@/components/ReelView';
 import Post from '@/interface/Post';
 import Reel from '@/interface/Reel';
 import User from '@/interface/User';
-import UserStory from '@/interface/UserStory';
+import Story from '@/interface/Story';
 import { getUser, getUserPosts, getUserReels, getUserStories } from '@/services/UserService';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LuCameraOff } from 'react-icons/lu';
+import { useRouter } from 'next/navigation';
 
 //TODO convertir la pagina en un componente de servidor
 //TODO crear un nuevo componente llamado ProvileView y meter toda la logica de cliente ahi
@@ -25,9 +26,10 @@ const Profile: React.FC = () => {
     // TODO: meter el user id en contexto react cuando se añada autenticacion
     const userId = 1
 
+    const router = useRouter()
     const [user, setUser] = useState<User>()
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
-    const [userHighlights, setUserHighlights] = useState<UserStory[]>([])
+    const [userHighlights, setUserHighlights] = useState<Story[]>([])
     const [userPosts, setUserPosts] = useState<Post[]>([])
     const [userReels, setUserReels] = useState<Reel[]>([])
     const [userSavedPosts, setUserSavedPosts] = useState<Post[]>([])
@@ -52,6 +54,10 @@ const Profile: React.FC = () => {
     }
 
     const closeModal = () => setActivePost(null)
+
+    const handleProfileImageOnClick = () => {
+        router.push(`/stories`)
+    }
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -90,7 +96,8 @@ const Profile: React.FC = () => {
                                     alt={user.username}
                                     fill
                                     sizes="50px"
-                                    className="rounded-full"
+                                    className="rounded-full cursor-pointer"
+                                    onClick={handleProfileImageOnClick}
                                 />
                             </div>
                             <div>
