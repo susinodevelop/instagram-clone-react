@@ -1,22 +1,9 @@
 export default interface User {
+    id: number,
     username: string,
-    profile_picture: string,
-    bio: string,
-    followers_count: number,
-    following_count: number,
-    post_count: number,
-    is_verified: boolean,
-    is_private: boolean,
-    website: string,
-    phone_number: string,
-    birthdate: Date,
-    location: string,
-    interests: string,
-    story_views: number,
-    tagged_users: string,
-    engagement_rate: number,
-    profile_views: number,
-    caption: string,
-    hashtags: string,
-    comments_count: number
+    biography_name: string,
+    biography_content: string,
+    biography_url: string,
+    profile_img: string,
+    created_at: string
 }

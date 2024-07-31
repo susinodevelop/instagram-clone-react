@@ -1,38 +1,86 @@
-import Sidebar from "@/components/Sidebar";
-import { Flex } from "@chakra-ui/react";
+import ReelView from "@/components/ReelView";
+import Post from "@/interface/Post";
+import Reel from "@/interface/Reel";
+import { getAllPosts } from "@/services/PostService";
+import { getAllReels } from "@/services/ReelService";
+import { Box, SimpleGrid } from "@chakra-ui/react";
+import Image from "next/image";
 import React from "react";
 
-const Explore: React.FC = () => {
+export const metadata = {
+    title: 'Explorar',
+    description: 'Página de búsqueda de posts',
+}
 
-    const url: string = "https://scontent.fvgo1-1.fna.fbcdn.net/v/t39.30808-6/405369984_366479109172340_3464042000465999892_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_ohc=klWd7lrIwmUQ7kNvgHJ-iEv&_nc_ht=scontent.fvgo1-1.fna&oh=00_AYDSeo7zubILgu0fHBAC_HzSoEB5s1oak0uAhxDsh-zo3g&oe=6699897F"
+const Explore: React.FC = async () => {
 
-    const posts = [
-        { src: url, alt: 'Descripción de la imagen 1' },
-        { src: url, alt: 'Descripción de la imagen 2' },
-        { src: url, alt: 'Descripción de la imagen 3' },
-        // Agrega más imágenes según sea necesario
-    ];
+    const posts = (await getAllPosts() as Post[]).map(post => ({ ...post, type: 'post' }));
+    const reels = (await getAllReels() as Reel[]).map(reel => ({ ...reel, type: 'reel' }));
+
+    const allPublications = [...posts, ...reels].sort(() => Math.random() - 0.5);
 
     return (
-        <Flex style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh', padding: '20px' }}>
-            <Sidebar />
-            <h1>Galería</h1>
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                gap: '10px'
-            }}>
-                {posts.map((post, index) => (
-                    <div key={index} style={{ position: 'relative' }}>
-                        <img
-                            src={post.src}
-                            alt={post.alt}
-                            style={{ width: '100%', borderRadius: '10px' }}
-                        />
-                    </div>
-                ))}
-            </div>
-        </Flex>
+        <Box
+            position="absolute"
+            left="0"
+            top="0"
+            width="100%"
+            display="flex"
+            flexDirection="column"
+            gap="20px"
+            alignItems="center"
+        >
+            <SimpleGrid
+                columns={{ base: 2, md: 3 }}
+                spacing={1}
+                className="w-3/4"
+            >
+                {allPublications.map((publication, index) => {
+                    let resultHtml;
+
+                    if (publication.type === "post") {
+                        const post = publication as Post;
+                        resultHtml = (
+                            <div className="relative w-full aspect-square">
+                                <Image
+                                    src={post.url}
+                                    alt={post.description}
+                                    fill
+                                    className="aspect-square transition-transform duration-300 hover:scale-105"
+                                    priority
+                                    style={{ objectFit: "cover" }}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
+                            </div>
+                        );
+                    } else if (publication.type === "reel") {
+                        const reel = publication as Reel;
+                        resultHtml = (
+                            <div className="w-full h-full">
+                                <ReelView
+                                    reel={reel}
+                                    width="100%"
+                                    height="100%"
+                                    className="aspect-9/16 transition-transform duration-300 hover:scale-105"
+                                />
+                            </div>
+                        );
+                    }
+
+                    return (
+                        <Box
+                            key={index}
+                            gridColumn="span 1"
+                            gridRow={publication.type === "reel" ? 'span 2' : 'span 1'}
+                            overflow="hidden"
+                            position="relative"
+                        >
+                            {resultHtml}
+                        </Box>
+                    );
+                })}
+            </SimpleGrid>
+        </Box>
     );
 }
 

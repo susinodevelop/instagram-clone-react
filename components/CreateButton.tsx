@@ -1,3 +1,4 @@
+'use client'
 import { Icon } from '@chakra-ui/react';
 import React, { useState, useRef, useEffect } from 'react';
 import { FaPlus, FaRegFileVideo } from 'react-icons/fa';
@@ -8,6 +9,7 @@ export interface CreateButtonProps {
 }
 
 const CreateButton: React.FC<CreateButtonProps> = ({ showText = true }) => {
+    
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
