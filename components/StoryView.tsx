@@ -77,9 +77,6 @@ const StoryView = ({ story }: StoryViewProps) => {
                             <FaRegHeart size="50px" className="m-[20px]" />
                             <SlPaperPlane size="50px" className="mr-[20px]" />
                         </div>
-                        {/* <Text fontSize="xl">{storyOwner.username}</Text> */}
-                        {/* <Text>{currentStory.title}</Text> */}
-                        {/* <Text>{timeAgo(currentStory.created_at)}</Text> */}
                     </Box>
                 </Box >
             }
