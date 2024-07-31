@@ -18,7 +18,6 @@ const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = false,
         <Box
             as="video"
             controls={withControls}
-            borderRadius="lg"
             overflow="hidden"
             width={width}
             height={height}

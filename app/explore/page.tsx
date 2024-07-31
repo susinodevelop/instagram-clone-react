@@ -32,7 +32,7 @@ const Explore: React.FC = async () => {
         >
             <SimpleGrid
                 columns={{ base: 2, md: 3 }}
-                spacing={4}
+                spacing={1}
                 className="w-2/4"
             >
                 {allPublications.map((publication, index) => {
@@ -70,7 +70,6 @@ const Explore: React.FC = async () => {
                             gridColumn="span 1"
                             gridRow={publication.type === "reel" ? 'span 2' : 'span 1'}
                             overflow="hidden"
-                            borderRadius="md"
                             position="relative"
                         >
                             {resultHtml}

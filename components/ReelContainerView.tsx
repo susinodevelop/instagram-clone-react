@@ -29,7 +29,7 @@ const ReelContainerView = ({ reel, width = 'auto', height = 'auto', withControls
     return (
         <div style={{ width: width, padding: '16px' }}>
             <Box position="relative" >
-                <ReelView reel={reel} width={width} height={height} withControls={withControls} />
+                <ReelView reel={reel} width={width} height={height} withControls={withControls} className="rounded-md" />
                 {
                     user &&
                     <Box position="absolute" top="10px" left="10px" display="flex" alignItems="center">
