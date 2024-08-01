@@ -15,6 +15,7 @@ import Link from "next/link";
 
 const Sidebar: React.FC = () => {
 
+  const userId = 1 //TODO cambiar al añadir contexto y autenticacion
   const pathname = usePathname()
   const router = useRouter()
 
@@ -88,7 +89,9 @@ const Sidebar: React.FC = () => {
 
         <Button variant="unstyled" onClick={handleNotifications} ><Icon as={AiTwotoneHeart} boxSize="6" />{isShowText ? "Notificaciones" : ""}</Button>
         <CreateButton showText={isShowText}></CreateButton>
-        <Link href="/profile"><Icon as={FaUserCircle} boxSize="6" /> {isShowText ? "Perfil" : ""}</Link>
+        <Link href={`/profile/${userId}`}>
+          <Icon as={FaUserCircle} boxSize="6" /> {isShowText ? "Perfil" : ""}
+        </Link>
       </VStack>
       <div className="ml-[50px]">
         {showNotifications && <Notifications />}

@@ -22,10 +22,16 @@ import Link from 'next/link';
 
 const TAMAÑO_IMAGEN_1_1 = 250
 
-const Profile: React.FC = () => {
-    // TODO: meter el user id en contexto react cuando se añada autenticacion
-    const userId = 1
+interface ProfilePage {
+    params: {
+        id: string
+    }
+}
 
+const ProfilePage = ({ params }: ProfilePage) => {
+
+    const { id } = params
+    const userId = Number(id)
     const [user, setUser] = useState<User>()
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
     const [userHighlights, setUserHighlights] = useState<Story[]>([])
@@ -87,7 +93,7 @@ const Profile: React.FC = () => {
                         user &&
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                             <Link
-                                href="/stories">
+                                href={`/stories/${user.id}`}>
                                 <div className='relative w-[150px] h-[150px] mr-[20px]'>
                                     <Image src={user.profile_img}
                                         alt={user.username}
@@ -284,4 +290,4 @@ const Profile: React.FC = () => {
     );
 }
 
-export default Profile;
+export default ProfilePage;

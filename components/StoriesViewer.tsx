@@ -9,9 +9,10 @@ import { RxCross2 } from "react-icons/rx";
 
 interface StoriesViewerProps {
     stories: Story[];
+    previousUrl: string;
 }
 
-const StoriesViewer = ({ stories }: StoriesViewerProps) => {
+const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
@@ -38,7 +39,7 @@ const StoriesViewer = ({ stories }: StoriesViewerProps) => {
                 right="20px"
                 cursor="pointer"
             >
-                <Link href="/profile">
+                <Link href={previousUrl}>
                     <RxCross2 size="50px" color="white" />
                 </Link>
             </Box>
