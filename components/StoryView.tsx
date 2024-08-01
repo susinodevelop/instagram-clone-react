@@ -32,30 +32,30 @@ const StoryView = ({ story }: StoryViewProps) => {
             setStoryOwner(owner);
         };
         loadInitialData();
-        setLoading(true)
+        setLoading(false)
     }, [story])
 
     return (
-        <Box
-            position="relative"
-            height="90vh"
-            width={`calc(90vh * 9 / 16)`}
-            maxWidth="100%"
-            mx="auto"
-        >
-            {isLoading && (
+        isLoading ?
+            <Box
+                position="absolute"
+                top="50%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                zIndex="1"
+            >
+                <Spinner size="xl" />
+            </Box>
+            :
+            story && storyOwner && (
                 <Box
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                    zIndex="1"
+                    position="relative"
+                    height="90vh"
+                    width={`calc(90vh * 9 / 16)`}
+                    maxWidth="100%"
+                    mx="auto"
                 >
-                    <Spinner size="xl" />
-                </Box>
-            )}
-            <Box display={isLoading ? 'none' : 'block'}>
-                {story && storyOwner && (
+
                     <>
                         <Box position="absolute" top="20px" left="20px" display="flex" alignItems="center" className="z-20">
                             <div className="relative w-[40px] h-[40px] mr-[10px]">
@@ -63,6 +63,7 @@ const StoryView = ({ story }: StoryViewProps) => {
                                     src={storyOwner.profile_img}
                                     alt={storyOwner.username}
                                     fill
+                                    priority
                                     sizes="40px"
                                     className="rounded-full"
                                 />
@@ -78,7 +79,7 @@ const StoryView = ({ story }: StoryViewProps) => {
                             sizes="(max-width: 768px) 90vw, (max-width: 1200px) 75vw, 60vw"
                             priority
                             style={{ objectFit: "cover" }}
-                            onLoadingComplete={() => setLoading(false)}
+                            onLoad={() => setLoading(false)}
                         />
                         <Box position="absolute" bottom={5} left={5}>
                             <div className="flex flex-row items-center justify-center">
@@ -99,9 +100,8 @@ const StoryView = ({ story }: StoryViewProps) => {
                             </div>
                         </Box>
                     </>
-                )}
-            </Box>
-        </Box>
+                </Box>
+            )
     );
 };
 

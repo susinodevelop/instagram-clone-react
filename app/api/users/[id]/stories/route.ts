@@ -34,15 +34,6 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                             FROM stories
                             WHERE stories.user_owner_id = ${id}`
 
-        if (result.rowCount === 0) {
-            return new NextResponse(JSON.stringify({ error: 'User Stories not found' }), {
-                status: 404,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        }
-
         const stories = result.rows
         return new NextResponse(JSON.stringify(stories), {
             status: 200,
