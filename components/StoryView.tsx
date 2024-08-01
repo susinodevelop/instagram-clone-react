@@ -78,7 +78,7 @@ const StoryView = ({ story }: StoryViewProps) => {
                             sizes="(max-width: 768px) 90vw, (max-width: 1200px) 75vw, 60vw"
                             priority
                             style={{ objectFit: "cover" }}
-                            onLoadingComplete={() => setLoading(false)}
+                            onLoad={() => setLoading(false)}
                         />
                         <Box position="absolute" bottom={5} left={5}>
                             <div className="flex flex-row items-center justify-center">
