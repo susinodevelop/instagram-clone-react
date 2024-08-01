@@ -32,7 +32,8 @@ const StoryView = ({ story }: StoryViewProps) => {
             setStoryOwner(owner);
         };
         loadInitialData();
-    }, [story.user_owner_id]);
+        setLoading(true)
+    }, [story])
 
     return (
         <Box
