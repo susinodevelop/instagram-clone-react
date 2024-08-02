@@ -2,7 +2,7 @@
 import User from '@/interface/User';
 import Notification from '@/interface/Notification';
 import { getUser, getUserNotifications } from '@/services/UserService';
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import NotificationView from './NotificationView';
 import StoryNotificationView from './StoryNotificationView';
@@ -17,18 +17,18 @@ const NotificationsView: React.FC = () => {
 
     useEffect(() => {
         const fetchAndSetNotifications = async (): Promise<void> => {
-            setNotifications(await getUserNotifications(userId));
+            const notifications: Notification[] = await getUserNotifications(userId)
 
             // Fetch users for the notifications
             const userIds = Array.from(new Set(notifications.map(notification => notification.action_user_id)));
             const usersData: User[] = await Promise.all(userIds.map(id => getUser(id)));
             const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
 
+            setNotifications(notifications)
             setUsers(usersMap);
         };
 
         fetchAndSetNotifications();
-        console.log(notifications)
     }, []);
 
     return (
@@ -37,23 +37,22 @@ const NotificationsView: React.FC = () => {
                 <aside style={{ width: '300px', borderRight: '1px solid #333', padding: '20px' }}>
                     <h1>Notificaciones</h1>
                     <a href="#" style={{ color: '#00f', textDecoration: 'none' }}>Filtrar</a>
-                    {
-                        notifications && notifications.length > 0 && notifications.map(notification => {
-                            const actionUser = users[notification.action_user_id];
+                    {notifications.map(notification => {
+                        const actionUser = users[notification.action_user_id];
 
-                            if (!actionUser) return <div key={notification.id}></div>; // In case user data is not yet loaded
+                        if (!actionUser) return <div key={notification.id}></div>; // In case user data is not yet loaded
 
-                            return (
-                                <div key={notification.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                                    {
+                        return (
+                            <div key={notification.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                                {
 
-                                        notification.related_entity_type === 'story' ?
-                                            <StoryNotificationView notification={notification} actionUser={actionUser} />
-                                            : <NotificationView notification={notification} actionUser={actionUser} />
-                                    }
-                                </div>
-                            )
-                        })
+                                    notification.related_entity_type === 'story' ?
+                                        <StoryNotificationView notification={notification} actionUser={actionUser} />
+                                        : <NotificationView notification={notification} actionUser={actionUser} />
+                                }
+                            </div>
+                        )
+                    })
                     }
                 </aside>
             </div>
