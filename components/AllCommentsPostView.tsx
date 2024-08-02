@@ -1,6 +1,6 @@
 'use client'
 import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
-import ProfilePicture from './ProfilePicture';
+import ProfileImage from './ProfileImage';
 import { useToast } from '@chakra-ui/react';
 import { timeAgo } from '@/utils/DateUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -104,13 +104,13 @@ const AllCommentsPostView: React.FC<AllCommentsPostViewProps> = ({ post }) => {
                 {owner && (
                     <>
                         <div className="flex items-center mb-2">
-                            <ProfilePicture user={owner} borderColor='red' />
+                            <ProfileImage user={owner} />
                             <strong className='text-white'>{owner.username}</strong>
                         </div>
                         <hr className='my-5' />
                         <div className="flex flex-row items-center mb-4">
-                            <ProfilePicture user={owner} borderColor='red' />
-                            <p className='ml-2 text-gray-400'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
+                            <ProfileImage user={owner} />
+                            <p className='ml-4 text-gray-400'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
                         </div>
                     </>
                 )}
@@ -121,8 +121,8 @@ const AllCommentsPostView: React.FC<AllCommentsPostViewProps> = ({ post }) => {
                             <div key={comment.id} className='flex flex-row items-center h-20'>
                                 {user && (
                                     <>
-                                        <ProfilePicture user={user} borderColor='red' />
-                                        <div className='flex flex-col'>
+                                        <ProfileImage user={user} />
+                                        <div className='flex flex-col ml-4'>
                                             <div className='flex flex-row'>
                                                 <strong className='text-white'>{user.username}</strong>
                                                 <p className='ml-2 text-gray-400'>{comment.content}</p>

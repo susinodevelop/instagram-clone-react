@@ -1,5 +1,5 @@
-import { sql } from '@vercel/postgres';
-import { NextResponse } from 'next/server';
+import { sql } from "@vercel/postgres";
+import { NextResponse } from "next/server";
 
 interface GetParams {
     id: string
@@ -9,7 +9,6 @@ interface HandlerArgs {
     params: GetParams
 }
 export async function GET(request: Request, { params }: HandlerArgs) {
-
 
     try {
         const { id } = params
@@ -25,17 +24,26 @@ export async function GET(request: Request, { params }: HandlerArgs) {
 
         const result = await sql`
                             SELECT 
-                                reels.id AS id,
-                                reels.url AS url,
-                                reels.title AS title,
-                                reels.status AS status,
-                                reels.created_at AS created_at,
-                                reels.user_owner_id as user_owner_id
-                            FROM reels
-                            WHERE reels.user_owner_id = ${id}`
+                                stories.id as id,
+                                stories.title as title,
+                                stories.url as url,
+                                stories.miniature_url as miniature_url,
+                                stories.created_at as created_at,
+                                stories.user_owner_id as user_owner_id
+                            FROM stories
+                            WHERE stories.id = ${id}`
 
-        const reels = result.rows
-        return new NextResponse(JSON.stringify(reels), {
+        if (result.rowCount === 0) {
+            return new NextResponse(JSON.stringify({ error: 'Story not found' }), {
+                status: 404,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+
+        const story = result.rows[0]
+        return new NextResponse(JSON.stringify(story), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json'

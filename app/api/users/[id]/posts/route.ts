@@ -34,15 +34,6 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                             FROM posts
                             WHERE posts.user_owner_id = ${id}`
 
-        if (result.rowCount === 0) {
-            return new NextResponse(JSON.stringify({ error: 'User Posts not found' }), {
-                status: 404,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        }
-
         const posts = result.rows
         return new NextResponse(JSON.stringify(posts), {
             status: 200,

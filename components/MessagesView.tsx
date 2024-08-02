@@ -5,30 +5,11 @@ import { getAllMessages } from '@/services/MessageService';
 import { getUser } from '@/services/UserService';
 import { timeAgo } from '@/utils/DateUtils';
 import { Flex } from '@chakra-ui/react';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-
-// TODO remove 
-// const conversations = [
-//     {
-//         id: 1,
-//         user: 'Amelia',
-//         lastMessage: 'Tú: 😂🤣😂',
-//         time: '22 min',
-//         userImage: 'https://via.placeholder.com/50'
-//     },
-//     {
-//         id: 2,
-//         user: 'RUBÉN | ENTRENADOR PERSONAL',
-//         lastMessage: 'RUBÉN ha enviado un archivo adjunto.',
-//         time: '1 h',
-//         userImage: 'https://via.placeholder.com/50'
-//     },
-//     // Agrega más conversaciones según sea necesario
-// ];
+import ProfileImage from './ProfileImage';
 
 // TODO revisar e hacer fetching co usuario sender do mensajes
-const ShowMessages: React.FC = () => {
+const MessagesView: React.FC = () => {
 
     const [messages, setMessages] = useState<DirectMessage[]>([])
     const [users, setUsers] = useState<{ [key: number]: User }>({})
@@ -68,15 +49,8 @@ const ShowMessages: React.FC = () => {
 
                         return (
                             <div key={message.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                                <div className='relative w-[50px] h-[50px] mr-[10px]'>
-                                    <Image
-                                        src={actionUser.profile_img}
-                                        alt={actionUser.username}
-                                        fill
-                                        sizes='50px'
-                                        className='rounded-full'
-                                    />
-                                    {/* TODO revisar el mensaje de timepo de carga de consola */}
+                                <div className='mr-[20px]'>
+                                    <ProfileImage user={actionUser} />
                                 </div>
                                 <div>
                                     <p style={{ margin: '0', fontWeight: 'bold' }}>{actionUser.username}</p>
@@ -92,4 +66,4 @@ const ShowMessages: React.FC = () => {
     );
 }
 
-export default ShowMessages;
+export default MessagesView;

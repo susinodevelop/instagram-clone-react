@@ -312,9 +312,9 @@ const ProfilePage = ({ params }: ProfilePage) => {
                 </div>
             </Box>
 
-            <PostModal post={activePost!} isOpen={isPostModalOpen} onClose={closePostModal} />
-            <ReelModal reel={activeReel!} isOpen={isReelModalOpen} onClose={closeReelModal} />
-            <StoriesModal stories={userStories} isOpen={isStoriesModalOpen} onClose={closeStoriesModal} />
+            {activePost && <PostModal post={activePost!} isOpen={isPostModalOpen} onClose={closePostModal} />}
+            {activeReel && <ReelModal reel={activeReel!} isOpen={isReelModalOpen} onClose={closeReelModal} />}
+            {userStories && userStories.length > 0 && <StoriesModal stories={userStories} isOpen={isStoriesModalOpen} onClose={closeStoriesModal} />}
         </>
     );
 }
