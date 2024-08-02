@@ -49,6 +49,7 @@ const StoryNotificationView = ({ notification, actionUser }: StoryNotificationVi
                         fill
                         sizes='50px'
                         className='rounded-[10px]'
+                        priority
                     />
                     <StoriesModal stories={[activeStory]} isOpen={isStoriesModalOpen} onClose={closeStoryModal} />
                 </Box >

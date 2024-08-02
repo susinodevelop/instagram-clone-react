@@ -5,7 +5,7 @@ import Reel from '@/interface/Reel';
 import User from '@/interface/User';
 import Story from '@/interface/Story';
 import { getUser, getUserPosts, getUserReels, getUserStories } from '@/services/UserService';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ import { LuCameraOff } from 'react-icons/lu';
 import StoriesModal from '@/components/StoriesModal';
 import PostModal from '@/components/PostModal';
 import ReelModal from '@/components/ReelModal';
+import ProfileImage from '@/components/ProfileImage';
 
 //TODO convertir la pagina en un componente de servidor
 //TODO crear un nuevo componente llamado ProvileView y meter toda la logica de cliente ahi
@@ -106,22 +107,8 @@ const ProfilePage = ({ params }: ProfilePage) => {
                     {
                         user &&
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                            <Box
-                                position="relative"
-                                width="150px"
-                                height="150px"
-                                marginRight="20px"
-                                onClick={openStoriesModal}
-                            >
-                                <Image src={user.profile_img}
-                                    alt={user.username}
-                                    fill
-                                    sizes="50px"
-                                    className="rounded-full cursor-pointer p-1 outline outline-gray-700"
-                                    style={{ outlineWidth: '2px' }}
-                                />
-                            </Box>
-                            <div>
+                            <ProfileImage user={user} width={150} height={150} />
+                            <div className='ml-8'>
                                 <h2 className="font-bold text-2xl my-5">{user.username}</h2>
                                 <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
                                 <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Ver archivo</button>
