@@ -10,10 +10,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { SlPaperPlane } from "react-icons/sl";
 
 interface StoryViewProps {
-    story: Story;
+    story: Story
+    showComments?: boolean
+    showLike?: boolean
 }
 
-const StoryView = ({ story }: StoryViewProps) => {
+const StoryView = ({ story, showComments = true, showLike = true }: StoryViewProps) => {
     const [storyOwner, setStoryOwner] = useState<User | undefined>();
     const [answer, setAnswer] = useState<string>('');
     const [isLoading, setLoading] = useState<boolean>(true);
@@ -79,20 +81,23 @@ const StoryView = ({ story }: StoryViewProps) => {
             />
             <Box position="absolute" bottom={5} left={5}>
                 <div className="flex flex-row items-center justify-center">
-                    <Input
-                        id={`answer-story-${storyOwner.username}`}
-                        value={answer}
-                        placeholder={`Responder a ${storyOwner.username}`}
-                        size="lg"
-                        variant="outline"
-                        outline="1px solid white"
-                        color="white"
-                        _placeholder={{ color: 'white' }}
-                        borderRadius="2xl"
-                        onChange={handleOnChangeAnswer}
-                    />
-                    <FaRegHeart size="50px" className="m-[20px]" onClick={handleLikeStory} />
-                    <SlPaperPlane size="50px" className="mr-[20px]" onClick={handleSendComment} />
+                    {
+                        showComments &&
+                        <Input
+                            id={`answer-story-${storyOwner.username}`}
+                            value={answer}
+                            placeholder={`Responder a ${storyOwner.username}`}
+                            size="lg"
+                            variant="outline"
+                            outline="1px solid white"
+                            color="white"
+                            _placeholder={{ color: 'white' }}
+                            borderRadius="2xl"
+                            onChange={handleOnChangeAnswer}
+                        />
+                    }
+                    {showLike && <FaRegHeart size="50px" className="m-[20px]" onClick={handleLikeStory} />}
+                    {showComments && <SlPaperPlane size="50px" className="mr-[20px]" onClick={handleSendComment} />}
                 </div>
             </Box>
         </Box>

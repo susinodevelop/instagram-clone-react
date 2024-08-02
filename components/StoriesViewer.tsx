@@ -86,6 +86,8 @@ const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
                         const scale = index === currentIndex ? 1 : 0.8;
                         const opacity = index === currentIndex ? 1 : 0.5;
 
+                        const isActualStory = index == currentIndex
+
                         return (
                             <motion.div
                                 key={story.id}
@@ -102,7 +104,7 @@ const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
                                     height: '100%',
                                 }}
                             >
-                                <StoryView story={story} />
+                                <StoryView story={story} showComments={isActualStory} showLike={isActualStory} />
                             </motion.div>
                         );
                     }
