@@ -24,9 +24,10 @@ const Feed = async () => {
             flexDirection="column"
             gap="20px"
             alignItems="center"
+            justifyContent="center"
         >
             <Header />
-            <VStack spacing="10px" padding="20px" bg="black" color="white" flex="1">
+            <VStack spacing="10px" padding="20px" bg="black" color="white" flex="1" maxWidth={500}>
                 {
                     posts.map(post => (
                         <PostView key={post.id} post={post} />

@@ -38,7 +38,7 @@ const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) =>
                 {
                     owner &&
                     <div>
-                        <p className='text-gray-400 w-[500px]'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
+                        <p className='text-gray-400'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
                         <ul>
                             {comments && Array.isArray(comments) && comments.slice(-visibleComments).map((comment) => (
                                 <li key={comment.id} className="my-2">
