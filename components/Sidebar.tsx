@@ -7,7 +7,7 @@ import { SlPaperPlane } from "react-icons/sl";
 import { TfiVideoClapper } from "react-icons/tfi";
 import CreateButton from "./CreateButton";
 import React, { useEffect, useState } from "react";
-import Notifications from "./Notifications";
+import NotificationsView from "./NotificationsView";
 import Search from "./Search";
 import ShowMessages from "./ShowMessages";
 import { usePathname, useRouter } from "next/navigation";
@@ -94,7 +94,7 @@ const Sidebar: React.FC = () => {
         </Link>
       </VStack>
       <div className="ml-[50px]">
-        {showNotifications && <Notifications />}
+        {showNotifications && <NotificationsView />}
         {showSearch && <Search />}
         {showMessages && <ShowMessages />}
       </div>
