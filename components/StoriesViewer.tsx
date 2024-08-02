@@ -11,10 +11,10 @@ import { RxCross2 } from "react-icons/rx";
 //TODO dejarlo en una pagina o meterlo en un modal?
 interface StoriesViewerProps {
     stories: Story[];
-    previousUrl: string;
+    close: () => void;
 }
 
-const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
+const StoriesViewer = ({ stories, close }: StoriesViewerProps) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [offset, setOffset] = useState(0);
 
@@ -53,10 +53,9 @@ const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
                 right="20px"
                 cursor="pointer"
                 zIndex="10"
+                onClick={close}
             >
-                <Link href={previousUrl}>
-                    <RxCross2 size="50px" color="white" />
-                </Link>
+                <RxCross2 size="50px" color="white" />
             </Box>
 
             {currentIndex > 0 && (
