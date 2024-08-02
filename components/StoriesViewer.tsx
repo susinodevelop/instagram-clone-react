@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
+//TODO dejarlo en una pagina o meterlo en un modal?
 interface StoriesViewerProps {
     stories: Story[];
     previousUrl: string;

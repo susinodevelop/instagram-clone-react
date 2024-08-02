@@ -79,25 +79,50 @@ const StoryView = ({ story, showComments = true, showLike = true }: StoryViewPro
                 priority
                 style={{ objectFit: "cover" }}
             />
-            <Box position="absolute" bottom={5} left={5}>
-                <div className="flex flex-row items-center justify-center">
-                    {
-                        showComments &&
-                        <Input
-                            id={`answer-story-${storyOwner.username}`}
-                            value={answer}
-                            placeholder={`Responder a ${storyOwner.username}`}
-                            size="lg"
-                            variant="outline"
-                            outline="1px solid white"
-                            color="white"
-                            _placeholder={{ color: 'white' }}
-                            borderRadius="2xl"
-                            onChange={handleOnChangeAnswer}
-                        />
-                    }
-                    {showLike && <FaRegHeart size="50px" className="m-[20px]" onClick={handleLikeStory} />}
-                    {showComments && <SlPaperPlane size="50px" className="mr-[20px]" onClick={handleSendComment} />}
+            <Box position="absolute" bottom={5} width="100%" zIndex={10}>
+                <div className="flex flex-row items-center justify-center h-[75px]">
+                    <div className="w-[70%] h-[50px]">
+                        {
+                            showComments &&
+                            <Input
+                                id={`answer-story-${storyOwner.username}`}
+                                value={answer}
+                                placeholder={`Responder a ${storyOwner.username}`}
+                                height="100%"
+                                width="100%"
+                                variant="outline"
+                                outline="1px solid white"
+                                color="white"
+                                _placeholder={{ color: 'white' }}
+                                borderRadius="2xl"
+                                onChange={handleOnChangeAnswer}
+                            />
+                        }
+                    </div>
+                    <div className="flex flex-row w-[25%] h-[50px] items-center justify-center">
+                        {
+                            showLike &&
+                            <Box
+                                as="button"
+                                backgroundColor="transparent"
+                                marginX="1em"
+                                onClick={handleLikeStory}
+                            >
+                                <FaRegHeart size="2em" />
+                            </Box>
+                        }
+                        {
+                            showComments &&
+                            <Box
+                                as="button"
+                                backgroundColor="transparent"
+                                marginRight="1em"
+                                onClick={handleSendComment}
+                            >
+                                <SlPaperPlane size="2em" />
+                            </Box>
+                        }
+                    </div>
                 </div>
             </Box>
         </Box>
