@@ -2,11 +2,11 @@
 import User from "@/interface/User";
 import { getAllUsers } from "@/services/UserService";
 import { Flex } from "@chakra-ui/react";
-import Image from "next/image";
 import React, { useEffect, useState } from "react"
 import { FaSearch, FaTimes } from "react-icons/fa";
+import ProfileImage from "./ProfileImage";
 
-const Search: React.FC = () => {
+const SearchView: React.FC = () => {
 
     const [users, setUsers] = useState<User[]>([])
 
@@ -47,14 +47,7 @@ const Search: React.FC = () => {
                     {users.map((user, index) => (
                         <li key={index} className="flex justify-between mt-[15px] w-full h-[50px]">
                             <div className="flex flex-row items-center">
-                                <div className="relative w-[50px] h-[50px]">
-                                    <Image src={user.profile_img}
-                                        alt={user.username}
-                                        fill
-                                        sizes="50px"
-                                        className="rounded-full"
-                                    />
-                                </div>
+                                <ProfileImage user={user} />
                                 <div className="flex flex-col ml-[10px]">
                                     <p style={{ margin: '0', fontWeight: 'bold' }}>{user.username}</p>
                                     <p style={{ margin: '0', color: '#bbb' }}>{user.biography_name} {/*TODO search.following && '• Siguiendo'*/}</p>
@@ -71,4 +64,4 @@ const Search: React.FC = () => {
     );
 }
 
-export default Search;
+export default SearchView;
