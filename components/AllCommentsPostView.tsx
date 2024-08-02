@@ -110,7 +110,7 @@ const AllCommentsPostView: React.FC<AllCommentsPostViewProps> = ({ post }) => {
                         <hr className='my-5' />
                         <div className="flex flex-row items-center mb-4">
                             <ProfileImage user={owner} />
-                            <p className='ml-2 text-gray-400'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
+                            <p className='ml-4 text-gray-400'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
                         </div>
                     </>
                 )}
@@ -122,7 +122,7 @@ const AllCommentsPostView: React.FC<AllCommentsPostViewProps> = ({ post }) => {
                                 {user && (
                                     <>
                                         <ProfileImage user={user} />
-                                        <div className='flex flex-col'>
+                                        <div className='flex flex-col ml-4'>
                                             <div className='flex flex-row'>
                                                 <strong className='text-white'>{user.username}</strong>
                                                 <p className='ml-2 text-gray-400'>{comment.content}</p>

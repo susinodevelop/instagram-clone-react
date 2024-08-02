@@ -14,7 +14,7 @@ interface PostViewProps {
 }
 
 const PostView: React.FC<PostViewProps> = (props) => {
-    const [post, setPost] = useState<Post>(props.post)
+    const [post] = useState<Post>(props.post)
     const [owner, setOwner] = useState<User>();
 
     useEffect(() => {
@@ -31,9 +31,9 @@ const PostView: React.FC<PostViewProps> = (props) => {
     return (
         <div className="list-none">
             <Box>
-                <div className="flex flex-row p-4">
+                <div className="flex flex-row my-4">
                     <ProfileImage user={owner} />
-                    <Text className="flex items-center text-white font-bold">{owner.username}</Text>
+                    <Text className="flex items-center text-white font-bold ml-2">{owner.username}</Text>
                     <Text className="flex items-center text-gray-500 mt-1 ml-2" fontSize="sm">{`• ${timeAgo(post.created_at)}`}</Text>
                 </div>
                 <div className="flex justify-center mb-[25px] border border-gray-900 bg-black max-h-[500px] max-w-[500px]">

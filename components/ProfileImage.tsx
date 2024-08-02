@@ -30,9 +30,10 @@ const ProfileImage = ({ user, width = 50, height = 50 }: ProfilePictureProps) =>
     }, [])
 
     return (
-        <Box as='button'
-            className={`flex items-center justify-center w-[${width + 10}px] h-[${height + 10}px] rounded-full`}
-            style={{ border: `${areStories() ? '2px solid red' : ''}` }}
+        <Box
+            className={`flex items-center justify-center rounded-full ${areStories() && 'cursor-pointer'}`}
+            minWidth={width}
+            maxHeight={height}
             onClick={openStoriesModal}
         >
             <Image
@@ -40,8 +41,8 @@ const ProfileImage = ({ user, width = 50, height = 50 }: ProfilePictureProps) =>
                 alt={user.username}
                 width={width}
                 height={height}
+                style={{ border: `${areStories() && '2px solid red'}` }}
                 className={`rounded-full aspect-square`}
-
             />
             {areStories() && <StoriesModal stories={stories} isOpen={isStoriesModalOpen} onClose={closeStoriesModal} />}
         </Box>
