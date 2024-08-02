@@ -40,17 +40,18 @@ const StoryNotificationView = ({ notification, actionUser }: StoryNotificationVi
             <NotificationView notification={notification} actionUser={actionUser} />
             {
                 activeStory &&
-                <div className="relative w-[50px] h-[50px] ml-[10px]">
-                    <Box as='button' onClick={openStoryModal}>
-                        <Image src={activeStory!.miniature_url}
-                            alt={actionUser.username}
-                            fill
-                            sizes='50px'
-                            className='rounded-[10px]'
-                        />
-                        <StoriesModal stories={[activeStory]} isOpen={isStoriesModalOpen} onClose={closeStoryModal} />
-                    </Box>
-                </div>
+                <Box as='button'
+                    className="relative w-[50px] h-[50px] ml-[10px]"
+                    onClick={openStoryModal}
+                >
+                    <Image src={activeStory.miniature_url}
+                        alt={actionUser.username}
+                        fill
+                        sizes='50px'
+                        className='rounded-[10px]'
+                    />
+                    <StoriesModal stories={[activeStory]} isOpen={isStoriesModalOpen} onClose={closeStoryModal} />
+                </Box >
             }
         </>
     )
