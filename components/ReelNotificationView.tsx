@@ -39,10 +39,7 @@ const ReelNotificationView = ({ notification, actionUser }: ReelNotificationView
             <NotificationView notification={notification} actionUser={actionUser} />
             {
                 activeReel &&
-                <Box as='button'
-                    className="relative w-[50px] h-[50px] ml-[10px]"
-                    onClick={openReelModal}
-                >
+                <Box as='button' onClick={openReelModal}                >
                     <ReelView reel={activeReel} width="50px" height="50px" />
                     <ReelModal reel={activeReel} isOpen={isReelsModalOpen} onClose={closeReelModal} />
                 </Box >
