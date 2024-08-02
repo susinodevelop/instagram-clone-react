@@ -12,6 +12,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { LuCameraOff } from 'react-icons/lu';
 import Link from 'next/link';
+import StoriesModal from '@/components/StoriesModal';
 
 //TODO convertir la pagina en un componente de servidor
 //TODO crear un nuevo componente llamado ProvileView y meter toda la logica de cliente ahi
@@ -39,6 +40,8 @@ const ProfilePage = ({ params }: ProfilePage) => {
     const [userReels, setUserReels] = useState<Reel[]>([])
     const [userSavedPosts, setUserSavedPosts] = useState<Post[]>([])
     const [userTaggedPosts, setUserTaggedPosts] = useState<Post[]>([])
+    const [isStoriesModalOpen, setStoriesModalOpen] = useState<boolean>(false)
+    const [userStories, setUserStories] = useState<Story[]>([])
 
     const [activePost, setActivePost] = useState<Post | Reel | null>(null)
     //TODO en un futuro añadir los post guardados y con etiquetaciones
@@ -59,7 +62,8 @@ const ProfilePage = ({ params }: ProfilePage) => {
     }
 
     const closeModal = () => setActivePost(null)
-
+    const openStoriesModal = () => setStoriesModalOpen(true)
+    const closeStoriesModal = () => setStoriesModalOpen(false)
     useEffect(() => {
         const fetchInitialData = async () => {
             setUser(await getUser(userId))
@@ -85,6 +89,17 @@ const ProfilePage = ({ params }: ProfilePage) => {
         }
     }, [activeTabIndex])
 
+    useEffect(() => {
+        const loadStories = async () => {
+            if (isStoriesModalOpen) {
+                setUserStories(await getUserStories(userId))
+            } else {
+                setUserStories([])
+            }
+        }
+        loadStories()
+    }, [isStoriesModalOpen])
+
     return (
         <>
             <Box className="mr-10 flex flex-col p-8 w-5/6 justify-center">
@@ -92,18 +107,21 @@ const ProfilePage = ({ params }: ProfilePage) => {
                     {
                         user &&
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                            <Link
-                                href={`/stories/${user.id}`}>
-                                <div className='relative w-[150px] h-[150px] mr-[20px]'>
-                                    <Image src={user.profile_img}
-                                        alt={user.username}
-                                        fill
-                                        sizes="50px"
-                                        className="rounded-full cursor-pointer p-1 outline outline-gray-700"
-                                        style={{ outlineWidth: '2px' }}
-                                    />
-                                </div>
-                            </Link>
+                            <Box
+                                position="relative"
+                                width="150px"
+                                height="150px"
+                                marginRight="20px"
+                                onClick={openStoriesModal}
+                            >
+                                <Image src={user.profile_img}
+                                    alt={user.username}
+                                    fill
+                                    sizes="50px"
+                                    className="rounded-full cursor-pointer p-1 outline outline-gray-700"
+                                    style={{ outlineWidth: '2px' }}
+                                />
+                            </Box>
                             <div>
                                 <h2 className="font-bold text-2xl my-5">{user.username}</h2>
                                 <button style={{ marginRight: '10px', padding: '5px 10px', borderRadius: '5px', border: '1px solid #333', backgroundColor: '#000', color: '#fff' }}>Editar perfil</button>
@@ -286,6 +304,7 @@ const ProfilePage = ({ params }: ProfilePage) => {
                     {activePost && <AllCommentsModal post={activePost as Post} />}
                 </ModalContent>
             </Modal>
+            <StoriesModal stories={userStories} isOpen={isStoriesModalOpen} onClose={closeStoriesModal} />
         </>
     );
 }
