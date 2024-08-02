@@ -10,6 +10,10 @@ interface PostModalProps {
 
 const PostModal = ({ post, isOpen, onClose }: PostModalProps) => {
 
+    if (!post) {
+        onClose()
+    }
+
     return (
         <Modal
             isOpen={isOpen}

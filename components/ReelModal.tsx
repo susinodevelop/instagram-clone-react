@@ -10,6 +10,10 @@ interface ReelModalProps {
 
 const ReelModal = ({ reel, isOpen, onClose }: ReelModalProps) => {
 
+    if (!reel) {
+        onClose()
+    }
+
     return (
         <Modal
             isOpen={isOpen}

@@ -10,6 +10,10 @@ interface StoriesModalProps {
 
 const StoriesModal = ({ stories, isOpen, onClose }: StoriesModalProps) => {
 
+    if (!stories || stories.length === 0) {
+        onClose()
+    }
+
     return (
         <Modal
             isOpen={isOpen}
