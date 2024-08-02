@@ -1,5 +1,4 @@
 'use client'
-import AllCommentsModal from '@/components/AllCommentsModal';
 import ReelView from '@/components/ReelView';
 import Post from '@/interface/Post';
 import Reel from '@/interface/Reel';
@@ -11,8 +10,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { LuCameraOff } from 'react-icons/lu';
-import Link from 'next/link';
 import StoriesModal from '@/components/StoriesModal';
+import PostModal from '@/components/PostModal';
+import ReelModal from '@/components/ReelModal';
 
 //TODO convertir la pagina en un componente de servidor
 //TODO crear un nuevo componente llamado ProvileView y meter toda la logica de cliente ahi
@@ -42,26 +42,25 @@ const ProfilePage = ({ params }: ProfilePage) => {
     const [userTaggedPosts, setUserTaggedPosts] = useState<Post[]>([])
     const [isStoriesModalOpen, setStoriesModalOpen] = useState<boolean>(false)
     const [userStories, setUserStories] = useState<Story[]>([])
+    const [isPostModalOpen, setPostModalOpen] = useState<boolean>(false)
+    const [activePost, setActivePost] = useState<Post>()
+    const [isReelModalOpen, setReelModalOpen] = useState<boolean>(false)
+    const [activeReel, setActiveReel] = useState<Reel>()
 
-    const [activePost, setActivePost] = useState<Post | Reel | null>(null)
+
     //TODO en un futuro añadir los post guardados y con etiquetaciones
 
     const fetchAndSetPosts = async () => setUserPosts(await getUserPosts(userId))
     const fetchAndSetReels = async () => setUserReels(await getUserReels(userId))
     const fetchAndSetSavedPosts = async () => setUserSavedPosts([]) //TODO cargar saved posts
     const fetchAndSetTaggedPosts = async () => setUserTaggedPosts([]) //TODO cargar tagged posts
-
     const handleTabChange = (index: number) => setActiveTabIndex(index)
-
-    const handleActiveClick = (post: Post | Reel) => {
-        if (activePost === null) {
-            setActivePost(post)
-        } else {
-            setActivePost(null)
-        }
-    }
-
-    const closeModal = () => setActivePost(null)
+    const handleSelectPost = (post: Post) => setActivePost(post)
+    const handleSelectReel = (reel: Reel) => setActiveReel(reel)
+    const openReelModal = () => setReelModalOpen(true)
+    const closeReelModal = () => setReelModalOpen(false)
+    const openPostModal = () => setPostModalOpen(true)
+    const closePostModal = () => setPostModalOpen(false)
     const openStoriesModal = () => setStoriesModalOpen(true)
     const closeStoriesModal = () => setStoriesModalOpen(false)
     useEffect(() => {
@@ -184,7 +183,10 @@ const ProfilePage = ({ params }: ProfilePage) => {
                                                                     fill
                                                                     sizes={`${TAMAÑO_IMAGEN_1_1}px`}
                                                                     style={{ objectFit: "cover" }}
-                                                                    onClick={() => handleActiveClick(post)}
+                                                                    onClick={() => {
+                                                                        handleSelectPost(post)
+                                                                        openPostModal()
+                                                                    }}
                                                                     className="aspect-square cursor-pointer"
                                                                     priority
                                                                 />
@@ -207,7 +209,19 @@ const ProfilePage = ({ params }: ProfilePage) => {
                                             userReels && userReels.length > 0 ?
                                                 (
                                                     userReels.map(reel => (
-                                                        <ReelView key={reel.id} reel={reel} width='23%' height='auto' withControls={false} className='m-1' />
+                                                        <ReelView
+                                                            key={reel.id}
+                                                            reel={reel}
+                                                            width='23%'
+                                                            height='auto'
+                                                            withControls={false}
+                                                            className='m-1 cursor-pointer'
+                                                            onClick={() => {
+                                                                handleSelectReel(reel)
+                                                                openReelModal()
+                                                            }}
+                                                        />
+
                                                     ))
                                                 ) : (
                                                     <div className='flex flex-col items-center justify-center h-full'>
@@ -235,7 +249,10 @@ const ProfilePage = ({ params }: ProfilePage) => {
                                                                     fill
                                                                     sizes={`${TAMAÑO_IMAGEN_1_1}px`}
                                                                     style={{ objectFit: "cover" }}
-                                                                    onClick={() => handleActiveClick(post)}
+                                                                    onClick={() => {
+                                                                        handleSelectPost(post)
+                                                                        openPostModal()
+                                                                    }}
                                                                     className="aspect-square cursor-pointer"
                                                                     priority
                                                                 />
@@ -269,7 +286,10 @@ const ProfilePage = ({ params }: ProfilePage) => {
                                                                     fill
                                                                     sizes={`${TAMAÑO_IMAGEN_1_1}px`}
                                                                     style={{ objectFit: "cover" }}
-                                                                    onClick={() => handleActiveClick(post)}
+                                                                    onClick={() => {
+                                                                        handleSelectPost(post)
+                                                                        openPostModal()
+                                                                    }}
                                                                     className="aspect-square cursor-pointer"
                                                                     priority
                                                                 />
@@ -292,18 +312,8 @@ const ProfilePage = ({ params }: ProfilePage) => {
                 </div>
             </Box>
 
-            <Modal
-                isOpen={activePost !== null}
-                isCentered={true}
-                size="6xl"
-                onClose={closeModal}
-            >
-                <ModalOverlay bg="blackAlpha.800" />
-                <ModalContent className='mx-[150px]'>
-                    {/* TODO revisar para que admita reels tambien */}
-                    {activePost && <AllCommentsModal post={activePost as Post} />}
-                </ModalContent>
-            </Modal>
+            <PostModal post={activePost!} isOpen={isPostModalOpen} onClose={closePostModal} />
+            <ReelModal reel={activeReel!} isOpen={isReelModalOpen} onClose={closeReelModal} />
             <StoriesModal stories={userStories} isOpen={isStoriesModalOpen} onClose={closeStoriesModal} />
         </>
     );

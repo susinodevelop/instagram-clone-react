@@ -8,10 +8,11 @@ interface ReelViewProps {
     width?: string,
     height?: string,
     withControls?: boolean,
-    className?: string
+    className?: string,
+    onClick?: () => void
 }
 
-const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = false, className }: ReelViewProps) => {
+const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = false, className, onClick }: ReelViewProps) => {
     const [thisReel, setThisReel] = useState<Reel>(reel);
 
     return (
@@ -23,6 +24,7 @@ const ReelView = ({ reel, width = 'auto', height = 'auto', withControls = false,
             height={height}
             objectFit={'cover'}
             className={className}
+            onClick={onClick}
         >
             <source src={thisReel.url} type="video/mp4" />
         </Box>
