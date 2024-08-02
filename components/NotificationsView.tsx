@@ -15,20 +15,20 @@ const NotificationsView: React.FC = () => {
     const [notifications, setNotifications] = useState<Notification[]>([])
     const [users, setUsers] = useState<{ [key: number]: User }>({})
 
-    const fetchAndSetNotifications = async (): Promise<void> => {
-        setNotifications(await getUserNotifications(userId));
-
-        // Fetch users for the notifications
-        const userIds = Array.from(new Set(notifications.map(notification => notification.action_user_id)));
-        const usersData: User[] = await Promise.all(userIds.map(id => getUser(id)));
-        const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
-
-        setUsers(usersMap);
-    };
-
-
     useEffect(() => {
+        const fetchAndSetNotifications = async (): Promise<void> => {
+            setNotifications(await getUserNotifications(userId));
+
+            // Fetch users for the notifications
+            const userIds = Array.from(new Set(notifications.map(notification => notification.action_user_id)));
+            const usersData: User[] = await Promise.all(userIds.map(id => getUser(id)));
+            const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
+
+            setUsers(usersMap);
+        };
+
         fetchAndSetNotifications();
+        console.log(notifications)
     }, []);
 
     return (
@@ -38,10 +38,10 @@ const NotificationsView: React.FC = () => {
                     <h1>Notificaciones</h1>
                     <a href="#" style={{ color: '#00f', textDecoration: 'none' }}>Filtrar</a>
                     {
-                        notifications.map(notification => {
+                        notifications && notifications.length > 0 && notifications.map(notification => {
                             const actionUser = users[notification.action_user_id];
 
-                            if (!actionUser) return null; // In case user data is not yet loaded
+                            if (!actionUser) return <div key={notification.id}></div>; // In case user data is not yet loaded
 
                             return (
                                 <div key={notification.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>

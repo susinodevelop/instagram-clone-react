@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Text } from "@chakra-ui/react";
 import { getUser } from "@/services/UserService";
-import ProfilePicture from "./ProfilePicture";
+import ProfileImage from "./ProfileImage";
 import CommentsView from "./CommentsView";
 import { timeAgo } from "@/utils/DateUtils";
 import User from '@/interface/User';
@@ -31,8 +31,8 @@ const PostView: React.FC<PostViewProps> = (props) => {
     return (
         <div className="list-none">
             <Box>
-                <div className="flex flex-row p-4 rounded-lg shadow-md">
-                    <ProfilePicture user={owner} borderColor="red" />
+                <div className="flex flex-row p-4">
+                    <ProfileImage user={owner} />
                     <Text className="flex items-center text-white font-bold">{owner.username}</Text>
                     <Text className="flex items-center text-gray-500 mt-1 ml-2" fontSize="sm">{`• ${timeAgo(post.created_at)}`}</Text>
                 </div>

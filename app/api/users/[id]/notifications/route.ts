@@ -32,7 +32,8 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                 notifications.related_entity_id as related_entity_id,
                 notifications.related_entity_type as related_entity_type,
                 notifications.content AS content,
-                notifications.created_at AS created_at
+                notifications.created_at AS created_at,
+                notifications.read AS read
             FROM notifications
             WHERE notifications.user_id = ${id}`
 

@@ -2,7 +2,7 @@
 import User from "@/interface/User";
 import Notification from "@/interface/Notification";
 import { timeAgo } from "@/utils/DateUtils";
-import Image from "next/image";
+import ProfileImage from "./ProfileImage";
 
 interface NotificationView {
     notification: Notification
@@ -13,13 +13,8 @@ const NotificationView = ({ notification, actionUser }: NotificationView) => {
 
     return (
         <>
-            <div className="relative w-[50px] h-[50px] mr-[10px]">
-                <Image src={actionUser.profile_img}
-                    alt={actionUser.username}
-                    fill
-                    sizes='50px'
-                    className='rounded-full'
-                />
+            <div className="mr-[10px]">
+                <ProfileImage user={actionUser} />
             </div>
             <div style={{ flex: '1' }}>
                 <p style={{ margin: '0' }}>{actionUser.username}</p>
