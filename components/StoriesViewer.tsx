@@ -4,7 +4,7 @@ import Story from "@/interface/Story";
 import { Box, Flex } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
@@ -15,6 +15,22 @@ interface StoriesViewerProps {
 
 const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [offset, setOffset] = useState(0);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setOffset(window.innerWidth * 0.3); // Ajuste dinámico
+        };
+
+        // Inicializar con el tamaño actual de la ventana
+        handleResize();
+
+        // Agregar un event listener para actualizar el offset cuando cambie el tamaño de la ventana
+        window.addEventListener('resize', handleResize);
+
+        // Limpiar el event listener cuando el componente se desmonte
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleNext = () => {
         if (currentIndex < stories.length - 1) {
@@ -66,16 +82,16 @@ const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
             <AnimatePresence initial={false}>
                 {stories.map((story, index) => {
                     if (index >= currentIndex - 1 && index <= currentIndex + 1) {
-                        const offset = (index - currentIndex) * 500; // Espacio entre historias
+                        const dynamicOffset = (index - currentIndex) * offset; // Espacio entre historias
                         const scale = index === currentIndex ? 1 : 0.8;
                         const opacity = index === currentIndex ? 1 : 0.5;
 
                         return (
                             <motion.div
                                 key={story.id}
-                                initial={{ scale: 0.8, x: offset, opacity: 0 }}
-                                animate={{ scale, x: offset, opacity }}
-                                exit={{ scale: 0.8, x: offset, opacity: 0 }}
+                                initial={{ scale: 0.8, x: dynamicOffset, opacity: 0 }}
+                                animate={{ scale, x: dynamicOffset, opacity }}
+                                exit={{ scale: 0.8, x: dynamicOffset, opacity: 0 }}
                                 transition={{ duration: 0.5 }}
                                 style={{
                                     position: 'absolute',
