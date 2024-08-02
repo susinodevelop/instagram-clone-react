@@ -4,8 +4,9 @@ import Notification from '@/interface/Notification';
 import { getUser, getUserNotifications } from '@/services/UserService';
 import { Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import NotificationView from './NotificationView';
 import StoryNotificationView from './StoryNotificationView';
+import ReelNotificationView from './ReelNotificationView';
+import NotificationView from './NotificationView';
 
 //TODO revisar para hacer con server components
 const NotificationsView: React.FC = () => {
@@ -31,6 +32,17 @@ const NotificationsView: React.FC = () => {
         fetchAndSetNotifications();
     }, []);
 
+    const processNotification = (notification: Notification, user: User) => {
+        switch (notification.related_entity_type) {
+            case 'story':
+                return <StoryNotificationView notification={notification} actionUser={user} />
+            case 'reel':
+                return <ReelNotificationView notification={notification} actionUser={user} />
+            default:
+                return <NotificationView notification={notification} actionUser={user} />
+        }
+    }
+
     return (
         <Flex style={{ display: 'flex', backgroundColor: '#000', color: '#fff', minHeight: '100vh' }}>
             <div className='flex flex-row w-full'>
@@ -43,12 +55,9 @@ const NotificationsView: React.FC = () => {
                         if (!actionUser) return <div key={notification.id}></div>; // In case user data is not yet loaded
 
                         return (
-                            <div key={notification.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                            <div key={notification.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                                 {
-
-                                    notification.related_entity_type === 'story' ?
-                                        <StoryNotificationView notification={notification} actionUser={actionUser} />
-                                        : <NotificationView notification={notification} actionUser={actionUser} />
+                                    processNotification(notification, actionUser)
                                 }
                             </div>
                         )

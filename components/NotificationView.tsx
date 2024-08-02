@@ -4,12 +4,12 @@ import Notification from "@/interface/Notification";
 import { timeAgo } from "@/utils/DateUtils";
 import ProfileImage from "./ProfileImage";
 
-interface NotificationView {
+interface NotificationViewProps {
     notification: Notification
     actionUser: User
 }
 //TODO revisar para hacer con server components
-const NotificationView = ({ notification, actionUser }: NotificationView) => {
+const NotificationView = ({ notification, actionUser }: NotificationViewProps) => {
 
     return (
         <>

@@ -10,12 +10,12 @@ import Notification from "@/interface/Notification";
 import { Box } from "@chakra-ui/react";
 import NotificationView from "./NotificationView";
 
-interface StoryNotificationView {
+interface StoryNotificationViewProps {
     notification: Notification
     actionUser: User
 }
 
-const StoryNotificationView = ({ notification, actionUser }: StoryNotificationView) => {
+const StoryNotificationView = ({ notification, actionUser }: StoryNotificationViewProps) => {
 
     const [isStoriesModalOpen, setStoriesModalOpen] = useState<boolean>(false)
     const [activeStory, setActiveStory] = useState<Story>()
