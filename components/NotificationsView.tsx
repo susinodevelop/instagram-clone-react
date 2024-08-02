@@ -10,16 +10,16 @@ import StoryNotificationView from './StoryNotificationView';
 //TODO revisar para hacer con server components
 const NotificationsView: React.FC = () => {
 
+    //TODO el id sacarlo del contexto despues de identificar al usuario
+    const userId = 1
     const [notifications, setNotifications] = useState<Notification[]>([])
     const [users, setUsers] = useState<{ [key: number]: User }>({})
 
     const fetchAndSetNotifications = async (): Promise<void> => {
-        //TODO el id sacarlo del contexto despues de identificar al usuario
-        const retrievedNotifications: Notification[] = await getUserNotifications(1);
-        setNotifications(retrievedNotifications);
+        setNotifications(await getUserNotifications(userId));
 
         // Fetch users for the notifications
-        const userIds = Array.from(new Set(retrievedNotifications.map(n => n.action_user_id)));
+        const userIds = Array.from(new Set(notifications.map(notification => notification.action_user_id)));
         const usersData: User[] = await Promise.all(userIds.map(id => getUser(id)));
         const usersMap = Object.fromEntries(usersData.map(user => [user.id, user]));
 
