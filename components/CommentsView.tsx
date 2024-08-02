@@ -1,15 +1,13 @@
 'use client';
-
 import React, { useEffect, useState } from "react";
-import { Modal, ModalContent, ModalOverlay } from "@chakra-ui/react";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AllCommentsModal from "./AllCommentsModal";
 import User from "@/interface/User";
 import { getPostComments } from "@/services/PostService";
 import { getUser } from "@/services/UserService";
 import Post from "@/interface/Post";
 import Comment from "@/interface/Comment";
+import PostModal from "./PostModal";
 
 interface CommentsViewProps {
     visibleComments: number;
@@ -19,7 +17,7 @@ interface CommentsViewProps {
 const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) => {
     const [owner, setOwner] = useState<User>();
     const [comments, setComments] = useState<Comment[]>([]);
-    const [isAllCommentsVisible, setAllCommentsVisibility] = useState<boolean>(false);
+    const [isPostModalOpen, setPostModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const loadData = async () => {
@@ -31,7 +29,8 @@ const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) =>
         loadData();
     }, [post.user_owner_id, post.id]);
 
-    const turnOffModal = () => setAllCommentsVisibility(false)
+    const openPostModal = () => setPostModalOpen(true)
+    const closePostModal = () => setPostModalOpen(false)
 
     return (
         <>
@@ -52,23 +51,13 @@ const CommentsView: React.FC<CommentsViewProps> = ({ visibleComments, post }) =>
                 }
                 {
                     visibleComments < comments.length &&
-                    <button className="text-gray-500 text-sm my-2" onClick={() => setAllCommentsVisibility(true)}>
+                    <button className="text-gray-500 text-sm my-2" onClick={openPostModal}>
                         Ver los {comments.length} comentarios
                         <FontAwesomeIcon icon={faChevronDown} className="ml-1" />
                     </button>
                 }
             </div>
-            <Modal
-                isOpen={isAllCommentsVisible}
-                isCentered={true}
-                size="6xl"
-                onClose={turnOffModal}
-            >
-                <ModalOverlay bg="blackAlpha.800" />
-                <ModalContent marginX={50}>
-                    {post && <AllCommentsModal post={post} />}
-                </ModalContent>
-            </Modal>
+            <PostModal post={post} isOpen={isPostModalOpen} onClose={closePostModal} />
         </>
     );
 };

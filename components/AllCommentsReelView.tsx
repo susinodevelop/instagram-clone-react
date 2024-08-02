@@ -6,20 +6,21 @@ import { useToast } from '@chakra-ui/react';
 import { timeAgo } from '@/utils/DateUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmile } from '@fortawesome/free-solid-svg-icons';
-import "@/styles/globals.css";
 import { getUser } from '@/services/UserService';
 import { addNewPostComment, getPostComments } from '@/services/PostService';
 import User from '@/interface/User';
-import Post from '@/interface/Post';
 import Comment from '@/interface/Comment';
 import NewComment from '@/interface/NewComment';
-import Image from 'next/image';
+import Reel from '@/interface/Reel';
+import ReelView from './ReelView';
+import "@/styles/globals.css";
 
-interface AllCommentsViewProps {
-    post: Post
+//TODO unificar modal de post y de reels
+interface AllCommentsReelViewProps {
+    reel: Reel
 }
 
-const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
+const AllCommentsReelView: React.FC<AllCommentsReelViewProps> = ({ reel }) => {
     const [actualUser, setActualUser] = useState<User>();
     const [owner, setOwner] = useState<User>();
     const [comments, setComments] = useState<Comment[]>([]);
@@ -29,7 +30,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const fetchComments = async () => {
-        const fetchedComments = await getPostComments(post.id);
+        const fetchedComments = await getPostComments(reel.id);
         setComments(fetchedComments);
 
         const userMap = new Map<number, User>();
@@ -53,14 +54,14 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
             const fetchedActualUser = await getUser(1);
             setActualUser(fetchedActualUser);
 
-            const fetchedOwner = await getUser(post.user_owner_id);
+            const fetchedOwner = await getUser(reel.user_owner_id);
             setOwner(fetchedOwner);
 
             fetchComments()
         };
 
         fetchData();
-    }, [post]);
+    }, [reel]);
 
     useEffect(() => {
         scrollToBottom();
@@ -77,7 +78,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
             content: newComment,
             user_owner_id: actualUser!.id //TODO revisar este forzado y comprobacion undefined
         }
-        await addNewPostComment(post.id, newCommentData)
+        await addNewPostComment(reel.id, newCommentData)
         await fetchComments()
         setNewComment("")
         toast({
@@ -92,12 +93,12 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
 
     return (
         <div className="flex flex-row w-full font-sans border border-gray-900 bg-black w-full h-full z-10">
-            <div className="relative w-2/3">
-                <Image
-                    src={post.url}
-                    alt={post.description}
-                    fill={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            <div className="relative w-2/4">
+                <ReelView
+                    reel={reel}
+                    height="90vh"
+                    withControls={true}
+                    className="aspect-9/16"
                 />
             </div>
             <div className="p-4 w-1/3 relative">
@@ -110,7 +111,7 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
                         <hr className='my-5' />
                         <div className="flex flex-row items-center mb-4">
                             <ProfilePicture user={owner} borderColor='red' />
-                            <p className='ml-2 text-gray-400'><strong className='text-white'>{owner.username}</strong> {post.description}</p>
+                            <p className='ml-2 text-gray-400'><strong className='text-white'>{owner.username}</strong> {reel.title}</p>
                         </div>
                     </>
                 )}
@@ -148,4 +149,4 @@ const AllCommentsModal: React.FC<AllCommentsViewProps> = ({ post }) => {
     );
 };
 
-export default AllCommentsModal;
+export default AllCommentsReelView;
