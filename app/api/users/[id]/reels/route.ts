@@ -34,15 +34,6 @@ export async function GET(request: Request, { params }: HandlerArgs) {
                             FROM reels
                             WHERE reels.user_owner_id = ${id}`
 
-        if (result.rowCount === 0) {
-            return new NextResponse(JSON.stringify({ error: 'User Reels not found' }), {
-                status: 404,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        }
-
         const reels = result.rows
         return new NextResponse(JSON.stringify(reels), {
             status: 200,

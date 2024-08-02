@@ -36,15 +36,6 @@ export async function GET(request: Request, { params }: HandlerArgs) {
             FROM notifications
             WHERE notifications.user_id = ${id}`
 
-        if (result.rowCount === 0) {
-            return new NextResponse(JSON.stringify({ error: 'User Notifications not found' }), {
-                status: 404,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        }
-
         const notifications = result.rows
         return new NextResponse(JSON.stringify(notifications), {
             status: 200,
