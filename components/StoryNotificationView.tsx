@@ -20,7 +20,7 @@ const StoryNotificationView = ({ notification, actionUser }: StoryNotificationVi
     const [isStoriesModalOpen, setStoriesModalOpen] = useState<boolean>(false)
     const [activeStory, setActiveStory] = useState<Story>()
 
-    const openStoryModal = async () => {
+    const openStoryModal = () => {
         setStoriesModalOpen(true)
     }
 
