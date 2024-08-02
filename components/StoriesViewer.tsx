@@ -71,7 +71,7 @@ const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
                     onClick={handlePrev}
                     zIndex="10"
                     position="absolute"
-                    left="20px"
+                    left="31%"
                     top="50%"
                     transform="translateY(-50%)"
                 >
@@ -123,7 +123,7 @@ const StoriesViewer = ({ stories, previousUrl }: StoriesViewerProps) => {
                     onClick={handleNext}
                     zIndex="10"
                     position="absolute"
-                    right="20px"
+                    right="31%"
                     top="50%"
                     transform="translateY(-50%)"
                 >
