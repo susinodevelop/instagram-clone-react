@@ -15,10 +15,6 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      outline: {
-        "with-stories": '2px solid black',
-        "without-stories": '2px solid gray',
-      }
     },
   },
   plugins: [],

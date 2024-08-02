@@ -30,7 +30,11 @@ const ProfileImage = ({ user, width = 50, height = 50 }: ProfilePictureProps) =>
     }, [])
 
     return (
-        <Box as='button' className={`flex items-center justify-center w-[${width+10}px] h-[${height+10}px] rounded-full outline ${areStories() ? 'outline-with-stories' : 'outline-without-stories'}`} onClick={openStoriesModal}>
+        <Box as='button'
+            className={`flex items-center justify-center w-[${width + 10}px] h-[${height + 10}px] rounded-full`}
+            style={{ border: `${areStories() ? '2px solid red' : ''}` }}
+            onClick={openStoriesModal}
+        >
             <Image
                 src={user.profile_img}
                 alt={user.username}
