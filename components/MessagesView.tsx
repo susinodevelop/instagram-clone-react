@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import ProfileImage from './ProfileImage';
 
 // TODO revisar e hacer fetching co usuario sender do mensajes
-const ShowMessages: React.FC = () => {
+const MessagesView: React.FC = () => {
 
     const [messages, setMessages] = useState<DirectMessage[]>([])
     const [users, setUsers] = useState<{ [key: number]: User }>({})
@@ -66,4 +66,4 @@ const ShowMessages: React.FC = () => {
     );
 }
 
-export default ShowMessages;
+export default MessagesView;

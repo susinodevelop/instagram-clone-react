@@ -9,7 +9,7 @@ import CreateButton from "./CreateButton";
 import React, { useEffect, useState } from "react";
 import NotificationsView from "./NotificationsView";
 import Search from "./Search";
-import ShowMessages from "./ShowMessages";
+import MessagesView from "./MessagesView";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -96,7 +96,7 @@ const Sidebar: React.FC = () => {
       <div className="ml-[50px]">
         {showNotifications && <NotificationsView />}
         {showSearch && <Search />}
-        {showMessages && <ShowMessages />}
+        {showMessages && <MessagesView />}
       </div>
     </Box>
   );
