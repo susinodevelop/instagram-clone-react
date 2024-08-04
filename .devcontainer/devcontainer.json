@@ -1,15 +1,14 @@
 {
-    "name": "Next.js Dev Container",
-    "dockerFile": ".devcontainer/Dockerfile",
-    "context": "..",
-    "appPort": [3000],
-    "workspaceFolder": "/workspace",
-    "extensions": [
-      "esbenp.prettier-vscode",
-      "dbaeumer.vscode-eslint"
-    ],
-    "settings": {
-      "terminal.integrated.shell.linux": "/bin/bash"
-    }
-  }
-  
+  "name": "Node.js Dev Container",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ],
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}
