@@ -1,0 +1,32 @@
+{
+    "name": "Next.js Project",
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "remoteUser": "node",
+    "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "ecmel.vscode-html-css",
+        "ms-vsliveshare.vsliveshare",
+        "mhutchie.git-graph"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "postCreateCommand": "npm install",
+    "forwardPorts": [
+        3000
+    ],
+    "portsAttributes": {
+        "3000": {
+            "label": "Next.js App",
+            "onAutoForward": "notify"
+        }
+    }
+}
