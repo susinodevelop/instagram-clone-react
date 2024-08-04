@@ -17,6 +17,9 @@ RUN npm install -g npm@latest
 RUN useradd -ms /bin/bash nodeuser
 USER nodeuser
 
+# Ensure the user has the necessary permissions
+RUN mkdir -p /workspace && chown -R nodeuser:nodeuser /workspace
+
 # Expose the port Next.js will run on
 EXPOSE 3000
 
