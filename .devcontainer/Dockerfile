@@ -1,12 +1,5 @@
 FROM node:20
 
-# Install necessary packages
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    vim \
-    && rm -rf /var/lib/apt/lists/*
-
 # Set the working directory
 WORKDIR /workspace
 
